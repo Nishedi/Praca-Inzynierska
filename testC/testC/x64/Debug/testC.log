@@ -1,0 +1,27 @@
+﻿  testC.cpp
+C:\Users\minec\Desktop\praca_inzynierska\testC\testC\GeneralMethods.h(8,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\minec\Desktop\praca_inzynierska\testC\testC\TS.h(20,33): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\minec\Desktop\praca_inzynierska\testC\testC\TS.h(39,33): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\minec\Desktop\praca_inzynierska\testC\testC\TS.h(96,1): warning C4305: 'initializing': truncation from '__int64' to 'int'
+C:\Users\minec\Desktop\praca_inzynierska\testC\testC\TS.h(96,34): warning C4309: 'initializing': truncation of constant value
+C:\Users\minec\Desktop\praca_inzynierska\testC\testC\TS.h(114,24): warning C4244: 'initializing': conversion from '_Rep' to 'long', possible loss of data
+          with
+          [
+              _Rep=__int64
+          ]
+C:\Users\minec\Desktop\praca_inzynierska\testC\testC\TS.h(116,25): warning C4244: 'argument': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\minec\Desktop\praca_inzynierska\testC\testC\TS.h(122,152): warning C4244: '=': conversion from '_Rep' to 'long', possible loss of data
+          with
+          [
+              _Rep=__int64
+          ]
+C:\Users\minec\Desktop\praca_inzynierska\testC\testC\TS.h(168,140): warning C4244: '=': conversion from '_Rep' to 'long', possible loss of data
+          with
+          [
+              _Rep=__int64
+          ]
+  testC.vcxproj -> C:\Users\minec\Desktop\praca_inzynierska\testC\x64\Debug\testC.exe
