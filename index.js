@@ -20,9 +20,13 @@ app.post('/run-script', async (req, res) => {
   try{
     const response = await fetch(url);
     const data = await response.json();
-    const algorithResponse = await runScript(data.distances[0].length+"|"+data.distances);
+    // console.log(data.distances[0].length+"|"+data.distances);
+    // return;
+    const algorithResponse = await runScript(data.distances[0].length+"|2|"+data.distances);
     const indices = algorithResponse.trim().split(" ");
     const sortedLocations = indices.map(index => locations[index]);
+    // console.log(sortedLocations.length);
+    // return;
     res.send({sortedLocations});
   }catch (error) {
     console.error('Error fetching API:', error);

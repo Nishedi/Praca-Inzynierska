@@ -1,5 +1,28 @@
-/Front-End
-
+# Ignorowanie globalne node_modules
 /node_modules
 
+# Ignorowanie folderu OSRM
 /osrm
+
+# dependencies
+/Front-End/node_modules
+/Front-End/.pnp
+/Front-End/.pnp.js
+
+# testing
+/Front-End/coverage
+
+# production
+/Front-End/build
+
+# misc
+/Front-End/.DS_Store
+/Front-End/.env.local
+/Front-End/.env.development.local
+/Front-End/.env.test.local
+/Front-End/.env.production.local
+
+# logi debugowania NPM i Yarn
+/Front-End/npm-debug.log*
+/Front-End/yarn-debug.log*
+/Front-End/yarn-error.log*

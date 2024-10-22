@@ -1,9 +1,11 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
 #include "BNB.h"
 #include "TS.h"
+#include <fstream>
+
 
 std::vector<std::string> split(const std::string& str, char delimiter) {
     std::vector<std::string> tokens;
@@ -31,10 +33,10 @@ void bnb_run(int numOfCities, std::vector<std::vector<int>> distancesInt) {
 
 }
 
-void ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbourType, int tabuSize) {// neigh 2 - slabe
+void ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbourType, int tabuSize, int numOfVechicles) {// neigh 2 - slabe
     TS* tabuSearch = new TS(numOfCities);
-    std::vector<int> result = tabuSearch->tabuSearch(distances, numOfCities, tabuSize, 20, numOfCities, neighbourType);
-    for (int i = 0; i < numOfCities; i++) {
+    std::vector<int> result = tabuSearch->tabuSearch(distances, numOfCities, tabuSize, 10, numOfCities, neighbourType, numOfVechicles);
+    for (int i = 0; i < result.size(); i++) {
         std::cout << result[i] << " ";
     }
    /* int res = 0;
@@ -50,13 +52,23 @@ int main(int argc, char* argv[]) {
         char delimiter = '|'; 
         std::vector<std::string> parts = split(input, delimiter);
         int numOfCities = std::stoi(parts[0]);
+        int numOfVechicles = std::stoi(parts[1]);
         char separator = ',';
-        std::vector<std::string> distances = split(parts[1], separator);
+        std::vector<std::string> distances = split(parts[2], separator);
         std::vector<std::vector<int>> distancesInt(numOfCities, std::vector<int>(numOfCities, 0));
+        
 
         for (int i = 0; i < distances.size(); i++) {
             int num = std::stoi(distances[i]);
             distancesInt[i / numOfCities][i % numOfCities] = num;
+        }
+
+        for (int i = 0; i < distancesInt.size(); i++) {
+            for (int j = 0; j < distancesInt[0].size(); j++) {
+                if (distancesInt[i][j] == 0)distancesInt[i][j] = 99999999;
+                //std::cout << distancesInt[i][j] << " ";
+            }
+            //std::cout << std::endl;
         }
         
         //std::cout << std::endl;
@@ -74,12 +86,12 @@ int main(int argc, char* argv[]) {
             }
             std::cout << "\n";
         }*/
-        ts_run(numOfCities, distancesInt, 1, numOfCities);
+        ts_run(numOfCities, distancesInt, 1, numOfCities, numOfVechicles);
 
         
     }
     else {
-        std::cout << "No argument provided! Loading example data" << std::endl;
+        /*std::cout << "No argument provided! Loading example data" << std::endl;
         int numOfCities = 5;
         std::vector<std::vector<int>> distances(numOfCities, std::vector<int>(numOfCities, 0));
         distances[0][0] = -1; distances[0][1] = 180; distances[0][2] = 200; distances[0][3] = 226; distances[0][4] = 257;
@@ -87,7 +99,48 @@ int main(int argc, char* argv[]) {
         distances[2][0] = 194; distances[2][1] = 379; distances[2][2] = -1; distances[2][3] = 206; distances[2][4] = 258;
         distances[3][0] = 227; distances[3][1] = 223; distances[3][2] = 205; distances[3][3] = -1; distances[3][4] = 448;
         distances[4][0] = 257; distances[4][1] = 439; distances[4][2] = 258; distances[4][3] = 448; distances[4][4] = -1;
-        bnb_run(numOfCities, distances);
+        bnb_run(numOfCities, distances);*/
+
+        std::string filename = "Polska-15.txt"; 
+        std::ifstream inputFile(filename);
+        if (!inputFile.is_open()) {
+            std::cerr << "Cannot open test file: " << filename << std::endl;
+            return 1; // Zakończ program z błędem
+        }
+        std::stringstream buffer; 
+        buffer << inputFile.rdbuf(); 
+        std::string input = buffer.str(); 
+        inputFile.close(); 
+
+        char delimiter = '|';
+        std::vector<std::string> parts = split(input, delimiter);
+        int numOfCities = std::stoi(parts[0]);
+        int numOfVechicles = std::stoi(parts[1]);
+        char separator = ',';
+        std::vector<std::string> distances = split(parts[2], separator);
+        std::vector<std::vector<int>> distancesInt(numOfCities, std::vector<int>(numOfCities, 0));
+
+        for (int i = 0; i < distances.size(); i++) {
+            int num = std::stoi(distances[i]);
+            distancesInt[i / numOfCities][i % numOfCities] = num;
+        }
+
+        //std::cout << std::endl;
+        /*for (int i = 0; i < numOfCities; i++) {
+            for (int j = 0; j < numOfCities; j++) {
+                std::cout << distancesInt[i][j] << " ";
+            }
+            std::cout << "\n";
+        }*/
+        //bnb_run(numOfCities, distancesInt);
+        /*for (int ts = 27; ts < 7*27; ts += 27) {
+            std::cout << ts;
+            for (int n = 1; n < 4; n++) {
+                 std::cout<< " " << n << ":"; ts_run(numOfCities, distancesInt, n, ts);
+            }
+            std::cout << "\n";
+        }*/
+        ts_run(numOfCities, distancesInt, 1, numOfCities, numOfVechicles);
     }
     return 0;
 }

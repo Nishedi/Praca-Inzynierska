@@ -3,7 +3,7 @@
 #include <chrono>
 class GeneralMethods {
 public:
-    std::vector<int> generateInitialSolution(int size, std::vector<std::vector<int>> distances, int gennumber) {
+    std::vector<int> generateInitialSolution(int size, std::vector<std::vector<int>> distances, int gennumber, int numOfVechicles) {
         std::vector<int> firstSolution;
         srand(time(NULL) + (gennumber * 51));
         int start = std::rand() % size;
@@ -30,6 +30,8 @@ public:
             firstSolution.emplace_back(bestNextNode);
         }
         delete[] visited;
+        for(int i = 0; i < numOfVechicles-1; i++)
+            firstSolution.insert(firstSolution.begin() + std::rand() % firstSolution.size() + 1, 0);
         return firstSolution;
     }
     int calculateTotalDistance(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {

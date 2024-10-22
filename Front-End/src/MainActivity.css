@@ -1,0 +1,48 @@
+.flex-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 50px;
+}
+.item {
+    margin: 10px 0px;
+}
+
+
+
+
+
+.autocomplete-container {
+    position: relative;
+  }
+  
+  .autocomplete-container input {
+    width: calc(100% - 43px);
+    outline: none;
+    
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    padding-right: 31px;
+    font-size: 16px;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-gap: 16px;
+}
+
+.one-column {
+    grid-template-columns: 1fr; /* Jedna kolumna */
+}
+
+.two-columns {
+    grid-template-columns: 1fr 1fr; /* Dwie kolumny */
+    column-gap: 20px; /* Odstęp między kolumnami */
+}
+
+.three-columns {
+    grid-template-columns: 1fr 1fr 1fr; /* Trzy kolumny */
+    column-gap: 20px; /* Odstęp między kolumnami */
+}
