@@ -5,6 +5,7 @@
 #include "BNB.h"
 #include "TS.h"
 #include <fstream>
+#include "GreedyVechicleAlocation.h"
 
 
 std::vector<std::string> split(const std::string& str, char delimiter) {
@@ -63,6 +64,10 @@ int main(int argc, char* argv[]) {
             distancesInt[i / numOfCities][i % numOfCities] = num;
         }
 
+        GreedyVechicleAllocation gva;
+
+        int numberOfVechicles = gva.greedyVehicleAllocation(distancesInt);
+
         for (int i = 0; i < distancesInt.size(); i++) {
             for (int j = 0; j < distancesInt[0].size(); j++) {
                 if (distancesInt[i][j] == 0)distancesInt[i][j] = 99999999;
@@ -86,7 +91,7 @@ int main(int argc, char* argv[]) {
             }
             std::cout << "\n";
         }*/
-        ts_run(numOfCities, distancesInt, 1, numOfCities, numOfVechicles);
+        ts_run(numOfCities, distancesInt, 1, numOfCities, numberOfVechicles);
 
         
     }

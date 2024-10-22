@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="BNB.h" />
     <ClInclude Include="GeneralMethods.h" />
+    <ClInclude Include="GreedyVechicleAlocation.h" />
     <ClInclude Include="Neigbor.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="TS.h" />

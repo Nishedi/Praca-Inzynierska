@@ -1034,9 +1034,9 @@ function MainActivity() {
                         </>
                     }
                     
-                    {/* {routeCoordinates.length > 0 && !isEditing && <Polyline positions={routeCoordinates} color="blue" />} */}
-                    {firstGroupRoute.length > 0 && !isEditing && <Polyline positions={firstGroupRoute} color="red" />}
-                    {secondGroupRoute.length > 0 && !isEditing && <Polyline positions={secondGroupRoute} color="green" />}
+                    {routeCoordinates.length > 0 && !isEditing && <Polyline positions={routeCoordinates} color="blue" />}
+                    {/* {firstGroupRoute.length > 0 && !isEditing && <Polyline positions={firstGroupRoute} color="red" />} */}
+                    {/* {secondGroupRoute.length > 0 && !isEditing && <Polyline positions={secondGroupRoute} color="green" />} */}
                 </MapContainer>
             </div>
         </div>
