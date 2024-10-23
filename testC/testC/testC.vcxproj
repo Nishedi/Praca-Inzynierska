@@ -132,8 +132,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BNB.h" />
+    <ClInclude Include="CrossOvers.h" />
     <ClInclude Include="GeneralMethods.h" />
+    <ClInclude Include="Genetic.h" />
     <ClInclude Include="GreedyVechicleAlocation.h" />
+    <ClInclude Include="Mutations.h" />
     <ClInclude Include="Neigbor.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="TS.h" />

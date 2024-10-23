@@ -41,5 +41,14 @@
     <ClInclude Include="GreedyVechicleAlocation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Genetic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mutations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CrossOvers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

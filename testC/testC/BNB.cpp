@@ -66,5 +66,6 @@ std::vector<int> BNB::bnb_execute(std::vector<std::vector<int>> routes) {
 	this->tempPath[0] = currentCity;
 	int result = 0;
 	bnb(routes, currentCity, currentCost);
+	this->bestPath.pop_back();
 	return this->bestPath;
 }
