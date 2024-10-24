@@ -39,16 +39,13 @@ public:
                 }
             }
             if (boolean == 0) {
-                std::cout << 1 << " ";
                 int index = find(parent2, parent1[i]);
                 while (index <= endPos && index >= startPos) {
-                    std::cout << 2 << " ";
                     index = find(parent2, parent1[index]);
                 }
                 child[index] = parent2[i];
             }
         }
-        std::cout << 3 << std::endl;
         for (int i = 0; i < child.size(); i++) {
             if (child[i] == -1) {
                 child[i] = parent2[i];

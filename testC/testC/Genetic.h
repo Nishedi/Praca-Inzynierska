@@ -95,9 +95,8 @@ public:
 					child = cs.PMXCrossOver(first, second, distancesSize, 0);
 				}
 				else {
-					//if (crossoverType == 0) child = cs.PMXCrossOver(first, second, distancesSize, crossoverRate);
-					//if (crossoverType == 1) 
-					child = cs.orderCrossover(first, second, distancesSize, crossoverRate);
+					if (crossoverType == 0) child = cs.PMXCrossOver(first, second, distancesSize, crossoverRate);
+					if (crossoverType == 1) child = cs.orderCrossover(first, second, distancesSize, crossoverRate);
 				}
 				if (mutationType == 0)mt.insertionMutate(child, distancesSize, mutationRate);
 				if (mutationType == 1)mt.swapMutate(child, distancesSize, mutationRate);
