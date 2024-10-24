@@ -28,13 +28,13 @@ public:
 		this->populationSize = populationSize;
 	}
 private:
-	vector<vector<int>> initializePopulation() {
+	vector<vector<int>> initializePopulation(int numberOfVechicles) {
 		vector<vector<int>> population(this->populationSize);
 		for (int i = 0; i < distancesSize; i++) {
-			population[i] = gm.generateInitialSolutionStartPoint(distancesSize, distances, i);
+			population[i] = gm.generateInitialSolutionStartPoint(distancesSize, distances, i, numberOfVechicles);
 		}
 		for (int i = distancesSize; i < this->populationSize; i++) {
-			population[i] = gm.generateInitialSolutionMutated(distancesSize, this->distances, (this->distancesSize + 151) * 191);
+			population[i] = gm.generateInitialSolutionMutated(distancesSize, this->distances, (this->distancesSize + 151) * 191, numberOfVechicles);
 		}
 		return population;
 	}
@@ -65,7 +65,7 @@ private:
 public:
 
 
-	std::vector<int>  geneticSolve(std::vector<std::vector<int>> distances, int distancesSize, int maxTime, int mutationType, int crossoverType, double crossoverRate, double mutationRate) {
+	std::vector<int>  geneticSolve(std::vector<std::vector<int>> distances, int distancesSize, int maxTime, int mutationType, int crossoverType, double crossoverRate, double mutationRate, int numberOfVechicles) {
 		maxTime = maxTime * 1000;
 		int changes = 0;
 		int bestDistance = 9999999;
@@ -73,10 +73,10 @@ public:
 		std::vector<int> times;
 		std::vector<int> bestResults;
 		times.push_back(0);
-		vector<int> bestTour(distancesSize);
+		vector<int> bestTour(distancesSize+numberOfVechicles-1);
 		long startTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 		long currentTime;
-		vector<vector<int>> population = initializePopulation();
+		vector<vector<int>> population = initializePopulation(numberOfVechicles);
 		for (int generation = 0;
 			(currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count()) - startTime <= maxTime;
 			generation++) {
@@ -86,22 +86,21 @@ public:
 				vector<int> first = selectParent(population);
 				vector<int> second = selectParent(population);
 				int iter = 0;
-				while (iter++ < 100 && std::equal(first.begin(), first.end(), second.begin())) {
+				/*while (iter++ < 100 && std::equal(first.begin(), first.end(), second.begin())) {
 					second = selectParent(population);
-				}
+				}*/
 
 				vector<int> child;
 				if (std::equal(first.begin(), first.end(), second.begin())) {
 					child = cs.PMXCrossOver(first, second, distancesSize, 0);
 				}
 				else {
-					if (crossoverType == 0) child = cs.PMXCrossOver(first, second, distancesSize, crossoverRate);
-					if (crossoverType == 1) child = cs.orderCrossover(first, second, distancesSize, crossoverRate);
+					//if (crossoverType == 0) child = cs.PMXCrossOver(first, second, distancesSize, crossoverRate);
+					//if (crossoverType == 1) 
+					child = cs.orderCrossover(first, second, distancesSize, crossoverRate);
 				}
-
 				if (mutationType == 0)mt.insertionMutate(child, distancesSize, mutationRate);
 				if (mutationType == 1)mt.swapMutate(child, distancesSize, mutationRate);
-
 				newPopulation[i] = child;
 			}
 			int lastBest = bestDistance;
@@ -124,6 +123,7 @@ public:
 					int randomIndex = distribution(generator);
 					population[randomIndex] = newPopulation[i];
 				}
+				
 			}
 		}
 		

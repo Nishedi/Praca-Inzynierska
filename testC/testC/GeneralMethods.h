@@ -37,14 +37,16 @@ public:
     }
     int calculateTotalDistance(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {
         int totalDistance = 0;
-        for (int i = 0; i < pathSize - 1; i++) {
-            totalDistance += distances[path[i]][path[i + 1]];
+        for (int i = 0; i < path.size() - 1; i++) {
+            int x = path[i];
+            int y = path[i + 1];
+            totalDistance += distances[x][y];
 
         }
-        return totalDistance += distances[path[pathSize - 1]][path[0]];
+        return totalDistance += distances[path[path.size() - 1]][path[0]];
     }
 
-    std::vector<int> generateInitialSolutionStartPoint(int size, std::vector<std::vector<int>> distances, int startpoint) {
+    std::vector<int> generateInitialSolutionStartPoint(int size, std::vector<std::vector<int>> distances, int startpoint, int numberOfVechicles) {
         std::vector<int> firstSolution;
         int start = startpoint;
         int* visited = new int[size];
@@ -71,9 +73,11 @@ public:
             firstSolution.emplace_back(bestNextNode);
         }
         delete[] visited;
+        for (int i = 0; i < numberOfVechicles - 1; i++)
+            firstSolution.insert(firstSolution.begin() + std::rand() % firstSolution.size() + 1, 0);
         return firstSolution;
     }
-    std::vector<int> generateInitialSolutionMutated(int size, std::vector<std::vector<int>> distances, int gennumber) {
+    std::vector<int> generateInitialSolutionMutated(int size, std::vector<std::vector<int>> distances, int gennumber, int numberOfVechicles) {
         std::vector<int> firstSolution;
         srand(time(NULL) + (gennumber * 511512) * iter++);
         int start = std::rand() % size;
@@ -109,6 +113,8 @@ public:
             firstSolution[first] = firstSolution[second];
             firstSolution[second] = swap;
         }
+        for (int i = 0; i < numberOfVechicles - 1; i++)
+            firstSolution.insert(firstSolution.begin() + std::rand() % firstSolution.size() + 1, 0);
         return firstSolution;
     }
     std::vector<int> generateRandomSolution(int size, std::vector<std::vector<int>> distances, int gennumber) {

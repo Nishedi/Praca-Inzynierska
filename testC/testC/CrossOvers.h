@@ -9,7 +9,7 @@ public:
     std::vector<int> PMXCrossOver(std::vector<int>& parent1, std::vector<int>& parent2, int numCities, double crossoverRate) {
         std::random_device rd;
         std::mt19937 generator(rd());
-        std::uniform_int_distribution<int> distribution(0, numCities - 1);
+        std::uniform_int_distribution<int> distribution(0, parent1.size() - 1);
         std::uniform_real_distribution<double> crossoverDistribution(0.0, 1.0);
         if (crossoverDistribution(generator) > crossoverRate) {
             return parent1;
@@ -19,11 +19,11 @@ public:
         if (startPos > endPos) {
             std::swap(startPos, endPos);
         }
-        std::vector<int> child(numCities, -1);
+        std::vector<int> child(parent1.size(), -1);
         for (int i = startPos; i <= endPos; i++) {
             child[i] = parent1[i];
         }
-        std::vector<int> temp(numCities, -1);
+        std::vector<int> temp(parent1.size(), -1);
         for (int i = startPos; i <= endPos; i++) {
             temp[parent1[i]] = 1;
         }
@@ -39,33 +39,21 @@ public:
                 }
             }
             if (boolean == 0) {
+                std::cout << 1 << " ";
                 int index = find(parent2, parent1[i]);
                 while (index <= endPos && index >= startPos) {
+                    std::cout << 2 << " ";
                     index = find(parent2, parent1[index]);
                 }
                 child[index] = parent2[i];
             }
         }
-
+        std::cout << 3 << std::endl;
         for (int i = 0; i < child.size(); i++) {
             if (child[i] == -1) {
                 child[i] = parent2[i];
             }
         }
-        /* for (int i = 0; i < child.size(); i++) {
-             bool value = false;
-             for (int j = 0; j < child.size(); j++) {
-                 if (child[j] == i) value = true;
-             }
-             if (!value) {
-                 show(parent1);
-                 show(parent2);
-                 show(child);
-                 std::cout << startPos << " " << endPos << std::endl;
-                 std::cout << std::endl;
-                 break;
-             }
-         }*/
         return child;
     }
     int find(std::vector<int> parent, int value) {
@@ -79,7 +67,7 @@ public:
     std::vector<int> orderCrossover(std::vector<int>& parent1, std::vector<int>& parent2, int numCities, double crossoverRate) {
         std::random_device rd;
         std::mt19937 generator(rd());
-        std::uniform_int_distribution<int> distribution(0, numCities - 1);
+        std::uniform_int_distribution<int> distribution(0, parent1.size() - 1);
         std::uniform_real_distribution<double> crossoverDistribution(0.0, 1.0);
         if (crossoverDistribution(generator) > crossoverRate) {
             return parent1;
@@ -89,19 +77,25 @@ public:
         if (startPos > endPos) {
             std::swap(startPos, endPos);
         }
-        std::vector<int> child(numCities, -1);
+        std::vector<int> child(parent1.size(), -1);
         for (int i = startPos; i <= endPos; i++) {
             child[i] = parent1[i];
         }
         int currentIndex = 0;
-        for (int i = 0; i < numCities; i++) {
+        for (int i = 0; i < parent1.size(); i++) {
             if (currentIndex == startPos) {
                 currentIndex = endPos + 1;
             }
-            if (currentIndex >= numCities) break;
+            if (currentIndex >= parent1.size()) break;
             if (child[currentIndex] == -1 && std::find(child.begin(), child.end(), parent2[i]) == child.end()) {
                 child[currentIndex++] = parent2[i];
             }
+        }
+        for (int i = 0; i < child.size(); i++) {
+            if (child[i] == -1) {
+                child[i] = 0;
+            }
+
         }
         return child;
     }

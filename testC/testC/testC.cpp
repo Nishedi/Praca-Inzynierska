@@ -43,20 +43,24 @@ int ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbo
     int res = 0;
     for (int i = 0; i < result.size() - 1; i++) {
         res += distances[result[i]][result[i + 1]];
+        std::cout << result[i] << " ";
     }
+    std::cout << result[result.size() - 1] << ":";
     res += distances[result[result.size() - 1]][result[0]];
     
 
     return res;
 }
 
-int genetic_run(int numOfCities, std::vector<std::vector<int>> distances) {
+int genetic_run(int numOfCities, std::vector<std::vector<int>> distances, int numOfVechicles) {
     Genetic* genetic = new Genetic(distances, numOfCities, 6000);
-    std::vector<int> result = genetic->geneticSolve(distances, numOfCities, 5, 0,0,0.8,0.1);
+    std::vector<int> result = genetic->geneticSolve(distances, numOfCities, 5, 0,0,0.8,0.1, numOfVechicles);
     int res = 0;
     for (int i = 0; i < result.size() - 1; i++) {
         res += distances[result[i]][result[i + 1]];
+        std::cout << result[i]<<" ";
     }
+    std::cout << result[result.size()-1] << ":";
     res += distances[result[result.size()-1]][result[0]];
     
 
@@ -82,17 +86,24 @@ int main(int argc, char* argv[]) {
             int num = std::stoi(distances[i]);
             distancesInt[i / numOfCities][i % numOfCities] = num;
         }
+        for (int i = 0; i < distancesInt.size(); i++) {
+            for (int j = 0; j < distancesInt.size(); j++) {
+                if (distancesInt[i][j] == 0) distancesInt[i][j] = 99999999;
+                std::cout << distancesInt[i][j] << " ";
+            }
+            std::cout << std::endl;
+        }
 
         GreedyVechicleAllocation gva;
 
         int numberOfVechicles = gva.greedyVehicleAllocation(distancesInt);
-        numberOfVechicles = 1;
+        numberOfVechicles = 4;
 
         for (int i = 0; i < 5; i++) {
             std::cout << std::endl << i << ". " << std::endl;
             //std::cout << "   " << bnb_run(numOfCities, distancesInt) << std::endl;
             std::cout << "   " << ts_run(numOfCities, distancesInt, 1, numOfCities, numberOfVechicles) << std::endl;
-            std::cout << "   " << genetic_run(numOfCities, distancesInt) << std::endl;
+            std::cout << "   " << genetic_run(numOfCities, distancesInt, numberOfVechicles) << std::endl;
         }
 
 
