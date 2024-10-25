@@ -7,22 +7,6 @@ const AutoCompleteInput = ({ exercise, setSelectedExercises, remove}) => {
     const [location, setLocation] = useState(exercise?.location||'');
     const [suggestions, setSuggestions] = useState([]);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-    // Funkcja do aktualizacji liczby powtórzeń
-    /*   const updateExercise = () => {
-        if(location){
-            console.log(exercise.id);
-            setSelectedExercises((prevExercises) =>
-                prevExercises.map((item) =>(
-                    item.id === exercise.id
-                        ? { ...item, location: location } // Zaktualizuj tylko czas trwania
-                        : item // Zwróć niezmienione elementy
-                )
-                    
-                )
-            );
-        }
-    };*/
-
     const getSuggestions = async (value) => {
         const promise = new Promise((resolve, reject) => {        
             const apiKey = "3351739dfa204e19a0a0177749229cc9";

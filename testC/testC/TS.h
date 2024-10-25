@@ -20,70 +20,17 @@ public:
         srand(time(NULL) * seed + seed);
         std::vector<Neigbor> neighborhood;
         for (int iter = 0; iter < numberOfMaxMoves && iter < 1000000; iter++) {
-            int i = rand() % pathSize;
-            int j = rand() % pathSize;
-            while (i == j) {
-                j = rand() % pathSize;
+            int i = (rand() % (pathSize - 1)) + 1;
+            while(path[i]==0)i = (rand() % (pathSize - 1)) + 1;
+            int j = (rand() % (pathSize - 1)) + 1;
+            while (i == j ) {
+                j = (rand() % (pathSize - 1)) + 1;
             }
             int valueToMove = path[i];
             std::vector<int> neighbor(path);
             neighbor.erase(neighbor.begin() + i);
             neighbor.insert(neighbor.begin() + j, valueToMove);
             neighborhood.emplace_back(neighbor, pathSize, i, j, 0, 0);
-        }
-        return neighborhood;
-    }
-
-    std::vector<Neigbor> generateNeighbor2(int pathSize, std::vector<int>& path, int numberOfMaxSwaps, int seed) {
-        std::vector<Neigbor> neighborhood;
-        srand(time(NULL) * seed + seed);
-        for (int iter = 0; iter < numberOfMaxSwaps && iter < 1000000; iter++) {
-            int i = std::rand() % pathSize;
-            int j = std::rand() % pathSize;
-            while (j == i) {
-                j = std::rand() % pathSize;
-            }
-
-            int k = std::rand() % pathSize;
-            while (k == i || k == j) {
-                k = std::rand() % pathSize;
-            }
-            std::vector<int> neighbor(path);
-            std::swap(neighbor[i], neighbor[j]);
-            std::swap(neighbor[k], neighbor[i]);
-            neighborhood.emplace_back(neighbor, pathSize, i, j, k, 0);
-        }
-        return neighborhood;
-    }
-
-    std::vector<Neigbor> generateNeighbor3(int pathSize, const std::vector<int>& path) {
-        std::vector<Neigbor> neighborhood;
-        for (int i = 0; i < pathSize - 2; i++) {
-            for (int j = i + 1; j < pathSize - 1; j++) {
-                for (int k = j + 1; k < pathSize; k++) {
-                    std::vector<int> neighbor(path.begin(), path.end());
-                    reverse(neighbor.begin() + i, neighbor.begin() + j, neighbor.begin() + k);
-                    neighborhood.emplace_back(neighbor, pathSize, i, j, k, 0);
-                }
-            }
-        }
-        return neighborhood;
-    }
-
-    void reverse(std::vector<int>::iterator start, std::vector<int>::iterator middle, std::vector<int>::iterator end) {
-        std::reverse(start, middle);
-        std::reverse(middle, end + 1);
-        std::reverse(start, end + 1);
-    }
-
-    std::vector<Neigbor> generateNeighbour(int pathSize, const std::vector<int>& path) {
-        std::vector<Neigbor> neighborhood;
-        for (int i = 0; i < pathSize; i++) {
-            for (int j = i + 1; j < pathSize; j++) {
-                std::vector<int> neighbor(path);
-                std::swap(neighbor[i], neighbor[j]);
-                neighborhood.emplace_back(neighbor, pathSize, i, j, 0, 0);
-            }
         }
         return neighborhood;
     }
@@ -97,18 +44,17 @@ public:
         int bestSolutionLength = 9999999999;
         std::vector<int> currentSolution;
         int currentSolutionLength;
-        for (int i = 0; i < numOfStartSolution; i++) {
-            currentSolution = gm.generateInitialSolution(distancesSize- numOfVechicles +1, distances, i * tabuSize / maxTime, numOfVechicles);
-            if (bestSolution.size() == 0) {
-                bestSolution = currentSolution;
-                bestSolutionLength = gm.calculateTotalDistance(bestSolution, distancesSize, distances);
-            }
-            currentSolutionLength = gm.calculateTotalDistance(currentSolution, distancesSize, distances);
-            if (currentSolutionLength < bestSolutionLength) {
-                bestSolution = currentSolution;
-                bestSolutionLength = currentSolutionLength;
-            }
+        currentSolution = gm.generateInitialSolution(distancesSize - numOfVechicles + 1, distances, numOfVechicles);
+        if (bestSolution.size() == 0) {
+            bestSolution = currentSolution;
+            bestSolutionLength = gm.calculateTotalDistance(bestSolution, distancesSize, distances);
         }
+        currentSolutionLength = gm.calculateTotalDistance(currentSolution, distancesSize, distances);
+        if (currentSolutionLength < bestSolutionLength) {
+            bestSolution = currentSolution;
+            bestSolutionLength = currentSolutionLength;
+        }
+        
         int greedily = gm.calculateTotalDistance(bestSolution, distancesSize, distances);
         maxTime = maxTime * 1000;
         std::vector<Neigbor> tabuList;
@@ -122,30 +68,7 @@ public:
         currentSolution = bestSolution;
         for (int i = 0; (currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count()) - startTime <= maxTime; i++) {
             std::vector<Neigbor> neighborhood;
-            if (false) {
-                currentSolution = gm.generateInitialSolution(distancesSize - numOfVechicles + 1, distances, 53, numOfVechicles);
-                int start = 0; int middle = distancesSize / 2; int end = distancesSize - 1;
-                reverse(currentSolution.begin(), currentSolution.begin() + middle, currentSolution.begin() + end);
-                for (int i = 0; i < 10; i++) {
-                    start = rand() % distancesSize;
-                    middle = rand() % distancesSize;
-                    end = rand() % distancesSize;
-                    while (middle == start)middle = rand() % distancesSize;
-                    while (end == middle || end == start) end = rand() % distancesSize;
-                    if (start > end) std::swap(start, end);
-                    if (middle < start) std::swap(middle, start);
-                    if (middle > end) std::swap(middle, end);
-                    reverse(currentSolution.begin() + start, currentSolution.begin() + middle, currentSolution.begin() + end);
-                }
-                nochange = 0;
-                tabuList.clear();
-            }
-            if (neighborType == 1)
-                neighborhood = generateNeighbor1(distancesSize, currentSolution, (distancesSize * distancesSize) / 2, currentTime);
-            if (neighborType == 2)
-                neighborhood = generateNeighbor2(distancesSize, currentSolution, distancesSize * distancesSize * (distancesSize / 2), currentTime);
-            if (neighborType == 3)
-                neighborhood = generateNeighbor3(distancesSize, currentSolution);
+            neighborhood = generateNeighbor1(distancesSize, currentSolution, (distancesSize * distancesSize) / 2, currentTime);
             std::sort(neighborhood.begin(), neighborhood.end(), [&distancesSize, &distances](const Neigbor& a, const Neigbor& b) {
                 TS ts(distancesSize);
             return ts.gm.calculateTotalDistance(a.path_vec, distancesSize, distances) < ts.gm.calculateTotalDistance(b.path_vec, distancesSize, distances);
@@ -163,13 +86,24 @@ public:
             }
             currentSolutionLength = gm.calculateTotalDistance(currentSolution, distancesSize, distances);
             if (currentSolutionLength < bestSolutionLength) {
-                bestSolution = currentSolution;
-                bestSolutionLength = currentSolutionLength;
-                f++;
-                found = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() - startTime;
-                updates++;
-                bestResults.emplace_back(bestSolutionLength);
-                times.emplace_back(found);
+                std::vector<int> occures;
+                for (int i = 0; i < currentSolution.size(); i++) {
+                    if (currentSolution[i] == 0) {
+                        occures.push_back(i);
+                    }
+                }
+                int redux = occures[1] - occures[0];
+                if (redux > 0.2 * currentSolution.size() && redux < 0.8*currentSolution.size()) {
+                    bestSolution = currentSolution;
+                    bestSolutionLength = currentSolutionLength;
+                    f++;
+                }
+                else {
+                    //std::cout << ".";
+                }
+
+
+                
             }
             else {
                 nochange++;

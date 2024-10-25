@@ -1,86 +1,87 @@
 ﻿  testC.cpp
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(9,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(82,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(107,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(125,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(20,33): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(39,33): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(97,1): warning C4305: 'initializing': truncation from '__int64' to 'int'
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(97,34): warning C4309: 'initializing': truncation of constant value
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(115,24): warning C4244: 'initializing': conversion from '_Rep' to 'long', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(81,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(106,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(124,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(20,33): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(40,33): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(98,1): warning C4305: 'initializing': truncation from '__int64' to 'int'
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(98,34): warning C4309: 'initializing': truncation of constant value
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(115,24): warning C4244: 'initializing': conversion from '_Rep' to 'long', possible loss of data
           with
           [
               _Rep=__int64
           ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(117,25): warning C4244: 'argument': conversion from 'double' to '_Ty', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(117,25): warning C4244: 'argument': conversion from 'double' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(123,152): warning C4244: '=': conversion from '_Rep' to 'long', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(123,152): warning C4244: '=': conversion from '_Rep' to 'long', possible loss of data
           with
           [
               _Rep=__int64
           ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(169,140): warning C4244: '=': conversion from '_Rep' to 'long', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(119,14): warning C4101: 'found': unreferenced local variable
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Mutations.h(12,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Mutations.h(35,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\CrossOvers.h(12,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\CrossOvers.h(67,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(43,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(46,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(52,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(55,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(77,18): warning C4244: 'initializing': conversion from '_Rep' to 'long', possible loss of data
           with
           [
               _Rep=__int64
           ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Mutations.h(12,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=int
-          ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Mutations.h(35,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=int
-          ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\CrossOvers.h(12,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=int
-          ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\CrossOvers.h(67,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=int
-          ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(43,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(46,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=int
-          ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(52,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(55,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(77,18): warning C4244: 'initializing': conversion from '_Rep' to 'long', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(81,131): warning C4244: '=': conversion from '_Rep' to 'long', possible loss of data
           with
           [
               _Rep=__int64
           ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(81,131): warning C4244: '=': conversion from '_Rep' to 'long', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(107,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(111,16): warning C4244: 'initializing': conversion from '_Rep' to 'int', possible loss of data
           with
           [
               _Rep=__int64
           ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(107,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(111,16): warning C4244: 'initializing': conversion from '_Rep' to 'int', possible loss of data
-          with
-          [
-              _Rep=__int64
-          ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(121,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(121,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\GreedyVechicleAlocation.h(12,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(69,63): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\GreedyVechicleAlocation.h(12,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(83,63): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(105,80): warning C4305: '=': truncation from '__int64' to '_Ty'
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(105,67): warning C4309: '=': truncation of constant value
   Generating code
-  4 of 712 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+  2 of 623 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  testC.vcxproj -> C:\Users\minec\Desktop\Praca-Inzynierska\testC\x64\Release\testC.exe
+  testC.vcxproj -> C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\x64\Release\testC.exe

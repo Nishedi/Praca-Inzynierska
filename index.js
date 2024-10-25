@@ -21,18 +21,32 @@ app.post('/run-script', async (req, res) => {
     const response = await fetch(url);
     const data = await response.json();
     console.log(data.distances[0].length+"|"+data.distances);
-    return;
-    const algorithResponse = await runScript(data.distances[0].length+"|2|"+data.distances);
-    const indices = algorithResponse.trim().split(" ");
-    const sortedLocations = indices.map(index => locations[index]);
-    // console.log(sortedLocations.length);
     // return;
-    res.send({sortedLocations});
-  }catch (error) {
-    console.error('Error fetching API:', error);
-    res.status(500).send('Error fetching API');
-  } 
-});
+    // const algorithResponse = await runScript(data.distances[0].length+"|2|"+data.distances);
+    // const indices = algorithResponse.trim().split(" ");
+    // const sortedLocations = indices.map(index => locations[index]);
+    // const sortedLocationsWithIndices = sortedLocations.map((location, i) => ({
+    //   location: location,
+    //   id: indices[i] // Dodajemy odpowiadający 'indices' jako 'id'
+    // }));
+    // doIt(sortedLocationsWithIndices);
+    const algorithmResponses = await runScript(data.distances[0].length+"|2|"+data.distances);
+    const algorithResponse = algorithmResponses.split("|");
+    const numberOfvehicles = algorithResponse[1];
+    const path = algorithResponse[0];
+    const splittedPath = path.split(/(?<!\d)0(?!\d)/);
+    if(splittedPath.length>numberOfvehicles){
+        splittedPath[0] = splittedPath[splittedPath.length - 1] + " " + splittedPath[0];
+        splittedPath.pop();
+    }
+    const result = splittedPath.map(subArray => subArray.trim().split(" ").map(index => locations[index]));
+    res.send({result});
+    
+    }catch (error) {
+      console.error('Error fetching API:', error);
+      res.status(500).send('Error fetching API');
+    } 
+  });
 
 
 const runScript = (message) => {

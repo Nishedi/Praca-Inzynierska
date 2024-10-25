@@ -1,105 +1,3 @@
-// import React, { useState } from 'react';
-// import './MainActivity.css';
-// import AutoCompleteInput from './AutoCompleteInput';
-// import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
-// import 'leaflet/dist/leaflet.css'; 
-// function MainActivity() {
-//     const [sugerowanaTrasa, setSugerowanaTrasa] = useState('');
-//     const [listOfLocations, setListOfLocations] = useState([
-//         // {
-//         //     lat: '17.021325',
-//         //     lng: '51.104418',
-//         //     name: 'Wrocław'
-//         // },
-//         // {
-//         //     lat: '19.021807',
-//         //     lng: '50.264798',
-//         //     name: 'Katowice'
-//         // },
-//         // {
-//         //     lat: '16.915342',
-//         //     lng: '52.407560',
-//         //     name: 'Poznań'
-//         // },
-//         // {
-//         //     lat: '19.469902',
-//         //     lng: '51.760327',
-//         //     name: 'Łódź'
-//         // }
-//     ]);
-//     const handleChange = (e, index) => {
-//         console.log(e.target.value);
-//         const newValues = [...listOfLocations];
-//         newValues[index] = e.target.value;
-//         setListOfLocations(newValues);
-//     };
-//     const handleAddInput = () => {
-//         if(listOfLocations.at(-1)==="") return; // Jeśli ostatni input jest pusty, nie dodajemy nowego
-//         setListOfLocations([...listOfLocations, {id: new Date()}]); // Dodajemy nowy pusty input
-//     };
-
-//     const remove = (id) => {
-//         setListOfLocations((prevListOfLocations) => prevListOfLocations.filter((location) => location.id !== id));
-//     };
-
-//     const [testInput, setTestInput] = useState('');
-
-//     const makeRequest = async () => {
-//         const message = listOfLocations;
-        
-//         const response = await fetch('http://localhost:3000/run-script', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({ message: message }),
-//         });
-//         const data = await response.json();
-//         setSugerowanaTrasa("Optymalna trasa: "+data.sortedLocations.map(location => location.name).join(' -> '));
-//     };
-//     return (
-//         <div className='flex-container'>
-//             {console.log(listOfLocations)}
-//             <button className='item' onClick={() => makeRequest(testInput)}>Run Script</button>
-          
-//             {listOfLocations.map((value, index) => (
-//                 <div key={value.id}>
-//                     {/* {console.log(value)}     */}
-//                     <AutoCompleteInput 
-//                         exercise={value} // Przekaż obiekt lokalizacji (lat, lng, name)
-//                         setSelectedExercises={setListOfLocations} // Ustaw nową listę lokalizacji
-//                         setItem={(location) => handleChange(location, index)} // Podmień cały obiekt
-//                         initialValue={value}  // Przekaż początkową wartość lokalizacji (obiekt z lat, lng, name)
-//                         remove={() => remove(value.id)} // Usuń lokalizację z listy
-//                         // inne opcje AutoCompleteInput...
-//                     />
-//                 </div>
-//             ))}
-//             {/* {listOfLocations.map((value, index) => (
-//                 <div>
-//                     {index}:{value.name}
-//                 </div>    
-//             ))} */}
-//             <button onClick={handleAddInput}>Add input</button>
-//             {sugerowanaTrasa && <div className='item'>{sugerowanaTrasa}</div>}
-//             <div>
-//             <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-//                 <TileLayer
-//                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//                 />
-//                 <Marker position={[51.505, -0.09]}>
-//                     <Popup>
-//                     A pretty CSS3 popup. <br /> Easily customizable.
-//                     </Popup>
-//                 </Marker>
-//             </MapContainer>
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default MainActivity;
 import React, { useState, useEffect } from 'react';
 import './MainActivity.css';
 import AutoCompleteInput from './AutoCompleteInput';
@@ -117,6 +15,16 @@ const defaultIcon = L.icon({
     iconAnchor: [12, 41], // Punkt zakotwiczenia, który wskazuje lokalizację
     popupAnchor: [1, -34], // Punkt zakotwiczenia dla popupu
     shadowSize: [41, 41]  // Rozmiar cienia
+});
+
+const baseIcon = L.icon({
+    iconUrl: markerIconPng,
+    shadowUrl: markerShadowPng,
+    color: 'red',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
 });
 
 function MainActivity() {
@@ -835,12 +743,12 @@ function MainActivity() {
         }
     ]);
     const [mapCenter] = useState([51.110307, 17.033225]);
-    const [routeCoordinates, setRouteCoordinates] = useState([]);
     const [isEditing, setIsEditing] = useState(true);
-    const [firstGroup, setFirstGroup] = useState([]);
-    const [secondGroup, setSecondGroup] = useState([]);
-    const [firstGroupRoute, setFirstGroupRoute] = useState([]);
-    const [secondGroupRoute, setSecondGroupRoute] = useState([]);
+    const colors = ['#08ff00', '#ff0800', '#fff700', '#00e8ff', '#00e8ff',
+        '#ff00f7', '#000000'];
+
+    const [groups, setGroups] = useState([]);
+    const [groupsRoute, setGroupsRoute] = useState([]);
 
     const handleChange = (e, index) => {
         const newValues = [...listOfLocations];
@@ -866,35 +774,15 @@ function MainActivity() {
             body: JSON.stringify({ message: message }),
         });
         const data = await response.json();
-        if (Array.isArray(data.sortedLocations)) {
-            setSugerowanaTrasa(data.sortedLocations);
-            setIsEditing(false);
+        if(data?.result){
+            const routes = [];
+            data.result.map((route, index) => {
+                route.unshift(listOfLocations[0]);
+                route.push(listOfLocations[0]);
+                routes.push(route);
 
-
-            const firstGroup = [];
-            const secondGroup = [];
-            let isSettingFirstGrup = true;
-            data.sortedLocations.forEach(location => {
-                if(isSettingFirstGrup){
-                    if (location.id !== listOfLocations[0].id)
-                        firstGroup.push(location);
-                    else{
-                        firstGroup.unshift(location);
-                        isSettingFirstGrup = false;
-                    }       
-                }else{
-                    if (location.id !== listOfLocations[0].id)
-                        secondGroup.push(location);
-                    else{
-                        secondGroup.unshift(location);
-                        isSettingFirstGrup = true;
-                    }
-                }
             });
-            setFirstGroup(firstGroup);
-            setSecondGroup(secondGroup);
-        } else {
-            console.error('sortedLocations is not an array:', data.sortedLocations);
+            setGroups(routes);
         }
     };
 
@@ -929,67 +817,37 @@ function MainActivity() {
         }
     };
 
-    const getRouteCoordinates = async() => {
-        if(sugerowanaTrasa.length < 2) return;
-        let allRoutes = [];
-        for(let i=0; i<sugerowanaTrasa.length; i++){
-            if(i+1 === sugerowanaTrasa.length){
-                const firstLocation = sugerowanaTrasa[i].others;
-                const secondLocation = sugerowanaTrasa[0].others;
-                const resp = await fetchRoute(firstLocation, secondLocation);
-                allRoutes.push(resp);
-            }else{
-                const firstLocation = sugerowanaTrasa[i].others;
-                const secondLocation = sugerowanaTrasa[i+1].others;
-                const resp = await fetchRoute(firstLocation, secondLocation);
-                allRoutes.push(resp);
-            }
-        }
-        setRouteCoordinates(allRoutes);
-    };
-
-    const getRouteCoordTest = async(group, setGroup) => {
+    const getRouteCoordTest = async(group) => {
         if(group.length < 2) return;
         let allRoutes = [];
-        for(let i=0; i<group.length; i++){
-            if(i+1 === group.length){
-                const firstLocation = group[i].others;
-                const secondLocation = group[0].others;
-                const resp = await fetchRoute(firstLocation, secondLocation);
-                allRoutes.push(resp);
-            }else{
-                const firstLocation = group[i].others;
-                const secondLocation = group[i+1].others;
-                const resp = await fetchRoute(firstLocation, secondLocation);
-                allRoutes.push(resp);
-            }
+        for(let i=0; i<group.length-1; i++){
+            const firstLocation = group[i].others;
+            const secondLocation = group[i+1].others;
+            const resp = await fetchRoute(firstLocation, secondLocation);
+            allRoutes.push(resp);
         }
-        setGroup(allRoutes);
+        return allRoutes;
     };
 
 
-
-
     useEffect(() => {
-        getRouteCoordinates();
-    }, [sugerowanaTrasa]);
-    
-    useEffect(() => {
-        getRouteCoordTest(firstGroup, setFirstGroupRoute);
-    }, [firstGroup]);
-
-    useEffect(() => {
-        getRouteCoordTest(secondGroup, setSecondGroupRoute);
-    }, [secondGroup]);
-
-    
+        const fetchRoutes = async () => {
+            const groupRoutes2 = [];
+            if (groups.length > 0) {
+                for (const group of groups) {
+                    const route = await getRouteCoordTest(group); 
+                    groupRoutes2.push(route);
+                }
+                setGroupsRoute(groupRoutes2);
+            }
+        };
+        fetchRoutes(); 
+    }, [groups]);    
 
     return (
         <>
-        {/* <h1 style={{display: 'flex', alignItems: 'center', color: 'white'}}>Kocham Amelkę 😊❤️</h1> */}
         <div className='flex-container'>
-        <div className={`grid-container ${listOfLocations.length > 8 ? listOfLocations.length > 16 ? 'three-columns' :'two-columns' : 'one-column'}`}>
-            {/* <div className='inputs'>  */}
+            <div className={`grid-container ${listOfLocations.length > 8 ? listOfLocations.length > 16 ? 'three-columns' :'two-columns' : 'one-column'}`}>
                 {listOfLocations.map((value, index) => (
                     <div key={value.id} onChange={()=>setIsEditing(true)}>
                         <AutoCompleteInput 
@@ -1017,26 +875,27 @@ function MainActivity() {
                     <>
                         {sugerowanaTrasa.map((location, index) => (
                             location?.others?.lat && location?.others?.lon ?
-                            <Marker key={index} position={[location?.others?.lat, location?.others?.lon]} icon={defaultIcon}>
+                            <Marker key={index} position={[location?.others?.lat, location?.others?.lon]} icon={index === 0 ? baseIcon: defaultIcon}>
                                 <Popup>{index+". "+location.location}</Popup>
                             </Marker> : null  )) }
                             <FitMapToBounds locations={sugerowanaTrasa} />
                     </>
                     :
                         <>
-                        {console.log(listOfLocations)}
                         {listOfLocations.map((location, index) => (
                             location?.others?.lat && location?.others?.lon ?
-                            <Marker key={index} position={[location?.others?.lat, location?.others?.lon]} icon={defaultIcon}>
+                            <Marker key={index} position={[location?.others?.lat, location?.others?.lon]} icon={index === 0 ? baseIcon: defaultIcon}>
                                 <Popup>{location.location}</Popup>
                             </Marker> : null  ))  }
                             <FitMapToBounds locations={listOfLocations} /> 
                         </>
                     }
-                    
-                    {routeCoordinates.length > 0 && !isEditing && <Polyline positions={routeCoordinates} color="blue" />}
-                    {/* {firstGroupRoute.length > 0 && !isEditing && <Polyline positions={firstGroupRoute} color="red" />} */}
-                    {/* {secondGroupRoute.length > 0 && !isEditing && <Polyline positions={secondGroupRoute} color="green" />} */}
+                    {groupsRoute.length > 0  && groupsRoute.map((route, routeIndex) => (
+                        route.map((coords, index) => (
+                            <Polyline key={index} positions={coords} color={colors[routeIndex]} />
+                        ))
+                    ))    
+                    }
                 </MapContainer>
             </div>
         </div>
