@@ -30,12 +30,17 @@ public:
 private:
 	vector<vector<int>> initializePopulation(int numberOfVechicles) {
 		vector<vector<int>> population(this->populationSize);
-		for (int i = 0; i < distancesSize; i++) {
-			population[i] = gm.generateInitialSolutionStartPoint(distancesSize, distances, i, numberOfVechicles);
-		}
-		for (int i = distancesSize; i < this->populationSize; i++) {
+		population[0] = gm.generateInitialSolutionStartPoint(distancesSize, distances, 0, numberOfVechicles);
+		for (int i = 1; i < this->populationSize; i++) {
 			population[i] = gm.generateInitialSolutionMutated(distancesSize, this->distances, (this->distancesSize + 151) * 191, numberOfVechicles);
-		}
+		}		
+		/*for (int j = 0; j < 1000; j += 100) {
+			for (int i = 0; i < population[j].size(); i++) {
+				std::cout << population[j][i] << " ";
+			}
+			std::cout << std::endl;
+		}*/
+		
 		return population;
 	}
 
@@ -47,13 +52,10 @@ private:
 			int randomIndex = distribution(generator);
 			tournament[i] = population[randomIndex];
 		}
-
 		int bestTourIndex = 0;
 		int bestTourDistance = gm.calculateTotalDistance(tournament[0], tournament[0].size(), distances);
-
 		for (int i = 1; i < tournamentSize; i++) {
 			int distance = gm.calculateTotalDistance(tournament[i], tournament[i].size(), distances);
-
 			if (distance < bestTourDistance) {
 				bestTourDistance = distance;
 				bestTourIndex = i;
@@ -63,8 +65,6 @@ private:
 	}
 
 public:
-
-
 	std::vector<int>  geneticSolve(std::vector<std::vector<int>> distances, int distancesSize, int maxTime, int mutationType, int crossoverType, double crossoverRate, double mutationRate, int numberOfVechicles) {
 		maxTime = maxTime * 1000;
 		int changes = 0;
@@ -73,7 +73,8 @@ public:
 		std::vector<int> times;
 		std::vector<int> bestResults;
 		times.push_back(0);
-		vector<int> bestTour(distancesSize+numberOfVechicles-1);
+		distancesSize = distancesSize + numberOfVechicles - 1;
+		vector<int> bestTour(distancesSize);
 		long startTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 		long currentTime;
 		vector<vector<int>> population = initializePopulation(numberOfVechicles);
@@ -85,21 +86,16 @@ public:
 			for (int i = 0; i < populationSize; i++) {
 				vector<int> first = selectParent(population);
 				vector<int> second = selectParent(population);
-				int iter = 0;
-				/*while (iter++ < 100 && std::equal(first.begin(), first.end(), second.begin())) {
-					second = selectParent(population);
-				}*/
-
 				vector<int> child;
 				if (std::equal(first.begin(), first.end(), second.begin())) {
 					child = cs.PMXCrossOver(first, second, distancesSize, 0);
 				}
 				else {
 					if (crossoverType == 0) child = cs.PMXCrossOver(first, second, distancesSize, crossoverRate);
-					if (crossoverType == 1) child = cs.orderCrossover(first, second, distancesSize, crossoverRate);
+					if (crossoverType == 1) child = cs.orderCrossover(first, second, distancesSize, crossoverRate, numberOfVechicles);
 				}
-				if (mutationType == 0)mt.insertionMutate(child, distancesSize, mutationRate);
-				if (mutationType == 1)mt.swapMutate(child, distancesSize, mutationRate);
+				/*if (mutationType == 0)mt.insertionMutate(child, distancesSize, mutationRate);
+				if (mutationType == 1)mt.swapMutate(child, distancesSize, mutationRate);*/
 				newPopulation[i] = child;
 			}
 			int lastBest = bestDistance;
@@ -117,15 +113,13 @@ public:
 						bestTour[j] = newPopulation[i][j];
 					}
 				}
-				if (distance < 2.5 * lastBest) {//test1
+				if (distance < 2.5 * lastBest) {
 					std::uniform_int_distribution<int> distribution(0, population.size() - 1);
 					int randomIndex = distribution(generator);
 					population[randomIndex] = newPopulation[i];
-				}
-				
+				}		
 			}
 		}
-		
 		return bestTour;
 	}
 

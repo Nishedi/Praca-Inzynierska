@@ -1,9 +1,55 @@
 #pragma once
 #include <vector>
 #include <chrono>
+#include <algorithm>
+#include <cmath> // dla funkcji abs()
 class GeneralMethods {
     int iter = 0;
 public:
+    int calculateTotalDistance(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {
+        int totalDistance = 0;
+        for (int i = 0; i < path.size() - 1; i++) {
+            int x = path[i];
+            int y = path[i + 1];
+            totalDistance += distances[x][y];
+
+        }
+        return totalDistance += distances[path[path.size() - 1]][path[0]];
+    }
+
+
+   /* int calculateTotalDistance(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {
+        int totalDistance = 0;
+        std::vector<int> truckDistances;  
+        int currentDistance = 0;
+        int max = 0;
+        for (int i = 0; i < path.size() - 1; i++) {
+            int x = path[i];
+            int y = path[i + 1];
+            currentDistance += distances[x][y];
+            if (currentDistance > max)max = currentDistance;
+            if (y == 0 || i == path.size() - 2) {
+                truckDistances.push_back(currentDistance);  
+                currentDistance = 0; 
+            }
+        }
+        for (int i = 0; i < path.size() - 1; i++) {
+            int x = path[i];
+            int y = path[i + 1];
+            totalDistance += distances[x][y];
+        }
+        totalDistance += distances[path[path.size() - 1]][path[0]];
+
+        int imbalancePenalty = 0;
+        int maxDistance = *max_element(truckDistances.begin(), truckDistances.end());
+        int minDistance = *min_element(truckDistances.begin(), truckDistances.end());
+
+        if (maxDistance - minDistance > max) {  
+            imbalancePenalty = maxDistance - minDistance;
+        }
+        return totalDistance+2*imbalancePenalty;
+    }*/
+
     std::vector<int> generateInitialSolution(int size, std::vector<std::vector<int>> distances, int numOfVechicles) {
         std::vector<int> firstSolution;
         int start = 0;
@@ -34,18 +80,9 @@ public:
             firstSolution.insert(firstSolution.begin() + (i*firstSolution.size()/numOfVechicles) + 2, 0);
         return firstSolution;
     }
-    int calculateTotalDistance(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {
-        int totalDistance = 0;
-        for (int i = 0; i < path.size() - 1; i++) {
-            int x = path[i];
-            int y = path[i + 1];
-            totalDistance += distances[x][y];
+    
 
-        }
-        return totalDistance += distances[path[path.size() - 1]][path[0]];
-    }
-
-    std::vector<int> generateInitialSolutionStartPoint(int size, std::vector<std::vector<int>> distances, int startpoint, int numberOfVechicles) {
+    std::vector<int> generateInitialSolutionStartPoint(int size, std::vector<std::vector<int>> distances, int startpoint, int numOfVechicles) {
         std::vector<int> firstSolution;
         int start = startpoint;
         int* visited = new int[size];
@@ -72,14 +109,14 @@ public:
             firstSolution.emplace_back(bestNextNode);
         }
         delete[] visited;
-        for (int i = 0; i < numberOfVechicles - 1; i++)
-            firstSolution.insert(firstSolution.begin() + std::rand() % firstSolution.size() + 1, 0);
+        for (int i = 1; i < numOfVechicles; i++)
+            firstSolution.insert(firstSolution.begin() + (i * firstSolution.size() / numOfVechicles) + 2, 0);
         return firstSolution;
     }
-    std::vector<int> generateInitialSolutionMutated(int size, std::vector<std::vector<int>> distances, int gennumber, int numberOfVechicles) {
+    std::vector<int> generateInitialSolutionMutated(int size, std::vector<std::vector<int>> distances, int gennumber, int numOfVechicles) {
         std::vector<int> firstSolution;
         srand(time(NULL) + (gennumber * 511512) * iter++);
-        int start = std::rand() % size;
+        int start = 0;
         int* visited = new int[size];
         for (int i = 0; i < size; i++)
             visited[i] = 0;
@@ -104,16 +141,24 @@ public:
         }
         delete[] visited;
         srand(time(NULL) + (gennumber * 511512) * iter++);
-        for (int i = 0; i < size; i++) {
-            int first = std::rand() % size;
-            int second = std::rand() % size;
-            while (second == first) second = std::rand() % size;
+        for (int i = 0; i < size*size; i++) {
+            int first = (rand() % (size - 1)) + 1;
+            int second = (rand() % (size - 1)) + 1;
+            while (first == second) {
+                second = (rand() % (size - 1)) + 1;
+            }
+            if (firstSolution[first] == 0) {
+                second = second + (rand() % 5 - 2);
+            }
+            else if (firstSolution[second] == 0) {
+                first = first + (rand() % 5 - 2);
+            }
             int swap = firstSolution[first];
             firstSolution[first] = firstSolution[second];
             firstSolution[second] = swap;
         }
-        for (int i = 0; i < numberOfVechicles - 1; i++)
-            firstSolution.insert(firstSolution.begin() + std::rand() % firstSolution.size() + 1, 0);
+        for (int i = 1; i < numOfVechicles; i++)
+            firstSolution.insert(firstSolution.begin() + (i * firstSolution.size() / numOfVechicles) + 1, 0);
         return firstSolution;
     }
     std::vector<int> generateRandomSolution(int size, std::vector<std::vector<int>> distances, int gennumber) {
@@ -122,7 +167,7 @@ public:
             firstSolution[i] = i;
         }
         srand(time(NULL) + (gennumber * 511512) * iter++);
-        for (int i = 0; i < 5 * size; i++) {
+        for (int i = 0; i < size * size; i++) {
             int first = std::rand() % size;
             int second = std::rand() % size;
             while (second == first) second = std::rand() % size;

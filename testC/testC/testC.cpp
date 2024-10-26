@@ -37,9 +37,6 @@ int bnb_run(int numOfCities, std::vector<std::vector<int>> distancesInt) {
 int ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbourType, int tabuSize, int numOfVechicles) {// neigh 2 - slabe
     TS* tabuSearch = new TS(numOfCities);
     std::vector<int> result = tabuSearch->tabuSearch(distances, numOfCities, tabuSize, 5, numOfCities, neighbourType, numOfVechicles);
-   /* for (int i = 0; i < result.size(); i++) {
-        std::cout << result[i] << " ";
-    }*/
     int res = 0;
     for (int i = 0; i < result.size() - 1; i++) {
         if (result[i] == 0 && result[i + 1] == 0) {
@@ -57,30 +54,33 @@ int ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbo
         res += distances[result[i]][result[i + 1]];
         std::cout << result[i] << " ";
     }
-    std::cout << result[result.size() - 1];
+    std::cout << result[result.size() - 1]<<" ";
     res += distances[result[result.size() - 1]][result[0]];
-    
-
     return res;
 }
 
 int genetic_run(int numOfCities, std::vector<std::vector<int>> distances, int numOfVechicles, int crossOverType) {
     Genetic* genetic = new Genetic(distances, numOfCities, 6000);
-    std::vector<int> result = genetic->geneticSolve(distances, numOfCities, 5, 0,crossOverType,0.8,0.1, numOfVechicles);
+    std::vector<int> result = genetic->geneticSolve(distances, numOfCities, 15, 0,crossOverType,0.8,0.1, numOfVechicles);
     int res = 0;
-    
-
+    for (int i = 0; i < result.size() - 1; i++) {
+        if (result[i] == 0 && result[i + 1] == 0) {
+            int swap = result[i + 2];
+            result[i + 2] = result[i + 1];
+            result[i + 1] = swap;
+        }
+    }
+    if (result[result.size() - 1] == 0) {
+        int swap = result[result.size() - 1];
+        result[result.size() - 1] = result[result.size() - 2];
+        result[result.size() - 2] = swap;
+    }
     for (int i = 0; i < result.size() - 1; i++) {
         res += distances[result[i]][result[i + 1]];
         std::cout << result[i]<<" ";
     }
-    std::cout << result[result.size()-1] << ":";
+    std::cout << result[result.size()-1] << " ";
     res += distances[result[result.size()-1]][result[0]];
-    
-
-
-    GeneralMethods gn;
-    gn.calculateTotalDistance(result, result.size(), distances);
     return res;
 }
 
@@ -111,9 +111,19 @@ int main(int argc, char* argv[]) {
         GreedyVechicleAllocation gva;
 
         int numberOfVechicles = gva.greedyVehicleAllocation(distancesInt);
-        numberOfVechicles = 2;
-        ts_run(numOfCities, distancesInt, 1, numOfCities, numberOfVechicles);
-        std::cout << "|" << numberOfVechicles;
+        //numberOfVechicles = 2;
+        bool test = false;
+        if (test) {
+            std::cout << ts_run(numOfCities, distancesInt, 1, numOfCities, numberOfVechicles);
+            std::cout << std::endl;
+            std::cout << genetic_run(numOfCities, distancesInt, numberOfVechicles, 1);
+            
+        }
+        else {
+            ts_run(numOfCities, distancesInt, 1, numOfCities, numberOfVechicles);
+            //genetic_run(numOfCities, distancesInt, numberOfVechicles, 1);
+            std::cout << "|" << numberOfVechicles;
+        }
     }
     //else {
     //    /*std::cout << "No argument provided! Loading example data" << std::endl;

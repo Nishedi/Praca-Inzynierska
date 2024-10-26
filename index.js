@@ -20,7 +20,7 @@ app.post('/run-script', async (req, res) => {
   try{
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data.distances[0].length+"|"+data.distances);
+    // console.log(data.distances[0].length+"|"+data.distances);
     // return;
     // const algorithResponse = await runScript(data.distances[0].length+"|2|"+data.distances);
     // const indices = algorithResponse.trim().split(" ");
