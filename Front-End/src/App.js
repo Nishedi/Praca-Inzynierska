@@ -3,29 +3,23 @@ import truckImage from './res/animated_truck.png';
 import wheelGear from './res/wheel_gear.png';
 import MainActivity from './MainActivity';
 import ReactDOM from "react-dom/client";
+import { GlobalProvider } from './GlobalContext'; 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-
-
+import MainPage from './MainPage/MainPage';
+import Login from './Login/Login';
+import Register from './Login/Register';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainActivity />} />
-      </Routes>
-    </BrowserRouter>
-    // <div>
-      
-    //   <img src={truckImage} alt="logo" />
-    //   <div className="center">
-    //     <p>In progress...</p>
-    //     <img src={wheelGear} className="rotating-image" alt="logo" />
-    //   </div>
-    //   <div className="center">
-    //     <MainActivity/>
-    //   </div> 
-    // </div>
+    <GlobalProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/mainpage" element={<MainPage />} />
+        </Routes>
+      </BrowserRouter>
+    </GlobalProvider>
   );
 }
 

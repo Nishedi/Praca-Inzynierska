@@ -1,0 +1,133 @@
+.background {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: #EEEEEE;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 10vh;
+    background: #214225;
+    color: #ffffff;
+    box-sizing: border-box; /* Uwzględnia padding w szerokości */
+}
+
+.title {
+    font-size: 16px;
+    font-family: 'Montserrat-SemiBold';
+    letter-spacing: 0.2em;
+    font-variant: small-caps;
+    width: 75%;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 1vh;
+    background: #214225;
+    color: #ffffff;
+    box-sizing: border-box; /* Uwzględnia padding w szerokości */
+    margin-top: auto; /* Przesuń stopkę na dół */
+}
+
+.loginSection {
+    display: flex;
+    align-items: center;     /* Wyśrodkowanie w pionie */
+    justify-content: center;
+    flex-direction: column;  /* Ustawienie dzieci w kolumnie */
+    width: 40%; 
+             /* Ustalona szerokość */
+    /* height: 50%;            Wysokość dostosowująca się do zawartości */
+    background: #FFF;
+    margin-top: auto;
+    border-radius: 30px;
+    padding: 20px 0px;
+    /* flex: 1;                 Umożliwia zajęcie dostępnej przestrzeni */
+}
+
+.name {
+    font-size: 32px;
+    font-family: 'Montserrat-SemiBold';
+    font-variant: small-caps;
+    margin: 20px 0px;
+}
+
+.wholeInput{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    width: 60%;
+    margin: 10px 0px;
+}
+
+.wholeInput input{
+    width: auto;
+    line-height: 1.5;
+    padding: 10px;
+    border: 1px solid #777;
+    border-radius: 8px;
+}
+
+.inputName{
+    color: #777;
+    font-size: 14px;
+    font-family: 'Poppins-Regular';
+}
+
+.login, .register:hover{
+    font-size: 14px;
+    font-family: 'Montserrat-Bold';
+    color: white;
+    background-color: #7D9F81;
+    border: 0px;
+    width: 60%;
+    border-radius: 10px;
+    padding: 10px 20px;
+    letter-spacing: 0.25em; 
+    text-transform: uppercase;
+    margin: 20px 0px;
+    border: 1px solid #7D9F81;
+}
+
+.register, .login:hover{
+    font-size: 14px;
+    font-family: 'Montserrat-Bold';
+    color: #7D9F81;
+    background-color: white;
+    border: 1px solid #7D9F81;
+    width: 60%;
+    border-radius: 10px;
+    padding: 10px 20px;
+    letter-spacing: 0.25em; 
+    text-transform: uppercase;
+    margin: 20px 0px;
+}
+
+.spacer{
+    border: 1px solid #777;
+    flex:1;;
+}
+
+.dontHaveAccount{
+    font-size: 14px;
+    font-family: 'Poppins-Regular';
+    color: #777;
+    margin: 20px 0px;
+}
+
+.dontHaveAccountContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin: 20px;
+}

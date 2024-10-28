@@ -1,0 +1,82 @@
+.background {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  /* max-width: 1920px;
+  min-width: 1280px; */
+  width: 100%;
+  background: #EEEEEE;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 75%;
+    height: 10vh;
+    background: #EEE;
+    color: #282c34;
+    box-sizing: border-box; /* Umożliwia uwzględnienie paddingu w szerokości */
+}
+
+.mainWritting{
+    display: flex;
+    justify-content: center;
+    background-color: #214225;
+    width: 100%;
+    height: auto;
+    font-size: 20px;
+    color: white;
+    padding: 20px 0px;
+    font-family: 'Montserrat-Bold';
+    letter-spacing: 0.12em; 
+    font-variant: small-caps;
+}
+
+.title{
+    font-size: 16px;
+    font-family: 'Montserrat-SemiBold';
+    text-transform: uppercase;
+    letter-spacing: 0.25em
+}
+
+.bookmark{
+    font-size: 14px;
+    font-family: 'Montserrat-Medium';
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    padding: 10px 20px;
+}
+
+.bookmark:hover{
+    background-color: #dddddd;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.bookmark:focus{
+    background-color: #f31919;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.login{
+    font-size: 14px;
+    font-family: 'Montserrat-Bold';
+    color: white;
+    background-color: #7D9F81;
+    border-radius: 10px;
+    padding: 10px 20px;
+    letter-spacing: 0.25em; 
+    text-transform: uppercase;
+}
+
+.bookmarks{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}

@@ -52,7 +52,6 @@ const AutoCompleteInput = ({ exercise, setSelectedExercises, remove}) => {
             <div className={styles.exercise_details}>
                 <div className={styles.wholeInput}>
                     <input
-                        className={styles.input}
                         type="text"
                         placeholder='Podaj lokalizację'
                         value={location}
@@ -72,7 +71,7 @@ const AutoCompleteInput = ({ exercise, setSelectedExercises, remove}) => {
                                         ))
                                     );
                                 }}
-                        className={styles.test} 
+                        className={styles.Xbutton} 
                     />
                     {isDropdownVisible && (
                     <div className={styles.suggestions}>

@@ -7,16 +7,17 @@
 }
 
 .exercise_details input{
-    
     padding: 10px;
     font-size: 1rem;
     line-height: 1.5;
     resize: vertical;
     overflow-wrap: break-word;
     font-family: 'Roboto-Regular';
-    border-radius: 6px;
-    border-color: #CCC;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: #77777750;
     border-width: 1px;
+    width: 280px;
 }  
   /* Style for individual suggestion items */
   .suggestion {
@@ -96,25 +97,35 @@
     align-items: center;
 }
 
-.test{
+.Xbutton{
     position: absolute; /* Absolutne pozycjonowanie przycisku */
     right: 10px; /* Odległość od prawego brzegu inputa */
     top: 35%; 
     font-size: 16px;
     scale: 3;
+    color: #00000050;
     /* transform: translateY(-50%);   */
 }
 
-.test:hover {
+.Xbutton:hover {
     
     transform: translateY(-2px); /* Lekko unosi przy najechaniu */
 }
 
-.test:active {
+.Xbutton:active {
     transform: translateY(0); /* Powrót do normalnej pozycji */
     color: #e40000;
 }
 
 .trash{
   scale: 1.5;
+  color: #00000050;
+}
+
+.trash:hover {
+  color: #e40000;
+}
+
+.trash:active {
+  color: #b3e400;
 }
