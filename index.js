@@ -12,6 +12,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/run-script', async (req, res) => {
+  const timeOfExecution = req.body.timeOfExecution;
+  const numberOfVehicles = req.body.numberOfvehicles;
   const locations = req.body.message;
   const dataForDistances= locations
   .map(location => `${location.others.lon},${location.others.lat}`) // Przekształcenie każdego obiektu w string
@@ -30,7 +32,7 @@ app.post('/run-script', async (req, res) => {
     //   id: indices[i] // Dodajemy odpowiadający 'indices' jako 'id'
     // }));
     // doIt(sortedLocationsWithIndices);
-    const algorithmResponses = await runScript(data.distances[0].length+"|2|"+data.distances);
+    const algorithmResponses = await runScript(timeOfExecution+"|"+data.distances[0].length+"|"+numberOfVehicles+"|"+data.distances);
     const algorithResponse = algorithmResponses.split("|");
     const numberOfvehicles = algorithResponse[1];
     const path = algorithResponse[0];
@@ -48,6 +50,43 @@ app.post('/run-script', async (req, res) => {
     } 
   });
 
+app.post('/suggest-vehicles', async (req, res) => {
+  const locations = req.body.message;
+  const dataForDistances= locations
+  .map(location => `${location.others.lon},${location.others.lat}`) // Przekształcenie każdego obiektu w string
+  .join(';');
+  const url = "http://localhost:5000/table/v1/driving/"+dataForDistances+"?annotations=distance";
+  try{
+    const response = await fetch(url);
+    const data = await response.json();
+    const numberOfvehicles= await getNumberOfVechicles(data.distances[0].length+"|"+data.distances);
+    res.send({numberOfvehicles});
+    
+    }
+    catch (error) {
+      console.error('Error fetching API:', error);
+      res.status(500).send('Error fetching API');
+    }
+  });
+
+const getNumberOfVechicles = (locations) => {
+  return new Promise((resolve, reject) => {
+    exec(`GreedyVechicleAllocation\\x64\\Release\\GreedyVechicleAllocation.exe "${locations}"`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${error.message}`);
+        reject(error); // Odrzuć obietnicę w przypadku błędu
+        return;
+      }
+      if (stderr) {
+        console.error(`Stderr: ${stderr}`);
+        reject(new Error(stderr)); // Odrzuć obietnicę w przypadku błędu w stderr
+        return;
+      }
+      console.log(`Output to co zwraca: ${stdout}`);
+      resolve(stdout); // Rozwiąż obietnicę z wynikiem
+    });
+  });
+};
 
 const runScript = (message) => {
   return new Promise((resolve, reject) => {

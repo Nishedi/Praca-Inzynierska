@@ -45,7 +45,7 @@ public:
         bestSolution = currentSolution;
         currentSolutionLength = gm.calculateTotalDistance(currentSolution, distancesSize, distances);
         bestSolutionLength = currentSolutionLength;
-        currentSolutionLength = gm.calculateTotalDistance(currentSolution, distancesSize, distances);     
+        /*currentSolutionLength = gm.calculateTotalDistance(currentSolution, distancesSize, distances);   */
         maxTime = maxTime * 1000;
         std::vector<Neigbor> tabuList;
         long startTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
@@ -84,6 +84,7 @@ public:
                 } 
             }
         }
+        //gm.calculateTotalDistance2(bestSolution, bestSolutionLength, distances);
         return bestSolution;
     }
 };

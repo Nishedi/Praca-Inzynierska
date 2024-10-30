@@ -6,7 +6,7 @@
 class GeneralMethods {
     int iter = 0;
 public:
-    int calculateTotalDistance(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {
+    /*int calculateTotalDistance(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {
         int totalDistance = 0;
         for (int i = 0; i < path.size() - 1; i++) {
             int x = path[i];
@@ -15,12 +15,11 @@ public:
 
         }
         return totalDistance += distances[path[path.size() - 1]][path[0]];
-    }
+    }*/
 
-
-   /* int calculateTotalDistance(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {
+    int calculateTotalDistance(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {
         int totalDistance = 0;
-        std::vector<int> truckDistances;  
+        std::vector<int> truckDistances;
         int currentDistance = 0;
         int max = 0;
         for (int i = 0; i < path.size() - 1; i++) {
@@ -29,8 +28,8 @@ public:
             currentDistance += distances[x][y];
             if (currentDistance > max)max = currentDistance;
             if (y == 0 || i == path.size() - 2) {
-                truckDistances.push_back(currentDistance);  
-                currentDistance = 0; 
+                truckDistances.push_back(currentDistance);
+                currentDistance = 0;
             }
         }
         for (int i = 0; i < path.size() - 1; i++) {
@@ -44,18 +43,51 @@ public:
         int maxDistance = *max_element(truckDistances.begin(), truckDistances.end());
         int minDistance = *min_element(truckDistances.begin(), truckDistances.end());
 
-        if (maxDistance - minDistance > max) {  
+        if (maxDistance - minDistance > minDistance/2) {
             imbalancePenalty = maxDistance - minDistance;
         }
-        return totalDistance+2*imbalancePenalty;
-    }*/
+        return totalDistance + 100 * imbalancePenalty;
+    } 
+    std::string calculateTotalDistance2(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {
+        int totalDistance = 0;
+        std::vector<int> truckDistances;
+        int currentDistance = 0;
+        int max = 0;
+        for (int i = 0; i < path.size() - 1; i++) {
+            int x = path[i];
+            int y = path[i + 1];
+            currentDistance += distances[x][y];
+            if (currentDistance > max)max = currentDistance;
+            if (y == 0 || i == path.size() - 2) {
+                truckDistances.push_back(currentDistance);
+                currentDistance = 0;
+            }
+        }
+        for (int i = 0; i < path.size() - 1; i++) {
+            int x = path[i];
+            int y = path[i + 1];
+            totalDistance += distances[x][y];
+        }
+        totalDistance += distances[path[path.size() - 1]][path[0]];
 
+        int imbalancePenalty = 0;
+        int maxDistance = *max_element(truckDistances.begin(), truckDistances.end());
+        int minDistance = *min_element(truckDistances.begin(), truckDistances.end());
+
+        if (maxDistance - minDistance > minDistance / 2) {
+            imbalancePenalty = maxDistance - minDistance;
+        }
+        return std::to_string(totalDistance) + " " + std::to_string(100*imbalancePenalty);
+    }
+        
+    
+   
     std::vector<int> generateInitialSolution(int size, std::vector<std::vector<int>> distances, int numOfVechicles) {
         std::vector<int> firstSolution;
         int start = 0;
         int* visited = new int[size];
         for (int i = 0; i < size; i++)
-            visited[i] = 0;
+            visited[i] = 0; 
         int allVisited = 0;
         int currentNode = start;
         firstSolution.emplace_back(start);
