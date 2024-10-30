@@ -772,7 +772,6 @@ function MainActivity() {
         setListOfLocations(newValues);
     };
     const handleAddInput = () => {
-        console.log(listOfLocations);
         if(listOfLocations.at(-1) === "") return; 
         setListOfLocations([...listOfLocations, {id: new Date()}]);
     };
@@ -782,7 +781,9 @@ function MainActivity() {
     };
 
     const getSuggestedNumberOfVehicles = async () => {
-        const message = listOfLocations;
+        const message = listOfLocations.filter(location => 
+            location.location && location.location.trim() !== ""
+        );
         const response = await fetch('http://localhost:3000/suggest-vehicles', {
             method: 'POST',
             headers: {
@@ -802,15 +803,11 @@ function MainActivity() {
     }, [listOfLocations.length]);
 
     const makeRequest = async () => {
-<<<<<<< HEAD
         setIsOptimizing(true);
+        setTimeLeft(timeOfExecution);
         const message = listOfLocations.filter(location => 
             location.location && location.location.trim() !== ""
         );
-=======
-        setTimeLeft(timeOfExecution);
-        const message = listOfLocations;
->>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
         const response = await fetch('http://localhost:3000/run-script', {
             method: 'POST',
             headers: {
@@ -920,16 +917,13 @@ function MainActivity() {
                     </div> 
                     <button className='addButton' onClick={handleAddInput}>Add input</button> 
                     
-<<<<<<< HEAD
                     <button
                         className='optymaliseButton'
                         onClick={() => makeRequest()}
                         disabled={isOptimizing}  // Przycisk będzie nieklikalny, gdy isOptimizing jest true
                         >
-                        {!isOptimizing ? 'Optymalizuj' : 'Trwa optymalizacja...'}
+                        {!isOptimizing ? 'Optymalizuj' : `Trwa optymalizacja...${timeLeft > 0 ? timeLeft: ''}`}
                         </button>
-=======
-                    <button className='optymaliseButton' onClick={() => makeRequest()}>Optymalizuj {timeLeft > 0 ? timeLeft:null}</button> 
                     <div style={{display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>
                         <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}} >
                             <div>Sugerowana liczba pojazdów: </div>
@@ -941,7 +935,6 @@ function MainActivity() {
                         </div>
                         
                     </div>
->>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
                 </div>
                 <div style={{ width: '100%', height: '700px', display: 'flex', flexDirection: 'column', gap: '30px', flex: '1' }}>
                     <MapContainer key={listOfLocations.length} center={mapCenter} zoom={13} scrollWheelZoom={false} style={{height: '600px', width: '100%' }}>
