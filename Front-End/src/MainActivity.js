@@ -76,49 +76,49 @@ function MainActivity() {
                 "place_id": "513eeb684ed7e9304059989130c24a334a40f00102f901fe4ffb1500000000c0020192030f4176656e69646120506f7a6e61c584"
             }
         },
-        // {
-        //     "id": "2024-10-19T15:06:28.712Z",
-        //     "location": "Wrocławska 41, 81-552 Gdynia, Poland",
-        //     "others": {
-        //         "datasource": {
-        //             "sourcename": "openstreetmap",
-        //             "attribution": "© OpenStreetMap contributors",
-        //             "license": "Open Database License",
-        //             "url": "https://www.openstreetmap.org/copyright"
-        //         },
-        //         "name": "Wrocławska 41",
-        //         "country": "Poland",
-        //         "country_code": "pl",
-        //         "state": "Pomeranian Voivodeship",
-        //         "city": "Gdynia",
-        //         "suburb": "Orłowo",
-        //         "lon": 18.536440421999213,
-        //         "lat": 54.4838659,
-        //         "district": "Orłowo",
-        //         "result_type": "amenity",
-        //         "postcode": "81-552",
-        //         "formatted": "Wrocławska 41, 81-552 Gdynia, Poland",
-        //         "address_line1": "Wrocławska 41",
-        //         "address_line2": "81-552 Gdynia, Poland",
-        //         "timezone": {
-        //             "name": "Europe/Warsaw",
-        //             "offset_STD": "+01:00",
-        //             "offset_STD_seconds": 3600,
-        //             "offset_DST": "+02:00",
-        //             "offset_DST_seconds": 7200,
-        //             "abbreviation_STD": "CET",
-        //             "abbreviation_DST": "CEST"
-        //         },
-        //         "plus_code": "9F6WFGMP+GH",
-        //         "plus_code_short": "FGMP+GH Gdynia, Pomeranian Voivodeship, Poland",
-        //         "rank": {
-        //             "importance": 0.10667666666666664,
-        //             "confidence": 0.6666666666666666,
-        //             "match_type": "full_match"
-        //         },
-        //         "place_id": "5133bdd428548932405926135c51ef3d4b40f00102f90180ce2f4700000000c0020192030e57726f63c5826177736b61203431"
-        //     }
-        // },
+        {
+            "id": "2024-10-19T15:06:28.712Z",
+            "location": "Wrocławska 41, 81-552 Gdynia, Poland",
+            "others": {
+                "datasource": {
+                    "sourcename": "openstreetmap",
+                    "attribution": "© OpenStreetMap contributors",
+                    "license": "Open Database License",
+                    "url": "https://www.openstreetmap.org/copyright"
+                },
+                "name": "Wrocławska 41",
+                "country": "Poland",
+                "country_code": "pl",
+                "state": "Pomeranian Voivodeship",
+                "city": "Gdynia",
+                "suburb": "Orłowo",
+                "lon": 18.536440421999213,
+                "lat": 54.4838659,
+                "district": "Orłowo",
+                "result_type": "amenity",
+                "postcode": "81-552",
+                "formatted": "Wrocławska 41, 81-552 Gdynia, Poland",
+                "address_line1": "Wrocławska 41",
+                "address_line2": "81-552 Gdynia, Poland",
+                "timezone": {
+                    "name": "Europe/Warsaw",
+                    "offset_STD": "+01:00",
+                    "offset_STD_seconds": 3600,
+                    "offset_DST": "+02:00",
+                    "offset_DST_seconds": 7200,
+                    "abbreviation_STD": "CET",
+                    "abbreviation_DST": "CEST"
+                },
+                "plus_code": "9F6WFGMP+GH",
+                "plus_code_short": "FGMP+GH Gdynia, Pomeranian Voivodeship, Poland",
+                "rank": {
+                    "importance": 0.10667666666666664,
+                    "confidence": 0.6666666666666666,
+                    "match_type": "full_match"
+                },
+                "place_id": "5133bdd428548932405926135c51ef3d4b40f00102f90180ce2f4700000000c0020192030e57726f63c5826177736b61203431"
+            }
+        },
         {
             "id": "2024-10-19T15:06:39.669Z",
             "location": "Centrostal-Wrocław SA Oddział w Płocku, Kobiałka 7B, 09-411 Płock, Poland",
@@ -750,6 +750,21 @@ function MainActivity() {
 
     const [groups, setGroups] = useState([]);
     const [groupsRoute, setGroupsRoute] = useState([]);
+    const [numberOfvehicles, setNumberOfVehicles] = useState(1);
+    const [timeLeft, setTimeLeft] = useState(0);
+    const [timeOfExecution, setTimeOfExecution] = useState(10);
+
+    useEffect(() => {
+        if (timeLeft <= 0) {
+            return;
+        }
+
+        const interval = setInterval(() => {
+            setTimeLeft(prevTime => prevTime - 1); 
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [timeLeft]);
 
     const handleChange = (e, index) => {
         const newValues = [...listOfLocations];
@@ -766,17 +781,42 @@ function MainActivity() {
         setListOfLocations((prevListOfLocations) => prevListOfLocations.filter((location) => location.id !== id));
     };
 
-    const makeRequest = async () => {
-        setIsOptimizing(true);
-        const message = listOfLocations.filter(location => 
-            location.location && location.location.trim() !== ""
-        );
-        const response = await fetch('http://localhost:3000/run-script', {
+    const getSuggestedNumberOfVehicles = async () => {
+        const message = listOfLocations;
+        const response = await fetch('http://localhost:3000/suggest-vehicles', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ message: message }),
+        });
+        const data = await response.json();
+        if(data?.numberOfvehicles){
+            console.log(data);
+            setNumberOfVehicles(data.numberOfvehicles);
+        } 
+    };
+
+    useEffect(() => {
+        getSuggestedNumberOfVehicles();
+    }, [listOfLocations.length]);
+
+    const makeRequest = async () => {
+<<<<<<< HEAD
+        setIsOptimizing(true);
+        const message = listOfLocations.filter(location => 
+            location.location && location.location.trim() !== ""
+        );
+=======
+        setTimeLeft(timeOfExecution);
+        const message = listOfLocations;
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
+        const response = await fetch('http://localhost:3000/run-script', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: message, numberOfvehicles: numberOfvehicles, timeOfExecution: timeOfExecution }),
         });
         const data = await response.json();
         if(data?.result){
@@ -880,6 +920,7 @@ function MainActivity() {
                     </div> 
                     <button className='addButton' onClick={handleAddInput}>Add input</button> 
                     
+<<<<<<< HEAD
                     <button
                         className='optymaliseButton'
                         onClick={() => makeRequest()}
@@ -887,6 +928,20 @@ function MainActivity() {
                         >
                         {!isOptimizing ? 'Optymalizuj' : 'Trwa optymalizacja...'}
                         </button>
+=======
+                    <button className='optymaliseButton' onClick={() => makeRequest()}>Optymalizuj {timeLeft > 0 ? timeLeft:null}</button> 
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}} >
+                            <div>Sugerowana liczba pojazdów: </div>
+                            <div>Czas działania: </div>
+                        </div>
+                        <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}} >
+                            <input type="number" value={numberOfvehicles} onChange={(e) => setNumberOfVehicles(e.target.value)} />
+                            <input type="number" value={timeOfExecution} onChange={(e) => setTimeOfExecution(e.target.value)} />
+                        </div>
+                        
+                    </div>
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
                 </div>
                 <div style={{ width: '100%', height: '700px', display: 'flex', flexDirection: 'column', gap: '30px', flex: '1' }}>
                     <MapContainer key={listOfLocations.length} center={mapCenter} zoom={13} scrollWheelZoom={false} style={{height: '600px', width: '100%' }}>
@@ -923,8 +978,21 @@ function MainActivity() {
                     </MapContainer>
                     <button className='saveRoute'>Zapisz trasę</button> 
                 </div>
+                
             </div>
-            
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+                {groups.length > 0  && groups.map((route, routeIndex) => (
+                        <div>
+                            {route.map((coords, index) => (
+                                <div>
+                                    {coords.location}
+                                </div>
+                            ))}
+                        </div>
+                            
+                        ))    
+                        }
+                </div>
         </>
     );
 }

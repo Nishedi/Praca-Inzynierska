@@ -1,4 +1,5 @@
 ﻿  testC.cpp
+<<<<<<< HEAD
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(122,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(147,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(173,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
@@ -6,64 +7,106 @@ C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(20,33): warni
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(41,1): warning C4305: 'initializing': truncation from '__int64' to 'int'
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(41,34): warning C4309: 'initializing': truncation of constant value
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(51,24): warning C4244: 'initializing': conversion from '_Rep' to 'long', possible loss of data
+=======
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(149,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(174,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\GeneralMethods.h(200,26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(20,33): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(41,1): warning C4305: 'initializing': truncation from '__int64' to 'int'
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(41,34): warning C4309: 'initializing': truncation of constant value
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(51,24): warning C4244: 'initializing': conversion from '_Rep' to 'long', possible loss of data
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
           with
           [
               _Rep=__int64
           ]
+<<<<<<< HEAD
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\TS.h(54,152): warning C4244: '=': conversion from '_Rep' to 'long', possible loss of data
+=======
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\TS.h(54,152): warning C4244: '=': conversion from '_Rep' to 'long', possible loss of data
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
           with
           [
               _Rep=__int64
           ]
+<<<<<<< HEAD
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Mutations.h(12,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+=======
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Mutations.h(12,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
           with
           [
               _Ty=int
           ]
-C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Mutations.h(35,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Mutations.h(35,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\CrossOvers.h(12,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\CrossOvers.h(12,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\CrossOvers.h(67,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\CrossOvers.h(67,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
+<<<<<<< HEAD
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(48,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(51,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+=======
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(48,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(51,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
           with
           [
               _Ty=int
           ]
+<<<<<<< HEAD
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(56,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(58,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(78,18): warning C4244: 'initializing': conversion from '_Rep' to 'long', possible loss of data
+=======
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(56,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(58,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(78,18): warning C4244: 'initializing': conversion from '_Rep' to 'long', possible loss of data
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
           with
           [
               _Rep=__int64
           ]
+<<<<<<< HEAD
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(82,131): warning C4244: '=': conversion from '_Rep' to 'long', possible loss of data
+=======
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(82,131): warning C4244: '=': conversion from '_Rep' to 'long', possible loss of data
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
           with
           [
               _Rep=__int64
           ]
+<<<<<<< HEAD
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(103,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(107,16): warning C4244: 'initializing': conversion from '_Rep' to 'int', possible loss of data
+=======
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(103,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(107,16): warning C4244: 'initializing': conversion from '_Rep' to 'int', possible loss of data
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
           with
           [
               _Rep=__int64
           ]
+<<<<<<< HEAD
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(117,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+=======
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(117,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
           with
           [
               _Ty=int
           ]
+<<<<<<< HEAD
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\GreedyVechicleAlocation.h(12,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(105,80): warning C4305: '=': truncation from '__int64' to '_Ty'
           with
@@ -72,3 +115,10 @@ C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(105,80):
           ]
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(105,67): warning C4309: '=': truncation of constant value
   testC.vcxproj -> C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\x64\Debug\testC.exe
+=======
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\Genetic.h(123,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\GreedyVechicleAlocation.h(12,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(61,88): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\minec\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(115,34): warning C4101: 'gva': unreferenced local variable
+  testC.vcxproj -> C:\Users\minec\Desktop\Praca-Inzynierska\testC\x64\Debug\testC.exe
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95

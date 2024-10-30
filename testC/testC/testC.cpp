@@ -8,6 +8,7 @@
 #include <fstream>
 #include "Genetic.h"
 #include "GreedyVechicleAlocation.h"
+#include <limits>
 
 
 std::vector<std::string> split(const std::string& str, char delimiter) {
@@ -34,7 +35,7 @@ int bnb_run(int numOfCities, std::vector<std::vector<int>> distancesInt) {
 
 }
 
-int ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbourType, int tabuSize, int numOfVechicles) {// neigh 2 - slabe
+std::string ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbourType, int tabuSize, int numOfVechicles) {// neigh 2 - slabe
     TS* tabuSearch = new TS(numOfCities);
     std::vector<int> result = tabuSearch->tabuSearch(distances, numOfCities, tabuSize, 10, numOfCities, neighbourType, numOfVechicles);
     int res = 0;
@@ -56,12 +57,18 @@ int ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbo
     }
     std::cout << result[result.size() - 1]<<" ";
     res += distances[result[result.size() - 1]][result[0]];
-    return res;
+    GeneralMethods gm;
+    std::string resultstr = gm.calculateTotalDistance2(result, result.size(), distances);
+    return resultstr;
 }
 
 int genetic_run(int numOfCities, std::vector<std::vector<int>> distances, int numOfVechicles, int crossOverType) {
     Genetic* genetic = new Genetic(distances, numOfCities, 6000);
+<<<<<<< HEAD
     std::vector<int> result = genetic->geneticSolve(distances, numOfCities, 10, 0,crossOverType,0.8,0.1, numOfVechicles);
+=======
+    std::vector<int> result = genetic->geneticSolve(distances, numOfCities, 20, 0,crossOverType,0.8,0.1, numOfVechicles);
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
     int res = 0;
     for (int i = 0; i < result.size() - 1; i++) {
         if (result[i] == 0 && result[i + 1] == 0) {
@@ -90,10 +97,11 @@ int main(int argc, char* argv[]) {
         std::string input = argv[1];
         char delimiter = '|';
         std::vector<std::string> parts = split(input, delimiter);
-        int numOfCities = std::stoi(parts[0]);
-        int numOfVechicles = std::stoi(parts[1]);
+        int timeOfExecution = std::stoi(parts[0]);
+        int numOfCities = std::stoi(parts[1]);
+        int numOfVechicles = std::stoi(parts[2]);
         char separator = ',';
-        std::vector<std::string> distances = split(parts[2], separator);
+        std::vector<std::string> distances = split(parts[3], separator);
         std::vector<std::vector<int>> distancesInt(numOfCities, std::vector<int>(numOfCities, 0));
 
         for (int i = 0; i < distances.size(); i++) {
@@ -102,7 +110,7 @@ int main(int argc, char* argv[]) {
         }
         for (int i = 0; i < distancesInt.size(); i++) {
             for (int j = 0; j < distancesInt.size(); j++) {
-                if (distancesInt[i][j] == 0) distancesInt[i][j] = 9999999999999;
+                if (distancesInt[i][j] == 0) distancesInt[i][j] = std::numeric_limits<int>::max();
                 //std::cout << distancesInt[i][j] << " ";
             }
             //std::cout << std::endl;
@@ -110,7 +118,12 @@ int main(int argc, char* argv[]) {
 
         GreedyVechicleAllocation gva;
 
+<<<<<<< HEAD
         int numberOfVechicles = gva.greedyVehicleAllocation(distancesInt);
+=======
+        int numberOfVechicles = numOfVechicles;
+        //numberOfVechicles = 2;
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
         bool test = false;
         if (test) {
             std::cout << ts_run(numOfCities, distancesInt, 1, numOfCities, numberOfVechicles);
@@ -119,9 +132,15 @@ int main(int argc, char* argv[]) {
             
         }
         else {
+<<<<<<< HEAD
             //ts_run(numOfCities, distancesInt, 1, 2*numOfCities, numberOfVechicles);
             genetic_run(numOfCities, distancesInt, numberOfVechicles, 1);
             std::cout << "|" << numberOfVechicles;
+=======
+            std::string x = ts_run(numOfCities, distancesInt, 1, 100* numOfCities, numberOfVechicles);
+            //genetic_run(numOfCities, distancesInt, numberOfVechicles, 1);
+            std::cout << "|" << numberOfVechicles<<"|"<<x;
+>>>>>>> bbddb97f4d6746b943b7d3b2ee4baa175fabbc95
         }
     }
     //else {

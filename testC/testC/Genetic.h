@@ -120,6 +120,7 @@ public:
 				}		
 			}
 		}
+		gm.calculateTotalDistance2(bestTour, bestTour.size(), distances);
 		return bestTour;
 	}
 
