@@ -34,7 +34,7 @@ private:
 		for (int i = 1; i < this->populationSize; i++) {
 			population[i] = gm.generateInitialSolutionMutated(distancesSize, this->distances, (this->distancesSize + 151) * 191, numberOfVechicles);
 		}		
-		/*for (int j = 0; j < 1000; j += 100) {
+		/*for (int j = 0; j < population.size(); j += 100) {
 			for (int i = 0; i < population[j].size(); i++) {
 				std::cout << population[j][i] << " ";
 			}

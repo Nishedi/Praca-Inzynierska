@@ -50,6 +50,7 @@
     margin-top: auto;
     border-radius: 30px;
     padding: 20px 0px;
+    max-width: 550px;
     /* flex: 1;                 Umożliwia zajęcie dostępnej przestrzeni */
 }
 

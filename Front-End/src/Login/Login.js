@@ -15,7 +15,7 @@ const Login = () => {
         })
         if(data){
             console.log(data);
-            // navigate('/mainpage');
+            navigate('/mainpage');
         }
     }
 

@@ -36,7 +36,7 @@ int bnb_run(int numOfCities, std::vector<std::vector<int>> distancesInt) {
 
 int ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbourType, int tabuSize, int numOfVechicles) {// neigh 2 - slabe
     TS* tabuSearch = new TS(numOfCities);
-    std::vector<int> result = tabuSearch->tabuSearch(distances, numOfCities, tabuSize, 5, numOfCities, neighbourType, numOfVechicles);
+    std::vector<int> result = tabuSearch->tabuSearch(distances, numOfCities, tabuSize, 10, numOfCities, neighbourType, numOfVechicles);
     int res = 0;
     for (int i = 0; i < result.size() - 1; i++) {
         if (result[i] == 0 && result[i + 1] == 0) {
@@ -61,7 +61,7 @@ int ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbo
 
 int genetic_run(int numOfCities, std::vector<std::vector<int>> distances, int numOfVechicles, int crossOverType) {
     Genetic* genetic = new Genetic(distances, numOfCities, 6000);
-    std::vector<int> result = genetic->geneticSolve(distances, numOfCities, 15, 0,crossOverType,0.8,0.1, numOfVechicles);
+    std::vector<int> result = genetic->geneticSolve(distances, numOfCities, 10, 0,crossOverType,0.8,0.1, numOfVechicles);
     int res = 0;
     for (int i = 0; i < result.size() - 1; i++) {
         if (result[i] == 0 && result[i + 1] == 0) {
@@ -111,7 +111,6 @@ int main(int argc, char* argv[]) {
         GreedyVechicleAllocation gva;
 
         int numberOfVechicles = gva.greedyVehicleAllocation(distancesInt);
-        //numberOfVechicles = 2;
         bool test = false;
         if (test) {
             std::cout << ts_run(numOfCities, distancesInt, 1, numOfCities, numberOfVechicles);
@@ -120,8 +119,8 @@ int main(int argc, char* argv[]) {
             
         }
         else {
-            ts_run(numOfCities, distancesInt, 1, numOfCities, numberOfVechicles);
-            //genetic_run(numOfCities, distancesInt, numberOfVechicles, 1);
+            //ts_run(numOfCities, distancesInt, 1, 2*numOfCities, numberOfVechicles);
+            genetic_run(numOfCities, distancesInt, numberOfVechicles, 1);
             std::cout << "|" << numberOfVechicles;
         }
     }
