@@ -6,6 +6,7 @@ import L from 'leaflet'; // Importujemy Leaflet do niestandardowej ikony
 import 'leaflet/dist/leaflet.css';
 import markerIconPng from 'leaflet/dist/images/marker-icon.png'; // Import domyślnego markera
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png'; // Import cienia markera
+import { FaTruck } from "react-icons/fa";
 
 // Ustawienie ikony markera
 const defaultIcon = L.icon({
@@ -753,6 +754,7 @@ function MainActivity() {
     const [numberOfvehicles, setNumberOfVehicles] = useState(1);
     const [timeLeft, setTimeLeft] = useState(0);
     const [timeOfExecution, setTimeOfExecution] = useState(10);
+    const [activeRoute, setActiveRoute] = useState(null);   
 
     useEffect(() => {
         if (timeLeft <= 0) {
@@ -973,12 +975,17 @@ function MainActivity() {
                 </div>
                 
             </div>
-            <div style={{display: 'flex', flexDirection: 'row'}}>
+            <div className='routesList'>
                 {groups.length > 0  && groups.map((route, routeIndex) => (
-                        <div>
+                        <div className='routeList'>
+                            <div className='emoticoneDiv'>
+                                <FaTruck style={{color: colors[routeIndex]}}/>
+                            </div>
+                            
                             {route.map((coords, index) => (
-                                <div>
-                                    {coords.location}
+                                <div style={index === 0 || index === route.length-1? { fontWeight: 'bold' } : {}}>
+                                    
+                                    {index}. {coords.location}
                                 </div>
                             ))}
                         </div>
