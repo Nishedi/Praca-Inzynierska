@@ -1,38 +1,39 @@
-import styles from './MainPage.module.css';
-import MainActivity from '../MainActivity';
+import styles from './YourProfile.module.css';
 import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../GlobalContext';
 import { useNavigate } from 'react-router-dom';
-
-const MainPage = () => {
+const YourProfile = () => {
     const {supabase} = useContext(GlobalContext);
-    const [isLogged, setIsLogged] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
         const checkUser = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             const id = session?.user?.id;
-            if (id) {
-                setIsLogged(true);
+            if (!id) {
+                navigate("/");
             }
         }
         checkUser();
     }, []);
-       
+
     const logOut = async () => {
         let { error } = await supabase.auth.signOut()
         if (error) {
             console.log(error);
         }
         else {
-            setIsLogged(false);
+            navigate("/mainpage");
         }
     }
 
-    const onYourProfileClick = () => {
-        navigate("/yourprofile");
+    const onOptimalizeRouteClick = () => {
+        navigate("/mainpage");
     };
-    
+
+    const onYourRoutesClick = () => {
+        navigate("/savedroutes");
+    };
+
     return (
         <div className={styles.background}>
             <div className={styles.navbar}>
@@ -43,32 +44,22 @@ const MainPage = () => {
                     <div className={styles.bookmark}>
                         O nas
                     </div>
-                    {isLogged && 
-                    <>
-                        <div onClick={()=>navigate("/savedroutes")} className={styles.bookmark}>
-                            Twoje trasy
-                        </div>
-                        <div onClick={onYourProfileClick} className={styles.bookmark}>
-                            Twój profil
-                        </div>
-                        <div onClick={logOut} className={styles.login}>
-                        Wyloguj
-                        </div>
-                    </>
-                    }
-                    {!isLogged && 
-                    <div onClick={()=>navigate("/")} className={styles.login}>
-                        Zaloguj
+                    <div onClick={onOptimalizeRouteClick} className={styles.bookmark}>
+                        Optymalizuj trasę
                     </div>
-                    }
+                    <div onClick={onYourRoutesClick} className={styles.bookmark}>
+                        Twoje trasy
+                    </div>
+                    <div onClick={logOut} className={styles.login}>
+                        Wyloguj
+                    </div>
                 </div>
             </div>
             <div className={styles.mainWritting}>
-                Wprowadź lokalizacje
+                Twój profil
             </div>
-            <MainActivity/>
         </div>
     );
 }
 
-export default MainPage;    
+export default YourProfile;    

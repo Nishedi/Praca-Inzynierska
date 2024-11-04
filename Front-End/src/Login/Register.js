@@ -8,23 +8,49 @@ const Register = () => {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
+    const [numberOfVehicles, setNumberOfVehicles] = useState("");
     const navigate = useNavigate();
+   
     const tryRegister = async () => {
         let { data, error } = await supabase.auth.signUp({
-            email: 'minecraftkonrad872@gmail.com',
+            // email: 'minecraftkonrad872@gmail.com',
+            // password: 'TestCzemu!123'
+            email: '263948@student.pwr.edu.pl',
             password: 'TestCzemu!123'
-        })
-        if(data){
-            console.log(data);
-            const { data2, error } = await supabase
+        });
+    
+        if (error) {
+            console.error('Error during sign-up:', error);
+            return;
+        }
+    
+        if (data?.user) {
+            // Bezpośrednio po rejestracji użyj data.user, a nie session
+            const id = data.user.id;
+            console.log('User ID:', data?.user?.id);
+    
+            const { data: data2, error: insertError } = await supabase
                 .from('users_details')
                 .insert([
-                    { test: 'someValue' },
+                    {
+                        user_id: id,
+                        test: 'someValue'
+                    }
                 ])
-                .select()
-            // navigate('/mainpage');
+                .select();
+    
+            if (insertError) {
+                console.error('Error inserting user details:', insertError);
+            } else {
+                console.log('User details inserted:', data2);
+            }
+    
+            navigate('/mainpage');
         }
-    }
+    };
+    
 
     const loginClick = () => {
         navigate('/');
@@ -58,6 +84,24 @@ const Register = () => {
                         Powtórz hasło
                     </div>
                     <input value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} type="password" placeholder="Powtórz hasło" className={styles.input}/>
+                </div>
+                <div className={styles.wholeInput}>
+                    <div className={styles.inputName}>
+                        Imię
+                    </div>
+                    <input value={name} type="text" placeholder="Podaj imię" className={styles.input}/>
+                </div>
+                <div className={styles.wholeInput}>
+                    <div className={styles.inputName}>
+                        Nazwisko
+                    </div>
+                    <input value={surname} type="text" placeholder="Podaj nazwisko" className={styles.input}/>
+                </div>
+                <div className={styles.wholeInput}>
+                    <div className={styles.inputName}>
+                        Liczba pojazdów
+                    </div>
+                    <input  value={numberOfVehicles} onChange={(e)=>setNumberOfVehicles(e.target.value)} type="number" placeholder="Liczba pojadów" className={styles.input}/>
                 </div>
                 <button className={styles.login} onClick={tryRegister}> Zarejestruj </button>
                 <div className={styles.dontHaveAccountContainer}>
