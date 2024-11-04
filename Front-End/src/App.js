@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from './MainPage/MainPage';
 import Login from './Login/Login';
 import Register from './Login/Register';
+import SavedRoutes from './SavedRoutes/SavedRoutes';
+import SavedRouteView from './SavedRoutes/SavedRouteView';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/mainpage" element={<MainPage />} />
+          <Route path="/savedroutes" element={<SavedRoutes />} />
+          <Route path="/savedroute/:id" element={<SavedRouteView />} />
         </Routes>
       </BrowserRouter>
     </GlobalProvider>

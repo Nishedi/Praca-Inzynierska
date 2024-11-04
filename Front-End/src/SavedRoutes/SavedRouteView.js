@@ -1,34 +1,50 @@
-import styles from './MainPage.module.css';
-import MainActivity from '../MainActivity';
+import styles from './SavedRoutes.module.css';
 import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../GlobalContext';
 import { useNavigate } from 'react-router-dom';
-
-const MainPage = () => {
+import SavedRoute from './SavedRoute';
+const SavedRouteView = () => {
     const {supabase} = useContext(GlobalContext);
-    const [isLogged, setIsLogged] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
         const checkUser = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             const id = session?.user?.id;
-            if (id) {
-                setIsLogged(true);
+            if (!id) {
+                navigate("/");
             }
         }
         checkUser();
     }, []);
-       
+
     const logOut = async () => {
         let { error } = await supabase.auth.signOut()
         if (error) {
             console.log(error);
         }
         else {
-            setIsLogged(false);
+            navigate("/mainpage");
         }
     }
-    
+
+    const [routes, setRoutes] = useState([]);
+
+    const getAllRoutes = async () => {
+        const { data, error } = await supabase
+            .from('saved_routes')
+            .select('*')
+        if (error) {
+            console.log(error);
+        }
+        else {
+            setRoutes(data);
+        }
+    }
+
+    useEffect(() => {
+        getAllRoutes();
+    }, []);
+
     return (
         <div className={styles.background}>
             <div className={styles.navbar}>
@@ -39,32 +55,23 @@ const MainPage = () => {
                     <div className={styles.bookmark}>
                         O nas
                     </div>
-                    {isLogged && 
-                    <>
-                        <div onClick={()=>navigate("/savedroutes")} className={styles.bookmark}>
-                            Twoje trasy
-                        </div>
-                        <div className={styles.bookmark}>
-                            Twój profil
-                        </div>
-                        <div onClick={logOut} className={styles.login}>
-                        Wyloguj
-                        </div>
-                    </>
-                    }
-                    {!isLogged && 
-                    <div onClick={()=>navigate("/")} className={styles.login}>
-                        Zaloguj
+                    <div className={styles.bookmark}>
+                        Optymalizuj trasę
                     </div>
-                    }
+                    <div className={styles.bookmark}>
+                        Twój profil
+                    </div>
+                    <div onClick={logOut} className={styles.login}>
+                        Wyloguj
+                    </div>
                 </div>
             </div>
             <div className={styles.mainWritting}>
                 Wprowadź lokalizacje
             </div>
-            <MainActivity/>
+            <SavedRoute/>
         </div>
     );
 }
 
-export default MainPage;    
+export default SavedRouteView;    

@@ -73,6 +73,13 @@
     padding: 10px 20px;
     letter-spacing: 0.25em; 
     text-transform: uppercase;
+    border: 1px solid #7D9F81;
+}
+
+.login:hover{
+    color: #7D9F81;
+    background-color: white;
+    border: 1px solid #7D9F81;
 }
 
 .bookmarks{
