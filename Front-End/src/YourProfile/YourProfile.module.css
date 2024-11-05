@@ -18,7 +18,7 @@
       height: 10vh;
       background: #EEE;
       color: #282c34;
-      box-sizing: border-box; /* Umożliwia uwzględnienie paddingu w szerokości */
+      box-sizing: border-box; 
   }
   
   .mainWritting{
@@ -88,74 +88,83 @@
         gap: 5px;
     }
 
-    .routeTableHeader, .routeTableHeaderContent{
-        display: flex;
-        flex-direction: row;
-        gap: 2px;
-        width: 100%;
-        background-color: #214225;
-    }
-    .routeTableHeader{
-        
-        justify-content: space-between;
-    }
-
-    .routeTableHeaderContent{
-        background-color: #FFF;
-    }
-
-    .routeTableHeaderContent:hover{
-        background-color: #CCC;
-    }
-
-    .routeNumber, .routeNumberContent, .routeDate, .routeDateContent, .routePath {
-        color: white;
-        font-family: 'Montserrat-Bold';
-        font-size: 16px;
+    input {
         padding: 10px;
+        border: 1px solid #7D9F81;
+        border-radius: 5px;
+        background-color: #f0f8ff;
+        color: #333;
+        font-size: 14px;
+        font-family: 'Montserrat-Medium';
+        width: 200px;
+    }
+
+    input:hover {
+        background-color: #c2c9cf;
+    }
+
+    input:focus {
+        border-color: #4CAF50; /* Zmiana koloru obramowania po kliknięciu */
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    }
+
+    .inputs{
         display: flex;
         justify-content: center;
-    }
-    .routeNumber, .routePath, .routeDate{
-        background-color: #7D9F81;
-    }
-    
-    .routeNumber, .routeDate{
-        flex: 0 0 auto; 
-    }
-
-    .routeNumberContent, .routeNumber {
-        min-width: 70px;
-        
-    }
-
-    .routeDate, .routeDateContent {
-        min-width: 150px;
-        
-    }
-    
-    .routePath{
-        flex: 1;
-        display: flex;
-        justify-content: center;            
-    }
-
-    .routePathContent, .routeDateContent, .routeNumberContent {
-        color: #282c34;
-    }
-
-    .routePathContent{
-        flex: 1;
-        font-size: 12px;
-        font-family: 'Montserrat-Regular';
-    }
-    
-    .table{
         padding: 20px 0px;
-        width: 75%;
+        gap:20px;
+    }
+
+    .todayStats p{
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      height: auto;
+      font-size: 20px;
+      color: black;
+      padding: 0px 0px;
+      font-family: 'Montserrat-Bold';
+      letter-spacing: 0.12em; 
+      font-variant: small-caps;
+    }
+
+    .todayStats{
+        padding: 20px 0px;
         display: flex;
         justify-content: center;
-        align-items: center;
         flex-direction: column;
-        gap: 2px;
+        align-items: center;
+    }
+
+    .todayStats button{
+        font-size: 14px;
+        font-family: 'Montserrat-Bold';
+        color: white;
+        background-color: #7D9F81;
+        border-radius: 10px;
+        padding: 10px 30px;
+        width: 40%;
+        letter-spacing: 0.25em; 
+        text-transform: uppercase;
+        border: 1px solid #7D9F81;
+        margin: 20px 0px;
+    }
+    .todayStats button:hover{
+        color: #7D9F81;
+        background-color: white;
+        border: 1px solid #7D9F81;
+    }
+
+    .name {
+        color: #777;
+        font-size: 14px;
+        font-family: 'Poppins-Regular';
+    }
+    
+    .wholeInput{
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        width: 60%;
+        margin: 10px 0px;
     }

@@ -3,10 +3,15 @@ import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../GlobalContext';
 import { useNavigate } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
+import e from 'cors';
 const YourProfile = () => {
     const {supabase} = useContext(GlobalContext);
-    const [firstDate, setFirstDate] = useState('2023-01-01');
-    const [secondDate, setSecondDate] = useState('2023-12-31');
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 2); 
+    const [firstDate, setFirstDate] = useState(firstDayOfMonth.toISOString().split('T')[0]);
+    const [secondDate, setSecondDate] = useState(new Date().toISOString().split('T')[0]);
+    const [usedFuel, setUsedFuel] = useState();
+    const [distance, setDistance] = useState();
 
     const navigate = useNavigate();
     const fuelDiary = useState([
@@ -107,14 +112,33 @@ const YourProfile = () => {
         {date: '2023-12-30', fuel: 11, distance: 106},
         
     ]);
+    useEffect(() => {
+        const getData = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            const id = session?.user?.id;
+            const { data, error } = await supabase
+                .from('fuel_diary')
+                .select('*')
+                .eq('user_id', id)
+            if (error) {
+                console.log(error);
+                alert("Wystąpił problem podczas zapisywania danych!");
+            }
+            console.log(data);
+            // if(data.length>0){
+            //     setFuelDiary(data);
+            // }
+        }
+        getData();
+    }, []);
+
     const [processedData, setProcessedData] = useState([]);
 
     useEffect(() => {
-        const data = fuelDiary[0].map(entry => ({
+        const data = fuelDiary.map(entry => ({
                     date: entry.date,
                     averageConsumption: (entry.fuel / entry.distance) * 100 // Przekształcenie do litrów na 100 km
                 }));
-
         // Wygeneruj wszystkie daty z pełnego zakresu
         const fullDateRange = [];
         const startDate = new Date(firstDate);
@@ -139,6 +163,7 @@ const YourProfile = () => {
             if (!id) {
                 navigate("/");
             }
+            
         }
         checkUser();
     }, []);
@@ -160,6 +185,58 @@ const YourProfile = () => {
     const onYourRoutesClick = () => {
         navigate("/savedroutes");
     };
+
+    const onSaveButtonClick = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        const id = session?.user?.id;
+        if(!id){
+            alert("Wystąpił problem podczas zapisywania danych!");
+            return;
+        }
+        const todayDate = new Date().toISOString().split('T')[0];
+        const { data, error } = await supabase
+            .from('fuel_diary')
+            .select('*')
+            .eq('user_id', id)
+            .eq('date', todayDate)
+        if (error) {
+            console.log(error);
+            alert("Wystąpił problem podczas zapisywania danych!");
+        }
+        else {
+            if(data.length===0){
+                console.log("Inserting new data");
+                const { data, error } = await supabase
+                    .from('fuel_diary')
+                    .insert([
+                        { user_id: id, used_fuel: usedFuel, distance: distance, date: todayDate }
+                    ])
+                if (error) {
+                    console.log(error);
+                    alert("Wystąpił problem podczas zapisywania danych!");
+                }
+                if(data){
+                    console.log(data);
+                };
+            }
+            else{
+                const { data, error } = await supabase
+                    .from('fuel_diary')
+                    .update({ used_fuel: usedFuel, distance: distance })
+                    .eq('user_id', id)
+                    .eq('date', todayDate)
+                    .select('*')
+                if (error) {
+                    console.log(error);
+                    alert("Wystąpił problem podczas aktualizowania danych!");
+                }
+                if(data){
+                    console.log(data);
+                }
+            }
+        }
+    }
+
 
     return (
         <div className={styles.background}>
@@ -185,7 +262,38 @@ const YourProfile = () => {
             <div className={styles.mainWritting}>
                 Twój profil
             </div>
-            <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px', gap: '20px'}}>
+            <div className={styles.mainWritting}>
+                Dzienniczek paliwowy
+            </div>
+            <div className={styles.todayStats}>
+                <p>Dzisiejsze statystyki</p>
+                <div className={styles.inputs}>
+                    <div className={styles.wholeInput}>
+                        <div className={styles.name}>
+                        Wykorzystane paliwo
+                        </div>
+                        <input
+                            type="number"
+                            value={usedFuel}
+                            placeholder='Wykorzystane paliwo'
+                            onChange={(e) => setUsedFuel(e.target.value)}
+                        />
+                    </div>
+                    <div className={styles.wholeInput}>
+                        <div className={styles.name}>
+                        Przejechany dystans
+                        </div>
+                        <input
+                            type="number"
+                            value={distance}
+                            placeholder='Przejechany dystans'
+                            onChange={(e) => setDistance(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <button onClick={onSaveButtonClick}>Zapisz</button>
+            </div>
+            <div className={styles.inputs}>
                 <input
                     type="date"
                     value={firstDate}
