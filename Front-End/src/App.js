@@ -10,6 +10,7 @@ import Login from './Login/Login';
 import Register from './Login/Register';
 import SavedRoutes from './SavedRoutes/SavedRoutes';
 import SavedRouteView from './SavedRoutes/SavedRouteView';
+import YourProfile from './YourProfile/YourProfile';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/mainpage" element={<MainPage />} />
           <Route path="/savedroutes" element={<SavedRoutes />} />
           <Route path="/savedroute/:id" element={<SavedRouteView />} />
+          <Route path="/yourprofile" element={<YourProfile />} />
         </Routes>
       </BrowserRouter>
     </GlobalProvider>

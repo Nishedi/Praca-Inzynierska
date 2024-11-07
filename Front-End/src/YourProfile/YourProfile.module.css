@@ -1,0 +1,170 @@
+.background {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    /* max-width: 1920px;
+    min-width: 1280px; */
+    width: 100%;
+    background: #EEEEEE;
+  }
+  
+  .navbar{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 75%;
+      height: 10vh;
+      background: #EEE;
+      color: #282c34;
+      box-sizing: border-box; 
+  }
+  
+  .mainWritting{
+      display: flex;
+      justify-content: center;
+      background-color: #214225;
+      width: 100%;
+      height: auto;
+      font-size: 20px;
+      color: white;
+      padding: 20px 0px;
+      font-family: 'Montserrat-Bold';
+      letter-spacing: 0.12em; 
+      font-variant: small-caps;
+  }
+  
+  .title{
+      font-size: 16px;
+      font-family: 'Montserrat-SemiBold';
+      text-transform: uppercase;
+      letter-spacing: 0.25em
+  }
+  
+  .bookmark{
+      font-size: 14px;
+      font-family: 'Montserrat-Medium';
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      padding: 10px 20px;
+  }
+  
+  .bookmark:hover{
+      background-color: #dddddd;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+  }
+  
+  .bookmark:focus{
+      background-color: #f31919;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+  }
+  
+  .login{
+      font-size: 14px;
+      font-family: 'Montserrat-Bold';
+      color: white;
+      background-color: #7D9F81;
+      border-radius: 10px;
+      padding: 10px 20px;
+      letter-spacing: 0.25em; 
+      text-transform: uppercase;
+      border: 1px solid #7D9F81;
+    }
+
+    .login:hover{
+        color: #7D9F81;
+        background-color: white;
+        border: 1px solid #7D9F81;
+    }
+
+    .bookmarks{
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+    }
+
+    input {
+        padding: 10px;
+        border: 1px solid #7D9F81;
+        border-radius: 5px;
+        background-color: #f0f8ff;
+        color: #333;
+        font-size: 14px;
+        font-family: 'Montserrat-Medium';
+        width: 200px;
+    }
+
+    input:hover {
+        background-color: #c2c9cf;
+    }
+
+    input:focus {
+        border-color: #4CAF50; /* Zmiana koloru obramowania po kliknięciu */
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    }
+
+    .inputs{
+        display: flex;
+        justify-content: center;
+        padding: 20px 0px;
+        gap:20px;
+    }
+
+    .todayStats p{
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      height: auto;
+      font-size: 20px;
+      color: black;
+      padding: 0px 0px;
+      font-family: 'Montserrat-Bold';
+      letter-spacing: 0.12em; 
+      font-variant: small-caps;
+    }
+
+    .todayStats{
+        padding: 20px 0px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .todayStats button{
+        font-size: 14px;
+        font-family: 'Montserrat-Bold';
+        color: white;
+        background-color: #7D9F81;
+        border-radius: 10px;
+        padding: 10px 30px;
+        width: 40%;
+        letter-spacing: 0.25em; 
+        text-transform: uppercase;
+        border: 1px solid #7D9F81;
+        margin: 20px 0px;
+    }
+    .todayStats button:hover{
+        color: #7D9F81;
+        background-color: white;
+        border: 1px solid #7D9F81;
+    }
+
+    .name {
+        color: #777;
+        font-size: 14px;
+        font-family: 'Poppins-Regular';
+    }
+    
+    .wholeInput{
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        width: 60%;
+        margin: 10px 0px;
+    }

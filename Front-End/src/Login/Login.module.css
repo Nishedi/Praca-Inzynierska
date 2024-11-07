@@ -132,3 +132,9 @@
     width: 60%;
     margin: 20px;
 }
+
+@media screen and (max-height: 1000px) {
+    .wholeInput {
+        margin: 5px 0px;
+    }
+}

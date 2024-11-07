@@ -28,6 +28,10 @@ const MainPage = () => {
             setIsLogged(false);
         }
     }
+
+    const onYourProfileClick = () => {
+        navigate("/yourprofile");
+    };
     
     return (
         <div className={styles.background}>
@@ -44,7 +48,7 @@ const MainPage = () => {
                         <div onClick={()=>navigate("/savedroutes")} className={styles.bookmark}>
                             Twoje trasy
                         </div>
-                        <div className={styles.bookmark}>
+                        <div onClick={onYourProfileClick} className={styles.bookmark}>
                             Twój profil
                         </div>
                         <div onClick={logOut} className={styles.login}>

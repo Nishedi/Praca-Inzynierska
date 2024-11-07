@@ -44,6 +44,14 @@ const SavedRoutes = () => {
         getAllRoutes();
     }, []);
 
+    const onYourProfileClick = () => {
+        navigate("/yourprofile");
+    };
+
+    const onOptimalizeRouteClick = () => {
+        navigate("/mainpage");
+    };
+
     return (
         <div className={styles.background}>
             <div className={styles.navbar}>
@@ -54,10 +62,10 @@ const SavedRoutes = () => {
                     <div className={styles.bookmark}>
                         O nas
                     </div>
-                    <div className={styles.bookmark}>
+                    <div onClick={onOptimalizeRouteClick} className={styles.bookmark}>
                         Optymalizuj trasę
                     </div>
-                    <div className={styles.bookmark}>
+                    <div onClick={onYourProfileClick} className={styles.bookmark}>
                         Twój profil
                     </div>
                     <div onClick={logOut} className={styles.login}>
@@ -82,7 +90,7 @@ const SavedRoutes = () => {
                 </div>
                 {
                     routes.map((route, index) => (
-                        <div onClick={()=>navigate("/savedroute/1")} className={styles.routeTableHeaderContent}>
+                        <div onClick={()=>navigate(`/savedroute/${route.id}`)} className={styles.routeTableHeaderContent}>
                             <div className={styles.routeNumberContent}>
                                 {route.id}
                             </div>

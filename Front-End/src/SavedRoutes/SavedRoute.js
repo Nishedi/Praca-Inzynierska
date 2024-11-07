@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../MainActivity.css';
-import AutoCompleteInput from '../AutoCompleteInput';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from 'react-leaflet';
 import { useContext } from 'react';
 import L from 'leaflet'; // Importujemy Leaflet do niestandardowej ikony
@@ -9,6 +8,7 @@ import markerIconPng from 'leaflet/dist/images/marker-icon.png'; // Import domyÅ
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png'; // Import cienia markera
 import { FaTruck } from "react-icons/fa";
 import { GlobalContext } from '../GlobalContext';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // Ustawienie ikony markera
 const defaultIcon = L.icon({
@@ -32,12 +32,15 @@ const baseIcon = L.icon({
 
 function SavedRoute() {
     const {supabase } = useContext(GlobalContext);
+    const routeID =  useParams().id;
+    const navigate = useNavigate();
     const [listOfLocations, setListOfLocations] = useState([]);
     const [mapCenter] = useState([51.110307, 17.033225]);
     const colors = ['#08ff00', '#ff0800', '#fff700', '#00e8ff', '#00e8ff',
         '#ff00f7', '#000000'];
     const [groups, setGroups] = useState([]);
     const [groupsRoute, setGroupsRoute] = useState([]);
+    const [modal, setModal] = useState(true);
     const FitMapToBounds = ({ locations }) => {
         const map = useMap();
     
@@ -111,7 +114,7 @@ function SavedRoute() {
             const { data, error } = await supabase
                 .from('saved_routes')
                 .select('data')
-                .eq('id', 12);
+                .eq('id', routeID);
             if (error) {
                 console.log(error);
             }
@@ -122,12 +125,67 @@ function SavedRoute() {
                         setGroups(parsed);
                     }
                 }
+                if(data.length === 0){
+                    setModal(true);
+                }
             }
         }
         fetchRoute();
     }, []);
 
+    const Modal = () => {
+        return (
+            <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0,0,0,0.5)'
+            }}>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '20px',
+                    backgroundColor: '#fff',
+                    borderRadius: '5px',
+                    width: '50%',
+                    height: '50%',
+                    overflow: 'auto',
+                    fontFamily: 'Montserrat-Bold',
+                }}>
+                    <p>Nieautoryzowany dostÄ™p</p>
+                    
+                    <button style={
+                        {
+                            fontSize: '14px',
+                            fontFamily: 'Montserrat-Bold',
+                            color: 'white',
+                            backgroundColor: '#7D9F81',
+                            border: '0px',
+                            width: '30%',
+                            borderRadius: '10px',
+                            padding: '10px 20px',
+                            letterSpacing: '0.25em',
+                            textTransform: 'uppercase',
+                            margin: '20px 0px',
+                            border: '1px solid #7D9F81'
+                        }
+
+                    } onClick={() => navigate("/mainpage")}>Zamknij</button>
+                </div>
+            </div>
+        );
+    }
+
     return (
+        <>  
+        {modal ? <Modal /> : 
         <>
             <div className={`${listOfLocations.length <= 8 ?  'flex-container':'flex-container-column'}`}>
                 <div style={{ width: '100%', height: '700px', display: 'flex', flexDirection: 'column', gap: '30px', flex: '1' }}>
@@ -171,6 +229,8 @@ function SavedRoute() {
                         ))    
                         }
                 </div>
+            </>
+            }
         </>
     );
 }

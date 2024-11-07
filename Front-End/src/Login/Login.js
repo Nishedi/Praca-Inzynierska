@@ -9,9 +9,12 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const tryLogin = async () => {
+        // email: 'konrad.pempera@gmail.com',
+        // password: '123456'
         let { data, error } = await supabase.auth.signInWithPassword({
-        email: 'konrad.pempera@gmail.com',
-        password: '123456'
+        
+        email: 'minecraftkonrad872@gmail.com',
+        password: 'TestCzemu!123'
         })
         if(data){
             console.log(data);
