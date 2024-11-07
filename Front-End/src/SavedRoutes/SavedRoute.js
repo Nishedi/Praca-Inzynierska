@@ -32,7 +32,6 @@ const baseIcon = L.icon({
 
 function SavedRoute() {
     const {supabase } = useContext(GlobalContext);
-    const [sugerowanaTrasa, setSugerowanaTrasa] = useState([]);
     const [listOfLocations, setListOfLocations] = useState([]);
     const [mapCenter] = useState([51.110307, 17.033225]);
     const colors = ['#08ff00', '#ff0800', '#fff700', '#00e8ff', '#00e8ff',
@@ -137,7 +136,6 @@ function SavedRoute() {
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                    
                         <>
                             {listOfLocations.map((location, index) => (
                                 location?.others?.lat && location?.others?.lon ?
