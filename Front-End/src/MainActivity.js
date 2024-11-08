@@ -307,21 +307,36 @@ function MainActivity() {
     };
 
     const getSuggestedNumberOfVehicles = async () => {
-        const message = listOfLocations.filter(location => 
-            location.location && location.location.trim() !== ""
-        );
-        const response = await fetch('http://localhost:3000/suggest-vehicles', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message: message }),
-        });
-        const data = await response.json();
-        if(data?.numberOfvehicles){
-            setNumberOfVehicles(data.numberOfvehicles);
-        } 
+        try {
+            const message = listOfLocations.filter(location => 
+                location.location && location.location.trim() !== ""
+            );
+            
+            const response = await fetch('http://localhost:3000/suggest-vehicles', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message }),
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Błąd ${response.status}: ${response.statusText}`);
+            }
+    
+            const data = await response.json();
+    
+            if (data?.numberOfvehicles) {
+                setNumberOfVehicles(data.numberOfvehicles);
+            } else {
+                console.warn("Brak danych dotyczących liczby pojazdów");
+            }
+        } catch (error) {
+            console.error("Wystąpił błąd podczas pobierania liczby sugerowanych pojazdów:", error);
+            setNumberOfVehicles(1); 
+        }
     };
+    
     
     const saveRoute = async () => {
         const { data: { session } } = await supabase.auth.getSession();
@@ -346,6 +361,7 @@ function MainActivity() {
     
         if (error) {
             console.error('Error saving route:', error);
+            alert('Wystąpił błąd podczas zapisywania trasy.');
         } else {
             setSaveRouteDrawing('Zapisano!');
             const interval = setInterval(() => {
@@ -354,54 +370,74 @@ function MainActivity() {
         }
     };
     
-
     useEffect(() => {
         getSuggestedNumberOfVehicles();
     }, [listOfLocations.length]);
 
     const makeRequest = async () => {
-        setIsOptimizing(true);
-        setTimeLeft(timeOfExecution);
-        let algChoice = alg === "TS" ? "0" : "1";
-        const message = listOfLocations.filter(location => 
-            location.location && location.location.trim() !== ""
-        );
-        const filteredListOfLocations = message.map(location =>({
-            id: location.id,
-            location: location.location,
-            others: {
-                name: location.others.name,
-                city: location.others.city,
-                state : location.others.state,
-                lon: location.others.lon,
-                lat: location.others.lat,
-                formatted: location.others.formatted,
-                address_line1: location.others.address_line1,
-                address_line2: location.others.address_line2
-            }
-        }))
-        setListOfLocations(filteredListOfLocations);
-        const response = await fetch('http://localhost:3000/run-script', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message: filteredListOfLocations, numberOfvehicles: numberOfvehicles, timeOfExecution: timeOfExecution, alg: algChoice }),
-        });
-        const data = await response.json();
-        if(data?.result){
-            const routes = [];
-            data.result.map((route, index) => {
-                route.unshift(listOfLocations[0]);
-                route.push(listOfLocations[0]);
-                routes.push(route);
-
+        try {
+            setIsOptimizing(true);
+            setTimeLeft(timeOfExecution);
+    
+            let algChoice = alg === "TS" ? "0" : "1";
+    
+            const message = listOfLocations.filter(location => 
+                location.location && location.location.trim() !== ""
+            );
+    
+            const filteredListOfLocations = message.map(location => ({
+                id: location.id,
+                location: location.location,
+                others: {
+                    name: location.others.name,
+                    city: location.others.city,
+                    state: location.others.state,
+                    lon: location.others.lon,
+                    lat: location.others.lat,
+                    formatted: location.others.formatted,
+                    address_line1: location.others.address_line1,
+                    address_line2: location.others.address_line2
+                }
+            }));
+    
+            setListOfLocations(filteredListOfLocations);
+    
+            const response = await fetch('http://localhost:3000/run-script', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: filteredListOfLocations,
+                    numberOfvehicles: numberOfvehicles,
+                    timeOfExecution: timeOfExecution,
+                    alg: algChoice
+                }),
             });
-            setGroups(routes);
-            scrollToSection();
+    
+            if (!response.ok) {
+                throw new Error(`Błąd ${response.status}: ${response.statusText}`);
+            }
+            const data = await response.json();
+    
+            if (data?.result) {
+                const routes = data.result.map((route) => {
+                    route.unshift(listOfLocations[0]);
+                    route.push(listOfLocations[0]);  
+                    return route;
+                });
+    
+                setGroups(routes);
+                scrollToSection(); 
+            }
+        } catch (error) {
+            console.error("Wystąpił błąd podczas wykonywania żądania:", error);
+            alert("Wystąpił błąd podczas optymalizacji. Spróbuj ponownie.");
+        } finally {
+            setIsOptimizing(false); 
         }
-        setIsOptimizing(false);
     };
+    
 
     const FitMapToBounds = ({ locations }) => {
         const map = useMap();

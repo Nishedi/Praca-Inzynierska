@@ -12,7 +12,8 @@ const Login = () => {
         // email: 'konrad.pempera@gmail.com',
         // password: '123456'
         let { data, error } = await supabase.auth.signInWithPassword({
-        
+        // email: 'konrad.pempera@gmail.com',
+        // password: '123456'
         email: 'minecraftkonrad872@gmail.com',
         password: 'TestCzemu!123'
         })

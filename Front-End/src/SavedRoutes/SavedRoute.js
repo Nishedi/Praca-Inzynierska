@@ -40,7 +40,7 @@ function SavedRoute() {
         '#ff00f7', '#000000'];
     const [groups, setGroups] = useState([]);
     const [groupsRoute, setGroupsRoute] = useState([]);
-    const [modal, setModal] = useState(true);
+    const [modal, setModal] = useState(false);
     const FitMapToBounds = ({ locations }) => {
         const map = useMap();
     
