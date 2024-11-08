@@ -35,9 +35,9 @@ int bnb_run(int numOfCities, std::vector<std::vector<int>> distancesInt) {
 
 }
 
-std::string ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbourType, int tabuSize, int numOfVechicles) {// neigh 2 - slabe
+std::string ts_run(int numOfCities, std::vector<std::vector<int>> distances, int neighbourType, int tabuSize, int numOfVechicles, int timeOfExecton) {// neigh 2 - slabe
     TS* tabuSearch = new TS(numOfCities);
-    std::vector<int> result = tabuSearch->tabuSearch(distances, numOfCities, tabuSize, 10, numOfCities, neighbourType, numOfVechicles);
+    std::vector<int> result = tabuSearch->tabuSearch(distances, numOfCities, tabuSize, timeOfExecton, numOfCities, neighbourType, numOfVechicles);
     int res = 0;
     for (int i = 0; i < result.size() - 1; i++) {
         if (result[i] == 0 && result[i + 1] == 0) {
@@ -62,9 +62,9 @@ std::string ts_run(int numOfCities, std::vector<std::vector<int>> distances, int
     return resultstr;
 }
 
-int genetic_run(int numOfCities, std::vector<std::vector<int>> distances, int numOfVechicles, int crossOverType) {
-    Genetic* genetic = new Genetic(distances, numOfCities, 6000);
-    std::vector<int> result = genetic->geneticSolve(distances, numOfCities, 10, 0,crossOverType,0.8,0.1, numOfVechicles);
+std::string genetic_run(int numOfCities, std::vector<std::vector<int>> distances, int numOfVechicles, int crossOverType, int timeOfExecton, int genSize) {
+    Genetic* genetic = new Genetic(distances, numOfCities, genSize);
+    std::vector<int> result = genetic->geneticSolve(distances, numOfCities, timeOfExecton, 0,crossOverType,0.8,0.1, numOfVechicles);
 
     int res = 0;
     for (int i = 0; i < result.size() - 1; i++) {
@@ -85,7 +85,9 @@ int genetic_run(int numOfCities, std::vector<std::vector<int>> distances, int nu
     }
     std::cout << result[result.size()-1] << " ";
     res += distances[result[result.size()-1]][result[0]];
-    return res;
+    GeneralMethods gm;
+    std::string resultstr = gm.calculateTotalDistance2(result, result.size(), distances);
+    return resultstr;
 }
 
 
@@ -100,6 +102,7 @@ int main(int argc, char* argv[]) {
         char separator = ',';
         std::vector<std::string> distances = split(parts[3], separator);
         std::vector<std::vector<int>> distancesInt(numOfCities, std::vector<int>(numOfCities, 0));
+        int alg = std::stoi(parts[4]);
 
         for (int i = 0; i < distances.size(); i++) {
             int num = std::stoi(distances[i]);
@@ -116,19 +119,35 @@ int main(int argc, char* argv[]) {
         GreedyVechicleAllocation gva;
 
         int numberOfVechicles = gva.greedyVehicleAllocation(distancesInt);
+        numberOfVechicles = numOfVechicles;
 
         bool test = false;
         if (test) {
-            std::cout << ts_run(numOfCities, distancesInt, 1, numOfCities, numberOfVechicles);
+            std::cout << ts_run(numOfCities, distancesInt, 1, numOfCities, numberOfVechicles, timeOfExecution);
             std::cout << std::endl;
-            std::cout << genetic_run(numOfCities, distancesInt, numberOfVechicles, 1);
+            std::cout << genetic_run(numOfCities, distancesInt, numberOfVechicles, 1, timeOfExecution, 600);
             
         }
         else {
 
-            std::string x = ts_run(numOfCities, distancesInt, 1, 100* numOfCities, numberOfVechicles);
-            //genetic_run(numOfCities, distancesInt, numberOfVechicles, 1);
-            std::cout << "|" << numberOfVechicles<<"|"<<x;
+            /*for (int i = 0; i < 5; i++) {
+                std::string x = ts_run(numOfCities, distancesInt, 1, 100 * numOfCities, numberOfVechicles, timeOfExecution);
+                std::cout << "|" << numberOfVechicles << "|" << x << "TS\n";
+                std::string y = genetic_run(numOfCities, distancesInt, numberOfVechicles, 1, timeOfExecution, numOfCities * 300);
+                std::cout << "|" << numberOfVechicles << "|" << y << "G\n\n";
+
+            }*/
+            if (alg == 0) {
+                std::string x = ts_run(numOfCities, distancesInt, 1, 100 * numOfCities, numberOfVechicles, timeOfExecution);
+                std::cout << "|" << numberOfVechicles << "|" << x << "TS\n";
+            }
+            if (alg == 1) {
+                std::string y = genetic_run(numOfCities, distancesInt, numberOfVechicles, 1, timeOfExecution, numOfCities * 300);
+                std::cout << "|" << numberOfVechicles << "|" << y << "G\n";
+            }
+            
+            
+            
         }
     }
     //else {

@@ -33,13 +33,7 @@ private:
 		population[0] = gm.generateInitialSolutionStartPoint(distancesSize, distances, 0, numberOfVechicles);
 		for (int i = 1; i < this->populationSize; i++) {
 			population[i] = gm.generateInitialSolutionMutated(distancesSize, this->distances, (this->distancesSize + 151) * 191, numberOfVechicles);
-		}		
-		/*for (int j = 0; j < population.size(); j += 100) {
-			for (int i = 0; i < population[j].size(); i++) {
-				std::cout << population[j][i] << " ";
-			}
-			std::cout << std::endl;
-		}*/
+		}	
 		
 		return population;
 	}
@@ -67,17 +61,17 @@ private:
 public:
 	std::vector<int>  geneticSolve(std::vector<std::vector<int>> distances, int distancesSize, int maxTime, int mutationType, int crossoverType, double crossoverRate, double mutationRate, int numberOfVechicles) {
 		maxTime = maxTime * 1000;
-		int changes = 0;
 		int bestDistance = 9999999;
-		int bestTime = 0;
-		std::vector<int> times;
-		std::vector<int> bestResults;
-		times.push_back(0);
 		distancesSize = distancesSize + numberOfVechicles - 1;
 		vector<int> bestTour(distancesSize);
 		long startTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 		long currentTime;
 		vector<vector<int>> population = initializePopulation(numberOfVechicles);
+		for (int j = 0; j < population[0].size(); j++) {
+			bestTour[j] = population[0][j];
+		}
+		if (gm.calculateTotalDistance(population[0], population[0].size(), distances) < bestDistance)
+			bestDistance = gm.calculateTotalDistance(population[0], population[0].size(), distances);
 		for (int generation = 0;
 			(currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count()) - startTime <= maxTime;
 			generation++) {
@@ -96,18 +90,16 @@ public:
 				}
 				/*if (mutationType == 0)mt.insertionMutate(child, distancesSize, mutationRate);
 				if (mutationType == 1)mt.swapMutate(child, distancesSize, mutationRate);*/
+				if (child[child.size() - 1] == 0) {
+					child[child.size() - 1] = child[child.size() - 2];
+					child[child.size() - 2] = 0;
+				}
 				newPopulation[i] = child;
 			}
 			int lastBest = bestDistance;
 			for (int i = 0; i < populationSize; i++) {
 				int distance = gm.calculateTotalDistance(newPopulation[i], newPopulation[i].size(), distances);
 				if (distance < bestDistance) {
-					changes++;
-					bestResults.push_back(distance);
-					int found = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() - startTime;
-					times.emplace_back(found);
-					bestTime = found;
-					//cout << ".";
 					bestDistance = distance;
 					for (int j = 0; j < newPopulation[i].size(); j++) {
 						bestTour[j] = newPopulation[i][j];

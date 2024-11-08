@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './MainActivity.css';
 import AutoCompleteInput from './AutoCompleteInput';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from 'react-leaflet';
@@ -273,6 +273,11 @@ function MainActivity() {
     const [timeOfExecution, setTimeOfExecution] = useState(10);
     const [saveRouteDrawing, setSaveRouteDrawing] = useState("Zapisz trasę");
     const [activeRoute, setActiveRoute] = useState(null);  
+    const [alg, setAlg] = useState("TS");
+    const targetRef = useRef(null);
+    const scrollToSection = () => {
+        targetRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
 
 
     useEffect(() => {
@@ -357,6 +362,7 @@ function MainActivity() {
     const makeRequest = async () => {
         setIsOptimizing(true);
         setTimeLeft(timeOfExecution);
+        let algChoice = alg === "TS" ? "0" : "1";
         const message = listOfLocations.filter(location => 
             location.location && location.location.trim() !== ""
         );
@@ -380,7 +386,7 @@ function MainActivity() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message: filteredListOfLocations, numberOfvehicles: numberOfvehicles, timeOfExecution: timeOfExecution }),
+            body: JSON.stringify({ message: filteredListOfLocations, numberOfvehicles: numberOfvehicles, timeOfExecution: timeOfExecution, alg: algChoice }),
         });
         const data = await response.json();
         if(data?.result){
@@ -392,6 +398,7 @@ function MainActivity() {
 
             });
             setGroups(routes);
+            scrollToSection();
         }
         setIsOptimizing(false);
     };
@@ -461,6 +468,14 @@ function MainActivity() {
         setIsEditing(true);
     }, [listOfLocations.length]);
 
+    const algSwitch = () => {
+        if(alg === "TS"){
+            setAlg("GA");
+        }else{
+            setAlg("TS");
+        }
+    };
+
     return (
         <>
             <div className={`${listOfLocations.length <= 8 ?  'flex-container':'flex-container-column'}`}>
@@ -500,10 +515,10 @@ function MainActivity() {
                             <input type="number" value={numberOfvehicles} onChange={(e) => setNumberOfVehicles(e.target.value)} />
                             <input type="number" value={timeOfExecution} onChange={(e) => setTimeOfExecution(e.target.value)} />
                         </div>
-                        
+                        <button onClick={algSwitch}>Alg: {alg}</button>
                     </div>
                 </div>
-                <div style={{ width: '100%', height: '700px', display: 'flex', flexDirection: 'column', gap: '30px', flex: '1' }}>
+                <div ref={targetRef} style={{ width: '100%', height: '700px', display: 'flex', flexDirection: 'column', gap: '30px', flex: '1' }}>
                     <MapContainer key={listOfLocations.length} center={mapCenter} zoom={13} scrollWheelZoom={false} style={{height: '600px', width: '100%' }}>
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
