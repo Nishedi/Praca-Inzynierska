@@ -29,6 +29,7 @@ public:
         //    std::cout << path[i] << " ";
         //}*/
         //std::cout << std::endl;
+        
         for (int i = 0; i < path.size() - 1; i++) {
             int x = path[i];
             int y = path[i + 1];

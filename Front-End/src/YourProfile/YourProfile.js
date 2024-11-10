@@ -125,6 +125,16 @@ const YourProfile = () => {
                 alert("Wystąpił problem podczas zapisywania danych!");
             }
             if(data.length>0){
+                console.log(data);
+                const currentData = data
+                    .filter(entry => entry.date === new Date().toISOString().split('T')[0])
+                    .map(entry => ({
+                        date: entry.date,
+                        used_fuel: entry.used_fuel,
+                        distance: entry.distance
+                    }));    
+                setUsedFuel(currentData[0]?.used_fuel);
+                setDistance(currentData[0]?.distance);
                 setFuelDiary(data);
             }
         }

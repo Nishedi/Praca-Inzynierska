@@ -40,7 +40,7 @@ function SavedRoute() {
         '#ff00f7', '#000000'];
     const [groups, setGroups] = useState([]);
     const [groupsRoute, setGroupsRoute] = useState([]);
-    const [modal, setModal] = useState(true);
+    const [modal, setModal] = useState(false);
     const FitMapToBounds = ({ locations }) => {
         const map = useMap();
     
@@ -194,7 +194,6 @@ function SavedRoute() {
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                    
                         <>
                             {listOfLocations.map((location, index) => (
                                 location?.others?.lat && location?.others?.lon ?

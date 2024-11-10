@@ -15,6 +15,7 @@ app.post('/run-script', async (req, res) => {
   const timeOfExecution = req.body.timeOfExecution;
   const numberOfVehicles = req.body.numberOfvehicles;
   const locations = req.body.message;
+  const alg = req.body.alg;
   const dataForDistances= locations
   .map(location => `${location.others.lon},${location.others.lat}`) // Przekształcenie każdego obiektu w string
   .join(';'); 
@@ -32,7 +33,8 @@ app.post('/run-script', async (req, res) => {
     //   id: indices[i] // Dodajemy odpowiadający 'indices' jako 'id'
     // }));
     // doIt(sortedLocationsWithIndices);
-    const algorithmResponses = await runScript(timeOfExecution+"|"+data.distances[0].length+"|"+numberOfVehicles+"|"+data.distances);
+    console.log(alg);
+    const algorithmResponses = await runScript(timeOfExecution+"|"+data.distances[0].length+"|"+numberOfVehicles+"|"+data.distances+"|"+alg);
     const algorithResponse = algorithmResponses.split("|");
     const numberOfvehicles = algorithResponse[1];
     const path = algorithResponse[0];
