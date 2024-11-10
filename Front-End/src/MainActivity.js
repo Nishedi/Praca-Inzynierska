@@ -491,16 +491,22 @@ function MainActivity() {
                         >
                         {!isOptimizing ? 'Optymalizuj' : `Trwa optymalizacja...${timeLeft > 0 ? timeLeft: ''}`}
                         </button>
-                    <div style={{display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>
-                        <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}} >
+                    <div className='allParameters'>
+                    <div className='parameters'>DODATKOWE PARAMETRY</div>
+                    <div className='optional'>
+                        <div className='optionalText'>
                             <div>Sugerowana liczba pojazdów: </div>
                             <div>Czas działania: </div>
                         </div>
-                        <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}} >
+                        <div className='optionalInput' >
                             <input type="number" value={numberOfvehicles} onChange={(e) => setNumberOfVehicles(e.target.value)} />
-                            <input type="number" value={timeOfExecution} onChange={(e) => setTimeOfExecution(e.target.value)} />
+                            <div className="sliderContainer">
+                                <input type="range" min="0" max="100" value={timeOfExecution} onChange={(e) => setTimeOfExecution(e.target.value)} />
+                                <span className="sliderValue">{timeOfExecution}</span>
+                            </div>
                         </div>
                         
+                    </div>
                     </div>
                 </div>
                 <div style={{ width: '100%', height: '700px', display: 'flex', flexDirection: 'column', gap: '30px', flex: '1' }}>

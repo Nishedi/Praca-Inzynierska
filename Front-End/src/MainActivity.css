@@ -54,6 +54,9 @@
 .grid-container {
     display: grid;
     grid-gap: 16px;
+    font-family: 'Montserrat-Regular';
+    font-size: 16px;
+
 }
 
 .one-column {
@@ -63,6 +66,8 @@
 .two-columns {
     grid-template-columns: 1fr 1fr; /* Dwie kolumny */
     column-gap: 20px; /* Odstęp między kolumnami */
+    font-family: 'Montserrat-Regular';
+    font-size: 16px;
 }
 
 .three-columns {
@@ -108,6 +113,63 @@
     flex-direction: column;
     gap: 30px;
     height: 100%;
+}
+
+.allParameters{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #7D9F81;
+}
+
+.parameters{
+    font-family: 'Montserrat-Bold';
+    color: #214225;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.optional {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 10px;
+    color: #214225;
+    text-transform: lowercase;
+    font-family: 'Montserrat-Regular';
+}
+
+.optional input{
+    background-color: #FFF;
+}
+
+.optionalText, .optionalInput{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-between;
+    text-align: end;
+   
+}
+
+.optionalText{
+    padding: 10px 0;
+}
+
+sliderContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.optionalInput input[type="range"] {
+    width: 100%;
+}
+
+.sliderValue {
+    font-weight: bold;
 }
 
 .routeList{
