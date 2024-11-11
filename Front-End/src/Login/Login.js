@@ -5,8 +5,8 @@ import { GlobalContext } from '../GlobalContext';
 
 const Login = () => {
     const {supabase } = useContext(GlobalContext);
-    const [login, setLogin] = useState("");
-    const [password, setPassword] = useState("");
+    const [login, setLogin] = useState("minecraftkonrad872@gmail.com");
+    const [password, setPassword] = useState("TestCzemu!123");
     const navigate = useNavigate();
     const tryLogin = async () => {
         // email: 'konrad.pempera@gmail.com',
@@ -14,8 +14,8 @@ const Login = () => {
         let { data, error } = await supabase.auth.signInWithPassword({
         // email: 'konrad.pempera@gmail.com',
         // password: '123456'
-        email: 'minecraftkonrad872@gmail.com',
-        password: 'TestCzemu!123'
+        email: login,
+        password: password
         })
         if(data){
             console.log(data);
@@ -40,9 +40,9 @@ const Login = () => {
                 </div>
                 <div className={styles.wholeInput}>
                     <div className={styles.inputName}>
-                        Login
+                        E-mail
                     </div>
-                    <input value={login} type="text" placeholder="Login" className={styles.input} onChange={(e)=>setLogin(e.target.value)}/>
+                    <input value={login} type="text" placeholder="E-mail" className={styles.input} onChange={(e)=>setLogin(e.target.value)}/>
                 </div>
                 <div className={styles.wholeInput}>
                     <div className={styles.inputName}>
