@@ -40,6 +40,7 @@
     font-family: 'Montserrat-SemiBold';
     text-transform: uppercase;
     letter-spacing: 0.25em
+
 }
 
 .bookmark{
@@ -48,13 +49,17 @@
     text-transform: uppercase;
     letter-spacing: 0.25em;
     padding: 10px 20px;
+    transition: all 0.1s ease;
 }
 
 .bookmark:hover{
-    background-color: #dddddd;
-    color: white;
-    border-radius: 10px;
+    /* background-color: #ddd; */
+    /* color: white; */
+    /* border-radius: 10px; */
+    text-decoration: underline #214225 1.5px;
     cursor: pointer;
+    /* box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.2); Adds a shadow effect */
+    transform: scale(1.05); /* Slight scaling effect */
 }
 
 .bookmark:focus{
@@ -74,12 +79,15 @@
     letter-spacing: 0.25em; 
     text-transform: uppercase;
     border: 1px solid #7D9F81;
+    transition: all 0.1s ease;
 }
 
 .login:hover{
     color: #7D9F81;
     background-color: white;
     border: 1px solid #7D9F81;
+    transform: scale(1.05); /* Slight scaling effect */
+
 }
 
 .bookmarks{

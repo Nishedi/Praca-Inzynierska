@@ -5,6 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 const YourProfile = () => {
     const {supabase} = useContext(GlobalContext);
+    const {userName, setUserName} = useState('');
+    const {userSurname, setUserSurname} = useState('');
+    const {userEmail, setUserEmail} = useState('');
+    const {userPassword, setUserPassword} = useState('');
+
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 2); 
     const [firstDate, setFirstDate] = useState(firstDayOfMonth.toISOString().split('T')[0]);
@@ -112,6 +117,32 @@ const YourProfile = () => {
         // {date: '2023-12-30', fuel: 11, distance: 106},
         
     ]);
+
+    // USTAW SOBIE ZGODNIE Z BAZĄ PLSSSSS
+    useEffect(() => {
+        const getUserProfile = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            const id = session?.user?.id;
+            if (!id) {
+                navigate("/");
+            } else {
+                // Fetch the user profile data
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('name, email')
+                    .eq('user_id', id)
+                    .single();
+                if (error) {
+                    console.log("Error fetching profile:", error);
+                } else {
+                    setUserName(data?.name || "N/A");
+                    setUserEmail(data?.email || "N/A");
+                }
+            }
+        };
+        getUserProfile();
+    }, []);
+
     useEffect(() => {
         const getData = async () => {
             const { data: { session } } = await supabase.auth.getSession();
@@ -270,6 +301,13 @@ const YourProfile = () => {
             <div className={styles.mainWritting}>
                 Twój profil
             </div>
+                <div className={styles.profile}>
+                <p>Imię: <strong>{userName}</strong></p>
+                <p>Email: <strong>{userEmail}</strong></p>
+               
+                </div>
+
+
             <div className={styles.mainWritting}>
                 Dzienniczek paliwowy
             </div>
