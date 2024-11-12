@@ -301,19 +301,30 @@ const YourProfile = () => {
             <div className={styles.mainWritting}>
                 Twój profil
             </div>
-            <div style={{
-                    display: 'flex',
-                    flexDirection: 'column', 
-                    justifyContent: 'center', 
-                    backgroundColor: '#ffffff'
-                }}
-            >
-                <div className={styles.profile}>
-                        <p>Imię: <strong>Konrad</strong></p>
-                        <p>Nazwisko: <strong>Pempi</strong></p>
-                        <p>Email: <strong>konrad@email.com</strong></p>
-                        <p>idk co jeszcze jakieś uwagi czy coś, czy liczba samochodow w firmie</p>        
+            <div className={styles.mainProfile}>
+            <div className={styles.profile}>
+                <div className={styles.formRow}>
+                    <p>Imię:</p>
+                    <input type="text" defaultValue="Konrad" />
                 </div>
+                <div className={styles.formRow}>
+                    <p>Nazwisko:</p>
+                    <input type="text" defaultValue="Pempi" />
+                </div>
+                <div className={styles.formRow}>
+                    <p>Email:</p>
+                    <input type="text" defaultValue="konrad@email.com" />
+                </div>
+                <div className={styles.formRow}>
+                    <p>Uwagi:</p>
+                    <input type="text" defaultValue="Liczba samochodów w firmie" />
+                </div>
+                <div className={styles.buttons}>
+                    <button>Zapisz</button>
+                    <button>Cofnij</button>
+                </div>
+            </div>
+
             </div>
             <div className={styles.mainWritting}>
                 Dzienniczek paliwowy

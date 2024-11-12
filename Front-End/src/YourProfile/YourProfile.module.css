@@ -42,21 +42,66 @@
     background-color: #ffffff;
     margin: 20px;
     width: 100%;
+    align-items: center;
+    gap: 50%;  
   }
   
   .profile{
     /* background-color: #fff; */
     /* border-radius: 10px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 20px;
-    width: 100%;
+    width: 25%;
+    margin: 20px;
   }
 
   .profile p {
     font-size: 14px;
     font-family: 'Montserrat-Regular';
     color: #333;
-    margin: 10px 0px;
+    margin-bottom: 10px;
+    
   }
+
+  .profile input {
+    background-color: #fff;
+    margin-top: 0px;
+  }
+
+  .mainProfile button {
+    padding: 5px;
+    margin: 10px;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #4e7553;
+    font-family: 'Montserrat-Medium';
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    }
+
+    .formRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .formRow p {
+        width: 100px; /* Fixed width to align labels */
+        margin-right: 10px; /* Space between label and input */
+    }
+
+    .formRow input {
+        flex: 1; /* Allows inputs to take up remaining space */
+    }
 
   .title{
       font-size: 16px;
@@ -103,7 +148,9 @@
       text-transform: uppercase;
       border: 1px solid #7D9F81;
       transition: all 0.2s ease;
-
+      display: flex;
+      text-align: center;
+      justify-content: center;
     }
 
 
@@ -173,7 +220,7 @@
         font-size: 14px;
         font-family: 'Montserrat-Bold';
         color: white;
-        background-color: #7D9F81;
+        background-color: #4e7553;
         border-radius: 10px;
         padding: 10px 30px;
         width: 40%;
