@@ -512,11 +512,34 @@ function MainActivity() {
         }
     };
 
+    const AdditionalParameters = ({numberOfLocations}) => {
+        return (
+            <div className='allParameters' style={{maxWidth: numberOfLocations <= 8 ? "282px" : "None"}}>
+                <div className='parameters'>DODATKOWE PARAMETRY</div>
+                <div className='optional'>
+                    <div className='optionalText'>
+                        <div>Sugerowana liczba pojazdów: </div>
+                        <div>Czas działania: </div>
+                    </div>
+                    <div className='optionalInput' >
+                        <input type="number" value={numberOfvehicles} onChange={(e) => setNumberOfVehicles(e.target.value)} />
+                        <div className="sliderContainer">
+                            <input type="range" min="0" max="20" value={timeOfExecution} onChange={(e) => setTimeOfExecution(e.target.value)} />
+                            {/* <span className="sliderValue">{timeOfExecution}</span> */}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <>
+            <button onClick={algSwitch}>Alg: {alg}</button>
             <div className={`${listOfLocations.length <= 8 ?  'flex-container':'flex-container-column'}`}>
                 <div className='input_section'>
                     
+                 
                     <div className="localisation_title">Lokalizacje</div>
                     <div className={`grid-container ${listOfLocations.length > 8 ? listOfLocations.length > 16 ? 'three-columns' :'two-columns' : 'one-column'}`}>
                         {listOfLocations.map((value, index) => (
@@ -531,34 +554,17 @@ function MainActivity() {
                                 />
                             </div>
                         ))}
-                       
                     </div> 
                     <button className='addButton' onClick={handleAddInput}>Add input</button> 
-                    
+
                     <button
                         className='optymaliseButton'
                         onClick={() => makeRequest()}
                         disabled={isOptimizing}  // Przycisk będzie nieklikalny, gdy isOptimizing jest true
                         >
                         {!isOptimizing ? 'Optymalizuj' : `Trwa optymalizacja...${timeLeft > 0 ? timeLeft: ''}`}
-                        </button>
-                    <div className='allParameters'>
-                    <div className='parameters'>DODATKOWE PARAMETRY</div>
-                    <div className='optional'>
-                        <div className='optionalText'>
-                            <div>Sugerowana liczba pojazdów: </div>
-                            <div>Czas działania: </div>
-                        </div>
-                        <div className='optionalInput' >
-                            <input type="number" value={numberOfvehicles} onChange={(e) => setNumberOfVehicles(e.target.value)} />
-                            <div className="sliderContainer">
-                                <input type="range" min="0" max="100" value={timeOfExecution} onChange={(e) => setTimeOfExecution(e.target.value)} />
-                                <span className="sliderValue">{timeOfExecution}</span>
-                            </div>
-                        </div>
-                        <button onClick={algSwitch}>Alg: {alg}</button>
-                    </div>
-                    </div>
+                    </button>
+                    <AdditionalParameters numberOfLocations={listOfLocations.length}/>                  
                 </div>
                 <div ref={targetRef} style={{ width: '100%', height: '700px', display: 'flex', flexDirection: 'column', gap: '30px', flex: '1' }}>
                     <MapContainer key={listOfLocations.length} center={mapCenter} zoom={13} scrollWheelZoom={false} style={{height: '600px', width: '100%' }}>
@@ -598,6 +604,7 @@ function MainActivity() {
                 </div>
                 
             </div>
+            
             <div className='routesList'>
                 {groups.length > 0  && groups.map((route, routeIndex) => (
                         <div className='routeList'>

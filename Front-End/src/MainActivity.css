@@ -158,14 +158,18 @@
     padding: 10px 0;
 }
 
-sliderContainer {
+.sliderContainer {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
+.sliderContainer input {
+    /* width: 150px; */
+}
+
 .optionalInput input[type="range"] {
-    width: 100%;
+    width: 80%;
 }
 
 .sliderValue {
