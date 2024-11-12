@@ -143,6 +143,7 @@
 
 .optional input{
     background-color: #FFF;
+    width: fit-content;
 }
 
 .optionalText, .optionalInput{
@@ -150,12 +151,17 @@
     flex-direction: column;
     gap: 10px;
     justify-content: space-between;
-    text-align: end;
+    text-align: end;   
+    padding-left: 5px;
    
 }
 
 .optionalText{
     padding: 10px 0;
+}
+
+.optionalText input {
+    width: 20px;
 }
 
 .sliderContainer {
@@ -165,11 +171,13 @@
 }
 
 .sliderContainer input {
-    /* width: 150px; */
+    color: #214225;
+    width: 50%;
 }
 
 .optionalInput input[type="range"] {
     width: 80%;
+    color: #214225;
 }
 
 .sliderValue {

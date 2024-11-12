@@ -301,13 +301,20 @@ const YourProfile = () => {
             <div className={styles.mainWritting}>
                 Twój profil
             </div>
+            <div style={{
+                    display: 'flex',
+                    flexDirection: 'column', 
+                    justifyContent: 'center', 
+                    backgroundColor: '#ffffff'
+                }}
+            >
                 <div className={styles.profile}>
-                <p>Imię: <strong>{userName}</strong></p>
-                <p>Email: <strong>{userEmail}</strong></p>
-               
+                        <p>Imię: <strong>Konrad</strong></p>
+                        <p>Nazwisko: <strong>Pempi</strong></p>
+                        <p>Email: <strong>konrad@email.com</strong></p>
+                        <p>idk co jeszcze jakieś uwagi czy coś, czy liczba samochodow w firmie</p>        
                 </div>
-
-
+            </div>
             <div className={styles.mainWritting}>
                 Dzienniczek paliwowy
             </div>

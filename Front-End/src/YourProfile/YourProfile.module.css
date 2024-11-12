@@ -34,17 +34,26 @@
       letter-spacing: 0.12em; 
       font-variant: small-caps;
   }
+
+  .mainProfile {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    background-color: #ffffff;
+    margin: 20px;
+    width: 100%;
+  }
   
   .profile{
-    background-color: #fff;
-    border-radius: 10px;
+    /* background-color: #fff; */
+    /* border-radius: 10px; */
     padding: 20px;
-    width: 60%;
+    width: 100%;
   }
 
   .profile p {
     font-size: 14px;
-    font-family: 'Montserrat-Medium';
+    font-family: 'Montserrat-Regular';
     color: #333;
     margin: 10px 0px;
   }

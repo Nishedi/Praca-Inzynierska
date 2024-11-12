@@ -536,12 +536,12 @@ function MainActivity() {
     return (
         <>
             <button onClick={algSwitch}>Alg: {alg}</button>
-            <div className={`${listOfLocations.length <= 8 ?  'flex-container':'flex-container-column'}`}>
+            <div className={`${listOfLocations.length <= 7 ?  'flex-container':'flex-container-column'}`}>
                 <div className='input_section'>
                     
                  
                     <div className="localisation_title">Lokalizacje</div>
-                    <div className={`grid-container ${listOfLocations.length > 8 ? listOfLocations.length > 16 ? 'three-columns' :'two-columns' : 'one-column'}`}>
+                    <div className={`grid-container ${listOfLocations.length > 7 ? listOfLocations.length > 16 ? 'three-columns' :'two-columns' : 'one-column'}`}>
                         {listOfLocations.map((value, index) => (
                             <div key={value.id} onChange={()=>setIsEditing(true)}>
                                 <AutoCompleteInput 
@@ -556,7 +556,7 @@ function MainActivity() {
                         ))}
                     </div> 
                     <button className='addButton' onClick={handleAddInput}>Add input</button> 
-
+                    <AdditionalParameters numberOfLocations={listOfLocations.length}/>
                     <button
                         className='optymaliseButton'
                         onClick={() => makeRequest()}
@@ -564,10 +564,26 @@ function MainActivity() {
                         >
                         {!isOptimizing ? 'Optymalizuj' : `Trwa optymalizacja...${timeLeft > 0 ? timeLeft: ''}`}
                     </button>
-                    <AdditionalParameters numberOfLocations={listOfLocations.length}/>                  
+                                      
                 </div>
-                <div ref={targetRef} style={{ width: '100%', height: '700px', display: 'flex', flexDirection: 'column', gap: '30px', flex: '1' }}>
-                    <MapContainer key={listOfLocations.length} center={mapCenter} zoom={13} scrollWheelZoom={false} style={{height: '600px', width: '100%' }}>
+                <div 
+                    ref={targetRef} 
+                    style={{ 
+                        width: '100%', 
+                        height: '700px', // Warunkowa wysokość
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        gap: '30px', 
+                        flex: '1',
+                        alignItems: 'center' 
+                    }}
+                >
+                    <MapContainer key={listOfLocations.length} 
+                                center={mapCenter} 
+                                zoom={13} 
+                                scrollWheelZoom={false} 
+                                style={{height:'700px', width: '100%' 
+                                }}>
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
