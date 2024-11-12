@@ -119,6 +119,9 @@ int main(int argc, char* argv[]) {
         GreedyVechicleAllocation gva;
 
         int numberOfVechicles = gva.greedyVehicleAllocation(distancesInt);
+        if (numOfVechicles > numOfCities) {
+            numOfVechicles = numOfCities;
+        }
         numberOfVechicles = numOfVechicles;
 
         bool test = false;

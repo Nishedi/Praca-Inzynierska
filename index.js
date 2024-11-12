@@ -12,8 +12,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/run-script', async (req, res) => {
+  console.log("req.body", req.body);
   const timeOfExecution = req.body.timeOfExecution;
   const numberOfVehicles = req.body.numberOfvehicles;
+  console.log("numberOfVehicles", numberOfVehicles);
   const locations = req.body.message;
   const alg = req.body.alg;
   const dataForDistances= locations
@@ -112,8 +114,9 @@ const runScript = (message) => {
 app.post('/', (req, res) => {
   const message = req.body.message;
   console.log("Running")
-  runScript(message);
-  res.send({message});
+  // runScript(message);
+  const response = "Hello from extended Node.js!";
+  res.send({response});
 });
 
 app.get('/', (req, res) => {

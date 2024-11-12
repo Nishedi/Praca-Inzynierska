@@ -1,0 +1,62 @@
+[
+  {
+    "user_id": "0a5ac221-7445-4561-9ec4-ecd6786047a6",
+    "date": "2024-11-11",
+    "used_fuel": 10,
+    "distance": 100
+  },
+  {
+    "user_id": "0a5ac221-7445-4561-9ec4-ecd6786047a6",
+    "date": "2024-11-12",
+    "used_fuel": 11,
+    "distance": 100
+  },
+  {
+    "user_id": "0a5ac221-7445-4561-9ec4-ecd6786047a6",
+    "date": "2024-11-13",
+    "used_fuel": 12.3,
+    "distance": 100
+  },
+  {
+    "user_id": "0a5ac221-7445-4561-9ec4-ecd6786047a6",
+    "date": "2024-11-14",
+    "used_fuel": 9.1,
+    "distance": 100
+  },
+  {
+    "user_id": "0a5ac221-7445-4561-9ec4-ecd6786047a6",
+    "date": "2024-11-15",
+    "used_fuel": 8.5,
+    "distance": 100
+  },
+  {
+    "user_id": "0a5ac221-7445-4561-9ec4-ecd6786047a6",
+    "date": "2024-11-16",
+    "used_fuel": 10,
+    "distance": 100
+  },
+  {
+    "user_id": "0a5ac221-7445-4561-9ec4-ecd6786047a6",
+    "date": "2024-11-17",
+    "used_fuel": 11,
+    "distance": 100
+  },
+  {
+    "user_id": "0a5ac221-7445-4561-9ec4-ecd6786047a6",
+    "date": "2024-11-18",
+    "used_fuel": 12.3,
+    "distance": 100
+  },
+  {
+    "user_id": "0a5ac221-7445-4561-9ec4-ecd6786047a6",
+    "date": "2024-11-19",
+    "used_fuel": 9.1,
+    "distance": 100
+  },
+  {
+    "user_id": "0a5ac221-7445-4561-9ec4-ecd6786047a6",
+    "date": "2024-11-20",
+    "used_fuel": 8.5,
+    "distance": 100
+  }
+]
