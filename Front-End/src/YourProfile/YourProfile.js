@@ -329,59 +329,68 @@ const YourProfile = () => {
             <div className={styles.mainWritting}>
                 Dzienniczek paliwowy
             </div>
-            <div className={styles.todayStats}>
-                <p>Dzisiejsze statystyki</p>
-                <div className={styles.inputs}>
-                    <div className={styles.wholeInput}>
-                        <div className={styles.name}>
-                        Wykorzystane paliwo
+            <div className={styles.dzienniczek}>
+                <div className={styles.todayStatsStyle}>
+                <div className={styles.todayStats}>
+                    <p>Dzisiejsze statystyki</p>
+                    <div className={styles.inputs}>
+                        <div className={styles.wholeInput}>
+                            <div className={styles.name}>
+                            Wykorzystane paliwo
+                            </div>
+                            <input
+                                type="number"
+                                value={usedFuel}
+                                placeholder='Wykorzystane paliwo'
+                                onChange={(e) => setUsedFuel(e.target.value)}
+                            />
                         </div>
-                        <input
-                            type="number"
-                            value={usedFuel}
-                            placeholder='Wykorzystane paliwo'
-                            onChange={(e) => setUsedFuel(e.target.value)}
-                        />
-                    </div>
-                    <div className={styles.wholeInput}>
-                        <div className={styles.name}>
-                        Przejechany dystans
+                        <div className={styles.wholeInput}>
+                            <div className={styles.name}>
+                            Przejechany dystans
+                            </div>
+                            <input
+                                type="number"
+                                value={distance}
+                                placeholder='Przejechany dystans'
+                                onChange={(e) => setDistance(e.target.value)}
+                            />
                         </div>
-                        <input
-                            type="number"
-                            value={distance}
-                            placeholder='Przejechany dystans'
-                            onChange={(e) => setDistance(e.target.value)}
-                        />
                     </div>
+                    <button onClick={onSaveButtonClick}>Zapisz</button>
                 </div>
-                <button onClick={onSaveButtonClick}>Zapisz</button>
-            </div>
-            <div className={styles.inputs}>
-                <input
-                    type="date"
-                    value={firstDate}
-                    onChange={(e) => setFirstDate(e.target.value)}
-                />
-                <input
-                    type="date"
-                    value={secondDate}
-                    onChange={(e) => setSecondDate(e.target.value)}
-                />
-            </div>
-            <div className={styles.chartSection}>
-                <LineChart width={900} height={400} data={processedData} margin={{ top: 20, right: 30, left: 20, bottom: 40 }}>
-                    <CartesianGrid strokeDasharray="5 5" />
-                    <XAxis dataKey="date" label={{ value: 'Data', position: 'bottom', offset: 0 }} minTickGap={15} />
-                    <YAxis label={{ value: 'Średnie Spalanie (l/100 km)', angle: -90, position: 'insideLeft', dy: 100 }}/>
-
-                    <Line
-                        type="monotone"
-                        dataKey="averageConsumption"
-                        stroke={'#77AEFF'} // Ustal kolor na podstawie wartości
-                        dot={false} // Możesz ustawić na true, jeśli chcesz wyświetlić kropki
+                <div className={styles.inputs}>
+                    <input
+                        type="date"
+                        value={firstDate}
+                        onChange={(e) => setFirstDate(e.target.value)}
                     />
-                </LineChart>
+                    <input
+                        type="date"
+                        value={secondDate}
+                        onChange={(e) => setSecondDate(e.target.value)}
+                    />
+                </div>
+                <div className={styles.chartSection}>
+                    <LineChart width={900} height={400} data={processedData} margin={{ top: 20, right: 30, left: 20, bottom: 40 }}>
+                        <CartesianGrid strokeDasharray="5 5" />
+                        <XAxis dataKey="date" label={{ value: 'Data', position: 'bottom', offset: 0 }} minTickGap={15} />
+                        <YAxis label={{ value: 'Średnie Spalanie (l/100 km)', angle: -90, position: 'insideLeft', dy: 100 }}/>
+
+                        <Line
+                            type="monotone"
+                            dataKey="averageConsumption"
+                            stroke={'#77AEFF'} // Ustal kolor na podstawie wartości
+                            dot={false} // Możesz ustawić na true, jeśli chcesz wyświetlić kropki
+                        />
+                    </LineChart>
+                </div>
+                </div>
+            </div>
+            <footer className={styles.footer}>
+            © Konrad Pempi 2024
+            </footer>
+            <div className={styles.footerEnd}>
             </div>
         </div>
     );

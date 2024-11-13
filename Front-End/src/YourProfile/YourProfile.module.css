@@ -172,15 +172,15 @@
         padding: 10px;
         border: 1px solid #7D9F81;
         border-radius: 5px;
-        background-color: #f0f8ff;
+        background-color: #fff;
         color: #333;
         font-size: 14px;
-        font-family: 'Montserrat-Medium';
+        font-family: 'Montserrat-Regular';
         width: 200px;
     }
 
     input:hover {
-        background-color: #c2c9cf;
+        background-color: #f2f7f2;
     }
 
     input:focus {
@@ -214,13 +214,14 @@
         justify-content: center;
         flex-direction: column;
         align-items: center;
+        
     }
 
     .todayStats button{
         font-size: 14px;
         font-family: 'Montserrat-Bold';
-        color: white;
-        background-color: #4e7553;
+        color: #fff;
+        background-color: #3a5b40;
         border-radius: 10px;
         padding: 10px 30px;
         width: 40%;
@@ -234,11 +235,30 @@
         background-color: white;
         border: 1px solid #7D9F81;
     }
+    .dzienniczek {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #7D9F81;
+    }
+
+    .todayStatsStyle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 10px;
+    }
 
     .name {
-        color: #777;
+        color: #fff;
         font-size: 14px;
-        font-family: 'Poppins-Regular';
+        font-family: 'Montserrat-Regular';
     }
     
     .wholeInput{
@@ -247,4 +267,28 @@
         /* align-items: center; */
         width: 60%;
         margin: 10px 0px;
+    }
+
+    .chartSection {
+        background-color: #fff;
+        margin-bottom: 10vh;
+    }
+
+    .footer {
+        /* background-image: linear-gradient(120deg, #7d9f81, #4e7553, #214225); */
+        background-color: #8a8f8d;
+        color: #676b6a;
+        font-family: 'Montserrat-Regular';
+        font-size: 16px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10vh;
+    }
+
+    .footerEnd {
+        width: 100%;
+        background-image: linear-gradient(120deg, #5f7863, #3a5b40, #18371b);
+        height: 1vh;
     }
