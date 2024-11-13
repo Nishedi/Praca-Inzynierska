@@ -387,9 +387,7 @@ const YourProfile = () => {
                 </div>
                 </div>
             </div>
-            <footer className={styles.footer}>
-            © Konrad Pempi 2024
-            </footer>
+           
             <div className={styles.footerEnd}>
             </div>
         </div>

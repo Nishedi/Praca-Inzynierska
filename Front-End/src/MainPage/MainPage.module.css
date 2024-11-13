@@ -16,7 +16,7 @@
     align-items: center;
     width: 75%;
     height: 10vh;
-    background: #EEE;
+    background: #fff;
     color: #282c34;
     box-sizing: border-box; /* Umożliwia uwzględnienie paddingu w szerokości */
 }
