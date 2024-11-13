@@ -514,7 +514,7 @@ function MainActivity() {
 
     const AdditionalParameters = ({numberOfLocations}) => {
         return (
-            <div className='allParameters' style={{maxWidth: numberOfLocations <= 8 ? "282px" : "None"}}>
+            <div className='allParameters' style={{maxWidth: numberOfLocations <= 6 ? "282px" : "None"}}>
                 <div className='parameters'>DODATKOWE PARAMETRY</div>
                 <div className='optional'>
                     <div className='optionalText'>
@@ -522,7 +522,9 @@ function MainActivity() {
                         <div>Czas działania: </div>
                     </div>
                     <div className='optionalInput' >
-                        <input type="number" value={numberOfvehicles} onChange={(e) => setNumberOfVehicles(e.target.value)} />
+                        <input type="number" value={numberOfvehicles} onChange={(e) => {
+                            if(e.target.value > 0 && e.target.value<numberOfLocations) setNumberOfVehicles(e.target.value);
+                        }} />
                         <div className="sliderContainer">
                             <input type="range" min="0" max="20" value={timeOfExecution} onChange={(e) => setTimeOfExecution(e.target.value)} />
                             {/* <span className="sliderValue">{timeOfExecution}</span> */}
@@ -536,12 +538,12 @@ function MainActivity() {
     return (
         <>
             <button onClick={algSwitch}>Alg: {alg}</button>
-            <div className={`${listOfLocations.length <= 7 ?  'flex-container':'flex-container-column'}`}>
+            <div className={`${listOfLocations.length <= 6 ?  'flex-container':'flex-container-column'}`}>
                 <div className='input_section'>
                     
                  
                     <div className="localisation_title">Lokalizacje</div>
-                    <div className={`grid-container ${listOfLocations.length > 7 ? listOfLocations.length > 16 ? 'three-columns' :'two-columns' : 'one-column'}`}>
+                    <div className={`grid-container ${listOfLocations.length > 6 ? listOfLocations.length > 16 ? 'three-columns' :'two-columns' : 'one-column'}`}>
                         {listOfLocations.map((value, index) => (
                             <div key={value.id} onChange={()=>setIsEditing(true)}>
                                 <AutoCompleteInput 
@@ -564,25 +566,27 @@ function MainActivity() {
                         >
                         {!isOptimizing ? 'Optymalizuj' : `Trwa optymalizacja...${timeLeft > 0 ? timeLeft: ''}`}
                     </button>
+                    {groups && groups.length>0&&<button ref={targetRef} onClick={saveRoute} className='saveRoute'>{saveRouteDrawing}</button> }
+                    
                                       
                 </div>
                 <div 
                     ref={targetRef} 
                     style={{ 
                         width: '100%', 
-                        height: '700px', // Warunkowa wysokość
+                        height: '100%',  // Rozciągnięcie kontenera na pełną wysokość
                         display: 'flex', 
                         flexDirection: 'column', 
-                        gap: '30px', 
-                        flex: '1',
-                        alignItems: 'center' 
+                        justifyContent: 'space-between', // Rozkład elementów w pionie
+                        // alignItems: 'center',
+                        gap: '20px'
                     }}
                 >
                     <MapContainer key={listOfLocations.length} 
                                 center={mapCenter} 
                                 zoom={13} 
                                 scrollWheelZoom={false} 
-                                style={{height:'700px', width: '100%' 
+                                style={{height: listOfLocations.length <= 6 ? '850px':'600px', width: '100%' 
                                 }}>
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -615,8 +619,7 @@ function MainActivity() {
                         ))    
                         }
                     </MapContainer>
-                    {groups && groups.length>0&&<button onClick={saveRoute} className='saveRoute'>{saveRouteDrawing}</button> }
-                    
+                   
                 </div>
                 
             </div>

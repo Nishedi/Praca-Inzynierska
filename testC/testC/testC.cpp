@@ -91,7 +91,7 @@ std::string genetic_run(int numOfCities, std::vector<std::vector<int>> distances
 }
 
 std::string loadDataFromFile(std::string filename) {
-    std::ifstream inputFile(filename);
+    std::ifstream inputFile("C:\\Users\\KONRAD PEMPERA\\Desktop\\Praca-Inzynierska\\"+filename);
     if (!inputFile.is_open()) {
         std::cerr << "Cannot open test file: " << filename << std::endl << std::endl;
         return "Error"; // Zakończ program z błędem
@@ -137,18 +137,23 @@ int main(int argc, char* argv[]) {
         numberOfVechicles = numOfVechicles;
 
         bool test = false;
-        if (test) {
+        if (alg == 0) {
+            std::string x = ts_run(numOfCities, distancesInt, 1, 100 * numOfCities, numberOfVechicles, timeOfExecution);
+            std::cout << "|" << numberOfVechicles << "|" << x << "TS\n";
         }
-        else {
-            if (alg == 0) {
-                std::string x = ts_run(numOfCities, distancesInt, 1, 100 * numOfCities, numberOfVechicles, timeOfExecution);
-                std::cout << "|" << numberOfVechicles << "|" << x << "TS\n";
+        if (alg == 1) {
+            std::string y = genetic_run(numOfCities, distancesInt, numberOfVechicles, 1, timeOfExecution, numOfCities * 300);
+            std::cout << "|" << numberOfVechicles << "|" << y << "G\n";
+        }
+        /*for (alg = 0; alg < 2; alg++) {
+            for (int i = 0; i < 10; i++) {
+                if (test) {
+                }
+                else {
+                    
+                }
             }
-            if (alg == 1) {
-                std::string y = genetic_run(numOfCities, distancesInt, numberOfVechicles, 1, timeOfExecution, numOfCities * 300);
-                std::cout << "|" << numberOfVechicles << "|" << y << "G\n";
-            } 
-        }
+        }*/
     }
     return 0;
 }

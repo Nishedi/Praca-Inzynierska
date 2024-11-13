@@ -25,11 +25,15 @@ public:
         std::vector<int> truckDistances;
         int currentDistance = 0;
         int max = 0;
-        ///*for (int i = 0; i < path.size(); i++) {
-        //    std::cout << path[i] << " ";
-        //}*/
-        //std::cout << std::endl;
-        
+        for (int i = 0; i < path.size()-1; i++) {
+            if (path[i] == 0 && path[i + 1] == 0) {
+                return 9999999999999999;
+            }
+        }  
+        if (path[0] == 0 && path[path.size()-1] == 0) {
+            return 9999999999999999;
+        }
+       
         for (int i = 0; i < path.size() - 1; i++) {
             int x = path[i];
             int y = path[i + 1];
@@ -61,6 +65,11 @@ public:
         std::vector<int> truckDistances;
         int currentDistance = 0;
         int max = 0;
+        for (int i = 0; i < path.size() - 1; i++) {
+            if (path[i] == 0 && path[i + 1] == 0) {
+                return std::to_string(9999999999999999) + " " + std::to_string(100 * 9999999999999999);
+            }
+        }
         for (int i = 0; i < path.size() - 1; i++) {
             int x = path[i];
             int y = path[i + 1];
