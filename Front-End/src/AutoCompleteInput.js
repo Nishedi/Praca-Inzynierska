@@ -3,8 +3,8 @@ import styles from './AutoComplete.module.css';
 import { FaRegTrashAlt } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 
-const AutoCompleteInput = ({ exercise, setSelectedExercises, remove}) => {
-    const [location, setLocation] = useState(exercise?.location||'');
+const AutoCompleteInput = ({ exercise, setSelectedExercises, remove, isBase}) => {
+    const [location, setLocation] = useState(exercise?.location || "");
     const [suggestions, setSuggestions] = useState([]);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const getSuggestions = async (value) => {
@@ -50,13 +50,15 @@ const AutoCompleteInput = ({ exercise, setSelectedExercises, remove}) => {
         <div>
             {/* <div>{exercise?.location}</div> */}
             <div className={styles.exercise_details}>
+                
                 <div className={styles.wholeInput}>
                     <input
                         type="text"
-                        placeholder='Podaj lokalizację'
+                        placeholder={isBase ? "Podaj lokalizację bazy" : "Podaj lokalizację"}
                         value={location}
                         onKeyDownCapture={() => setIsDropdownVisible(true)}
                         onChange={(e)=>{setLocation(e.target.value);}}
+                        style={{border: isBase ? "2px solid #214225" : "1px solid #77777750 "}}
                     />
                     <IoIosClose
                         onClick={() => {

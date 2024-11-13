@@ -565,8 +565,6 @@ function MainActivity() {
             <button onClick={algSwitch}>Alg: {alg}</button>
             <div className={`${listOfLocations.length <= 6 ?  'flex-container':'flex-container-column'}`}>
                 <div className='input_section'>
-                    
-                 
                     <div className="localisation_title">Lokalizacje</div>
                     <div className={`grid-container ${listOfLocations.length > 6 ? listOfLocations.length > 16 ? 'three-columns' :'two-columns' : 'one-column'}`}>
                         {listOfLocations.map((value, index) => (
@@ -578,6 +576,7 @@ function MainActivity() {
                                     initialValue={value} 
                                     onChange={()=>setIsEditing(true)}
                                     remove={() => remove(value.id)} 
+                                    isBase = {index === 0}
                                 />
                             </div>
                         ))}
