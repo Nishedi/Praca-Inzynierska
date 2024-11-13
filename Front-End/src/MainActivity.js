@@ -10,6 +10,7 @@ import markerShadowPng from 'leaflet/dist/images/marker-shadow.png'; // Import c
 import { FaTruck } from "react-icons/fa";
 import { GlobalContext } from './GlobalContext';
 import greenMarker from './assets/green_marker2.png';
+import e from 'cors';
 
 
 
@@ -486,7 +487,6 @@ function MainActivity() {
         return allRoutes;
     };
 
-
     useEffect(() => {
         const fetchRoutes = async () => {
             const groupRoutes2 = [];
@@ -513,52 +513,7 @@ function MainActivity() {
             setAlg("TS");
         }
     };
-    const SliderWithLabels = () => {
-        const [value, setValue] = useState(10);
-    
-        const handleSliderChange = (event) => {
-            setValue(event.target.value);
-        };
-    
-        return (
-            <div style={{  maxWidth: '300px',  textAlign: 'center' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
-                    <span >Szybko</span>
-                    <span >Dokładnie</span>
-                </div>
-                <input
-                    type="range"
-                    min="5"
-                    max="15"
-                    value={value}
-                    onChange={handleSliderChange}
-                    className='rangeInput'
-                />
-            </div>
-        );
-    };
 
-    const AdditionalParameters = ({numberOfLocations}) => {
-        return (
-            <div className='allParameters' style={{maxWidth: numberOfLocations <= 6 ? "282px" : "None"}}>
-                <div className='parameters'>DODATKOWE PARAMETRY</div>
-                <div className='optional'>
-                    <div className='optionalNOV'>
-                        <div>Sugerowana liczba pojazdów: </div>
-                        <input style={{width: numberOfLocations <= 6 ? '50%':'auto'}} type="number" value={numberOfvehicles} onChange={(e) => {
-                            if(e.target.value > 0 && e.target.value<numberOfLocations) setNumberOfVehicles(e.target.value);
-                        }} />
-                    </div>
-                    <div className='optionalNOV'>
-                        <div>Czas działania: </div>
-                        <SliderWithLabels  />
-                        {/* <input style={{width: numberOfLocations <= 6 ? '50%':'auto'}}  type="range" min="0" max="20" value={timeOfExecution} onChange={(e) => setTimeOfExecution(e.target.value)} /> */}
-                        
-                    </div>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <>
@@ -581,8 +536,35 @@ function MainActivity() {
                             </div>
                         ))}
                     </div> 
-                    <button className='addButton' onClick={handleAddInput}>Add input</button> 
-                    <AdditionalParameters numberOfLocations={listOfLocations.length}/>
+                    <button className='addButton' onClick={handleAddInput}>Dodaj miasto</button> 
+                    <div className='allParameters' style={{maxWidth: listOfLocations.length <= 6 ? "282px" : "None"}}>
+                        <div className='parameters'>DODATKOWE PARAMETRY</div>
+                        <div className='optional'>
+                            <div className='optionalNOV'>
+                                <div>Sugerowana liczba pojazdów: </div>
+                                <input style={{width: listOfLocations.length <= 6 ? '50%':'auto'}} type="number" value={numberOfvehicles} onChange={(e) => {
+                                    if(e.target.value > 0 && e.target.value<listOfLocations.length) setNumberOfVehicles(e.target.value);
+                                }} />
+                            </div>
+                            <div className='optionalNOV'>
+                                <div>Czas działania: </div>
+                                <div style={{  maxWidth: '300px',  textAlign: 'center' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                                        <span >Szybko</span>
+                                        <span >Dokładnie</span>
+                                    </div>
+                                    <input
+                                        type="range"
+                                        min="5"
+                                        max="15"
+                                        value={timeOfExecution}
+                                        onChange={(e) => {setTimeOfExecution(e.target.value)}}
+                                        className='rangeInput'
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <button
                         className='optymaliseButton'
                         onClick={() => makeRequest()}
@@ -598,11 +580,10 @@ function MainActivity() {
                     ref={targetRef} 
                     style={{ 
                         width: '100%', 
-                        height: '100%',  // Rozciągnięcie kontenera na pełną wysokość
+                        height: '100%',
                         display: 'flex', 
                         flexDirection: 'column', 
-                        justifyContent: 'space-between', // Rozkład elementów w pionie
-                        // alignItems: 'center',
+                        justifyContent: 'space-between', 
                         gap: '20px'
                     }}
                 >
@@ -628,7 +609,6 @@ function MainActivity() {
                         </>
                         :
                             <>
-
                             {listOfLocations.map((location, index) => (
                                 location?.others?.lat && location?.others?.lon ?
                                 <Marker key={index} position={[location?.others?.lat, location?.others?.lon]} icon={index === 0 ? baseIcon : defaultIcon}>
@@ -655,15 +635,12 @@ function MainActivity() {
                             <div className='emoticoneDiv'>
                                 <FaTruck style={{color: colors[routeIndex]}}/>
                             </div>
-                            
                             {route.map((coords, index) => (
                                 <div style={index === 0 || index === route.length-1? { fontWeight: 'bold' } : {}}>
-                                    
                                     {index}. {coords.location}
                                 </div>
                             ))}
-                        </div>
-                            
+                        </div>   
                         ))    
                         }
                 </div>

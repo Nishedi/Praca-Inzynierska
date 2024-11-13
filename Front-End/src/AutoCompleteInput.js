@@ -34,6 +34,7 @@ const AutoCompleteInput = ({ exercise, setSelectedExercises, remove, isBase}) =>
         });
     
         promise.then((data) => {
+            console.log(data.features);
             setSuggestions(data.features);
         }
         );
