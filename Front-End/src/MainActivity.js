@@ -9,6 +9,7 @@ import markerIconPng from 'leaflet/dist/images/marker-icon.png'; // Import domy�
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png'; // Import cienia markera
 import { FaTruck } from "react-icons/fa";
 import { GlobalContext } from './GlobalContext';
+import greenMarker from './assets/green_marker2.png';
 
 
 
@@ -22,13 +23,12 @@ const defaultIcon = L.icon({
     shadowSize: [41, 41]  // Rozmiar cienia
 });
 
-const baseIcon = L.icon({
-    iconUrl: markerIconPng,
+const baseIcon= L.icon({
+    iconUrl: greenMarker,
     shadowUrl: markerShadowPng,
-    color: 'red',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
+    iconSize: [25, 41], // Rozmiar markera
+    iconAnchor: [12, 41], // Punkt zakotwiczenia, który wskazuje lokalizację
+    popupAnchor: [1, -34], // Punkt zakotwiczenia dla popupu
     shadowSize: [41, 41]
 });
 
@@ -628,9 +628,10 @@ function MainActivity() {
                         </>
                         :
                             <>
+
                             {listOfLocations.map((location, index) => (
                                 location?.others?.lat && location?.others?.lon ?
-                                <Marker key={index} position={[location?.others?.lat, location?.others?.lon]} icon={index === 0 ? baseIcon: defaultIcon}>
+                                <Marker key={index} position={[location?.others?.lat, location?.others?.lon]} icon={index === 0 ? baseIcon : defaultIcon}>
                                     <Popup>{location.location}</Popup>
                                 </Marker> : null  ))  }
                                 <FitMapToBounds locations={listOfLocations} /> 
