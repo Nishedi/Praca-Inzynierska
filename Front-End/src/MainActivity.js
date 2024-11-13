@@ -10,6 +10,8 @@ import markerShadowPng from 'leaflet/dist/images/marker-shadow.png'; // Import c
 import { FaTruck } from "react-icons/fa";
 import { GlobalContext } from './GlobalContext';
 
+
+
 // Ustawienie ikony markera
 const defaultIcon = L.icon({
     iconUrl: markerIconPng,
@@ -263,8 +265,8 @@ function MainActivity() {
     const [mapCenter] = useState([51.110307, 17.033225]);
     const [isEditing, setIsEditing] = useState(true);
     const [isOptimizing, setIsOptimizing] = useState(false);
-    const colors = ['#08ff00', '#ff0800', '#fff700', '#00e8ff', '#00e8ff',
-        '#ff00f7', '#000000'];
+    
+    const colors = ['#007bff', '#dc3545', '#ffc107', '#28a745', '#6f42c1', '#343a40', '#f8f9fa'];
 
     const [groups, setGroups] = useState([]);
     const [groupsRoute, setGroupsRoute] = useState([]);
@@ -511,24 +513,47 @@ function MainActivity() {
             setAlg("TS");
         }
     };
+    const SliderWithLabels = () => {
+        const [value, setValue] = useState(10);
+    
+        const handleSliderChange = (event) => {
+            setValue(event.target.value);
+        };
+    
+        return (
+            <div style={{  maxWidth: '300px',  textAlign: 'center' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                    <span >Szybko</span>
+                    <span >Dokładnie</span>
+                </div>
+                <input
+                    type="range"
+                    min="5"
+                    max="15"
+                    value={value}
+                    onChange={handleSliderChange}
+                    className='rangeInput'
+                />
+            </div>
+        );
+    };
 
     const AdditionalParameters = ({numberOfLocations}) => {
         return (
             <div className='allParameters' style={{maxWidth: numberOfLocations <= 6 ? "282px" : "None"}}>
                 <div className='parameters'>DODATKOWE PARAMETRY</div>
                 <div className='optional'>
-                    <div className='optionalText'>
+                    <div className='optionalNOV'>
                         <div>Sugerowana liczba pojazdów: </div>
-                        <div>Czas działania: </div>
-                    </div>
-                    <div className='optionalInput' >
-                        <input type="number" value={numberOfvehicles} onChange={(e) => {
+                        <input style={{width: numberOfLocations <= 6 ? '50%':'auto'}} type="number" value={numberOfvehicles} onChange={(e) => {
                             if(e.target.value > 0 && e.target.value<numberOfLocations) setNumberOfVehicles(e.target.value);
                         }} />
-                        <div className="sliderContainer">
-                            <input type="range" min="0" max="20" value={timeOfExecution} onChange={(e) => setTimeOfExecution(e.target.value)} />
-                            {/* <span className="sliderValue">{timeOfExecution}</span> */}
-                        </div>
+                    </div>
+                    <div className='optionalNOV'>
+                        <div>Czas działania: </div>
+                        <SliderWithLabels  />
+                        {/* <input style={{width: numberOfLocations <= 6 ? '50%':'auto'}}  type="range" min="0" max="20" value={timeOfExecution} onChange={(e) => setTimeOfExecution(e.target.value)} /> */}
+                        
                     </div>
                 </div>
             </div>

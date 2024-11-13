@@ -126,7 +126,7 @@
 
 .optional {
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     padding: 10px;
     border-radius: 10px;
@@ -140,43 +140,46 @@
     width: fit-content;
 }
 
-.optionalText, .optionalInput{
+.optionalNOV{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
     justify-content: space-between;
-    text-align: end;   
-    padding-left: 5px;
-   
+    align-items: center;
+    text-align: end;
+    font-variant: small-caps;
 }
 
-.optionalText{
+.optionalNOV{
     padding: 10px 0;
 }
-
-.optionalText input {
+.optionalNOV div{
+    text-align:left;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Usuwa domyślny styl przeglądarki */
+    appearance: none;
     width: 20px;
+    height: 20px;
+    background-color: #214225; /* Kolor kuleczki */
+    border-radius: 50%; /* Ustawia kuleczkę na okrągłą */
+    cursor: pointer;
+  }
+
+.rangeInput {
+    padding: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background-color: #ddd;
+    border-radius: 50px;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    width: 100%;
 }
 
-.sliderContainer {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
 
-.sliderContainer input {
-    color: #214225;
-    width: 50%;
-}
-
-.optionalInput input[type="range"] {
-    width: 80%;
-    color: #214225;
-}
-
-.sliderValue {
-    font-weight: bold;
-}
 
 .routeList{
     display: flex;
@@ -215,6 +218,8 @@
     font-size: 16px;
     margin: 5px;
 }
+
+
 
 .emoticoneDiv{
     display: flex;
