@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './AutoComplete.module.css';
+import styles from './SingleAutoComplete.module.css';
 import { FaRegTrashAlt } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 

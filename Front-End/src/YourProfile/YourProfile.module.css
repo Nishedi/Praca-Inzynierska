@@ -95,7 +95,7 @@
     }
 
     .formRow p {
-        width: 120px; /* Fixed width to align labels */
+        width: 140px; /* Fixed width to align labels */
         margin-right: 10px; /* Space between label and input */
     }
 
@@ -256,7 +256,7 @@
     }
 
     .name {
-        color: #fff;
+        color: #333;
         font-size: 14px;
         font-family: 'Montserrat-Regular';
     }

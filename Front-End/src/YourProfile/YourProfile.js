@@ -9,6 +9,7 @@ const YourProfile = () => {
     const [userName, setUserName] = useState('');
     const [userSurname, setUserSurname] = useState('');
     const [numberOfVehicle, setNumberOfVehicle] = useState('');
+    const [baseLocation, setBaseLocation] = useState('');
 
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 2); 
@@ -231,6 +232,10 @@ const YourProfile = () => {
                     <p>Liczba pojazdów:</p>
                     <input type="number" placeholder="Podaj liczbę samochodów w firmie" value={numberOfVehicle} onChange={(e)=>setNumberOfVehicle(e.target.value)} />
                 </div>
+                <div className={styles.formRow}>
+                    <p>Centrum firmowe:</p>
+                    <input type="number" placeholder="Podaj liczbę samochodów w firmie" value={numberOfVehicle} onChange={(e)=>setNumberOfVehicle(e.target.value)} />
+                </div>
 
                 <div className={styles.buttons}>
                     <button onClick={updateProfile}>Zapisz</button>
@@ -272,16 +277,26 @@ const YourProfile = () => {
                     <button onClick={onSaveButtonClick}>Zapisz</button>
                 </div>
                 <div className={styles.inputs}>
-                    <input
-                        type="date"
-                        value={firstDate}
-                        onChange={(e) => setFirstDate(e.target.value)}
-                    />
-                    <input
-                        type="date"
-                        value={secondDate}
-                        onChange={(e) => setSecondDate(e.target.value)}
-                    />
+                    <div className={styles.wholeInput}>
+                        <div className={styles.name}>
+                            Data od
+                        </div>
+                        <input
+                            type="date"
+                            value={firstDate}
+                            onChange={(e) => setFirstDate(e.target.value)}
+                            />
+                    </div>
+                    <div className={styles.wholeInput}>
+                        <div className={styles.name}>
+                            Data do
+                        </div>
+                        <input
+                            type="date"
+                            value={secondDate}
+                            onChange={(e) => setSecondDate(e.target.value)}
+                        />
+                    </div>
                 </div>
                 <div className={styles.chartSection}>
                     <LineChart width={900} height={400} data={processedData} margin={{ top: 20, right: 30, left: 20, bottom: 40 }}>

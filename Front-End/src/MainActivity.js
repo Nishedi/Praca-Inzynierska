@@ -33,7 +33,7 @@ const baseIcon= L.icon({
     shadowSize: [41, 41]
 });
 
-function MainActivity() {
+function MainActivity({isLogged}) {
     const {supabase } = useContext(GlobalContext);
     const [sugerowanaTrasa, setSugerowanaTrasa] = useState([]);
     const [listOfLocations, setListOfLocations] = useState(
@@ -572,7 +572,7 @@ function MainActivity() {
                         >
                         {!isOptimizing ? 'Optymalizuj' : `Trwa optymalizacja...${timeLeft > 0 ? timeLeft: ''}`}
                     </button>
-                    {groups && groups.length>0&&<button ref={targetRef} onClick={saveRoute} className='saveRoute'>{saveRouteDrawing}</button> }
+                    {isLogged && groups && groups.length>0&&<button ref={targetRef} onClick={saveRoute} className='saveRoute'>{saveRouteDrawing}</button> }
                     
                                       
                 </div>
