@@ -332,6 +332,8 @@ function MainActivity({isLogged}) {
             if (data?.numberOfvehicles) {
                 if(user && data.numberOfvehicles <= user.number_of_trucks){
                     setNumberOfVehicles(data.numberOfvehicles);
+                }else if(user && data.numberOfvehicles > user.number_of_trucks){
+                    setNumberOfVehicles(user.number_of_trucks);
                 }
                 if(!user){
                     setNumberOfVehicles(data.numberOfvehicles);
@@ -361,10 +363,15 @@ function MainActivity({isLogged}) {
                     if(data[0].base_location && data[0].base_location !== listOfLocations[0]){
                         setListOfLocations([data[0].base_location, ...listOfLocations]);
                     }
+                    
                 }
             }
         }
     };
+
+    useEffect(() => {
+        getSuggestedNumberOfVehicles();
+    }, [user]);
 
     useEffect(() => {
         if (isLogged) {
