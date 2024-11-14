@@ -21,28 +21,39 @@ const YourProfile = () => {
     const navigate = useNavigate();
     const [fuelDiary, setFuelDiary] = useState([]);
 
-    // USTAW SOBIE ZGODNIE Z BAZĄ PLSSSSS
-    useEffect(() => {
-        const getUserProfile = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            const id = session?.user?.id;
-            if (!id) {
-                navigate("/");
+    const getUserProfile = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        const id = session?.user?.id;
+        if (!id) {
+            navigate("/");
+        } else {
+            // Fetch the user profile data
+            const { data, error } = await supabase
+                .from('users_details')
+                .select('*')
+                .eq('user_id', id)
+            if (error) {
+                console.log("Error fetching profile:", error);
             } else {
-                // Fetch the user profile data
-                const { data, error } = await supabase
-                    .from('users_details')
-                    .select('*')
-                    .eq('user_id', id)
-                if (error) {
-                    console.log("Error fetching profile:", error);
-                } else {
-                    setUserName(data?.name || "");
-                    setUserSurname(data?.surname || "");
-                    setNumberOfVehicle(data?.number_of_trucks || 0);
-                }
+                setUserName(data[0]?.name || "");
+                setUserSurname(data[0]?.surname || "");
+                setNumberOfVehicle(data[0]?.number_of_trucks || 0);
             }
-        };
+        }
+    };
+    const updateProfile = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        const id = session?.user?.id;
+        const { data, error } = await supabase
+            .from('users_details')
+            .update({ name: userName, surname: userSurname, number_of_trucks: numberOfVehicle })
+            .eq('user_id', id)
+            if (error) {
+                alert("Wystąpił problem podczas zapisywania danych!");
+                console.log("Error fetching profile:", error);
+            } 
+    };
+    useEffect(() => {
         getUserProfile();
     }, []);
 
@@ -214,16 +225,15 @@ const YourProfile = () => {
                 </div>
                 <div className={styles.formRow}>
                     <p>Nazwisko:</p>
-                    <input type="text" defaultValue="Podaj nazwisko" value={userSurname} onChange={(e)=>setUserSurname(e.target.value)} />
+                    <input type="text" placeholder="Podaj nazwisko" value={userSurname} onChange={(e)=>setUserSurname(e.target.value)} />
                 </div>
                 <div className={styles.formRow}>
                     <p>Liczba pojazdów:</p>
-                    <input type="text" defaultValue="Podaj liczbę samochodów w firmie" />
+                    <input type="number" placeholder="Podaj liczbę samochodów w firmie" value={numberOfVehicle} onChange={(e)=>setNumberOfVehicle(e.target.value)} />
                 </div>
 
                 <div className={styles.buttons}>
-                    <button>Zapisz</button>
-                    <button>Cofnij</button>
+                    <button onClick={updateProfile}>Zapisz</button>
                 </div>
             </div>
 
