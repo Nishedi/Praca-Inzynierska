@@ -1,0 +1,131 @@
+
+.exercise_details{
+    /* display:flex;
+    flex-direction: row;   
+    align-items: center; 
+    gap: 10px; */
+}
+
+.exercise_details input {
+    padding: 10px;
+    border: 1px solid #7D9F81;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    font-family: 'Montserrat-Regular';
+    width: 200px;
+}
+
+input {
+    flex: 1; /* Allows inputs to take up remaining space */
+}
+  /* Style for individual suggestion items */
+  .suggestion {
+    background-color: #dddada;
+    border: 1px solid #dddada;
+    border-top: none; /* To avoid double border between suggestions */
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  /* Hover effect for suggestions */
+  .suggestion:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Style for when there are no suggestions */
+  .suggestions_empty {
+    padding: 10px;
+    font-size: 14px;
+    color: #766;
+  }
+
+  .suggestions {
+    position: absolute;
+    top: 100%;
+    /* max-height: 200px;  */
+    background-color: #EEE;
+    
+    border: 1px solid #dddada;
+    overflow-y: auto;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 100%;
+
+  } 
+
+  .wholeInput{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    width: 60%;
+    margin: 10px 0px;
+}
+
+.add_button{
+    font-size: 40px;
+    color: #FFF;
+    background-image: linear-gradient(90deg, #1D61DC 9%,#1D61DC 47%, #103476 100%);
+    border-radius: 10px;
+    padding: 8px;
+    margin: 4px;   
+    position: absolute; /* Absolutne pozycjonowanie przycisku */
+    right: 10px; /* Odległość od prawego brzegu inputa */
+    top: 50%; /* Centrowanie w pionie */
+    transform: translateY(-50%); /* Aby przycisk był dokładnie na środku */
+}
+
+
+.add_button:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Większy cień przy najechaniu */
+    transform: translateY(-2px); /* Lekko unosi przy najechaniu */
+}
+
+.add_button:active {
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3); /* Mniejszy cień przy kliknięciu */
+    transform: translateY(0); /* Powrót do normalnej pozycji */
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Xbutton{
+    position: absolute; /* Absolutne pozycjonowanie przycisku */
+    right: 10px; /* Odległość od prawego brzegu inputa */
+    top: 35%; 
+    font-size: 16px;
+    scale: 3;
+    color: #00000050;
+    /* transform: translateY(-50%);   */
+}
+
+.Xbutton:hover {
+    
+    transform: translateY(-2px); /* Lekko unosi przy najechaniu */
+}
+
+.Xbutton:active {
+    transform: translateY(0); /* Powrót do normalnej pozycji */
+    color: #e40000;
+}
+
+.trash{
+  scale: 1.5;
+  color: #00000050;
+}
+
+.trash:hover {
+  color: #e40000;
+}
+
+.trash:active {
+  color: #b3e400;
+}

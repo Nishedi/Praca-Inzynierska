@@ -10,7 +10,6 @@ import markerShadowPng from 'leaflet/dist/images/marker-shadow.png'; // Import c
 import { FaTruck } from "react-icons/fa";
 import { GlobalContext } from './GlobalContext';
 import greenMarker from './assets/green_marker2.png';
-import e from 'cors';
 
 
 
@@ -277,6 +276,7 @@ function MainActivity({isLogged}) {
     const [saveRouteDrawing, setSaveRouteDrawing] = useState("Zapisz trasę");
     const [activeRoute, setActiveRoute] = useState(null);  
     const [alg, setAlg] = useState("TS");
+    const [user, setUser] = useState(null);
     const targetRef = useRef(null);
     const scrollToSection = () => {
         targetRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -330,7 +330,12 @@ function MainActivity({isLogged}) {
             const data = await response.json();
     
             if (data?.numberOfvehicles) {
-                setNumberOfVehicles(data.numberOfvehicles);
+                if(user && data.numberOfvehicles <= user.number_of_trucks){
+                    setNumberOfVehicles(data.numberOfvehicles);
+                }
+                if(!user){
+                    setNumberOfVehicles(data.numberOfvehicles);
+                }
             } else {
                 console.warn("Brak danych dotyczących liczby pojazdów");
             }
@@ -339,6 +344,33 @@ function MainActivity({isLogged}) {
             setNumberOfVehicles(1); 
         }
     };
+
+    const getUserProfile = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        const id = session?.user?.id;
+        if (id) {
+            const { data, error } = await supabase
+                .from('users_details')
+                .select('*')
+                .eq('user_id', id)
+            if (error) {
+                console.log("Error fetching profile:", error);
+            } else {
+                if(data && data.length>0){
+                    setUser(data[0]);
+                    if(data[0].base_location && data[0].base_location !== listOfLocations[0]){
+                        setListOfLocations([data[0].base_location, ...listOfLocations]);
+                    }
+                }
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (isLogged) {
+            getUserProfile();
+        }
+    }, [isLogged]);
     
     
     const saveRoute = async () => {
@@ -381,9 +413,7 @@ function MainActivity({isLogged}) {
         try {
             setIsOptimizing(true);
             setTimeLeft(timeOfExecution);
-    
             let algChoice = alg === "TS" ? "0" : "1";
-    
             const message = listOfLocations.filter(location => 
                 location.location && location.location.trim() !== ""
             );

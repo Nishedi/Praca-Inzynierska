@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../GlobalContext';
 import { useNavigate } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
-import {AutoCompleteInput} from '../AutoCompleteInput';
+import SingleAutoCompleteInput from '../SingleAutoComplete/SingleAutoComplete';
 const YourProfile = () => {
     const {supabase} = useContext(GlobalContext);
     const [userName, setUserName] = useState('');
@@ -43,11 +43,16 @@ const YourProfile = () => {
         }
     };
     const updateProfile = async () => {
+        if(!userName || !userSurname ){
+            alert("Wypełnij wszystkie pola!");
+            return;
+        }
+
         const { data: { session } } = await supabase.auth.getSession();
         const id = session?.user?.id;
         const { data, error } = await supabase
             .from('users_details')
-            .update({ name: userName, surname: userSurname, number_of_trucks: numberOfVehicle })
+            .update({ name: userName, surname: userSurname, number_of_trucks: numberOfVehicle, base_location: baseLocation })
             .eq('user_id', id)
             if (error) {
                 alert("Wystąpił problem podczas zapisywania danych!");
@@ -222,20 +227,28 @@ const YourProfile = () => {
             <div className={styles.profile}>
                 <div className={styles.formRow}>
                     <p>Imię:</p>
-                    <input type="text" placeholder='Podaj imię' value={userName} onChange={(e)=>setUserName(e.target.value)}/>
-                </div>
+                    <div>
+                        <input type="text" placeholder='Podaj imię' value={userName} onChange={(e)=>setUserName(e.target.value)}/>
+                    </div>
+                    </div>
+                    
                 <div className={styles.formRow}>
                     <p>Nazwisko:</p>
-                    <input type="text" placeholder="Podaj nazwisko" value={userSurname} onChange={(e)=>setUserSurname(e.target.value)} />
+                    <div>
+                        <input type="text" placeholder="Podaj nazwisko" value={userSurname} onChange={(e)=>setUserSurname(e.target.value)} />
+                    </div>
                 </div>
                 <div className={styles.formRow}>
                     <p>Liczba pojazdów:</p>
-                    <input type="number" placeholder="Podaj liczbę samochodów w firmie" value={numberOfVehicle} onChange={(e)=>setNumberOfVehicle(e.target.value)} />
+                    <div>
+                        <input type="number" placeholder="Podaj liczbę samochodów w firmie" value={numberOfVehicle} onChange={(e)=>setNumberOfVehicle(e.target.value)} />
+
+                    </div>
                 </div>
                 <div className={styles.formRow}>
                     <p>Centrum firmowe:</p>
-                    <input type="number" placeholder="Podaj liczbę samochodów w firmie" value={numberOfVehicle} onChange={(e)=>setNumberOfVehicle(e.target.value)} />
-                </div>
+                    <SingleAutoCompleteInput exercise={baseLocation} setExercise={setBaseLocation} isBase={true}/>
+                 </div>
 
                 <div className={styles.buttons}>
                     <button onClick={updateProfile}>Zapisz</button>

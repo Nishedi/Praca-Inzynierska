@@ -3,7 +3,7 @@ import styles from './SingleAutoComplete.module.css';
 import { FaRegTrashAlt } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 
-const AutoCompleteInput = ({ exercise, setSelectedExercises, remove, isBase}) => {
+const SingleAutoCompleteInput = ({ exercise, setExercise, isBase}) => {
     const [location, setLocation] = useState(exercise?.location || "");
     const [suggestions, setSuggestions] = useState([]);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -40,71 +40,52 @@ const AutoCompleteInput = ({ exercise, setSelectedExercises, remove, isBase}) =>
     }
 
     useEffect(() => {
-        // return;
         if(location.length >= 5)
             getSuggestions(location);
     },[location]);
 
 
     return (
-        <div>
-            {/* <div>{exercise?.location}</div> */}
-            <div className={styles.exercise_details}>
-                
-                <div className={styles.wholeInput}>
-                    <input
-                        type="text"
-                        placeholder={isBase ? "Podaj lokalizację bazy" : "Podaj lokalizację"}
-                        value={location}
-                        onKeyDownCapture={() => setIsDropdownVisible(true)}
-                        onChange={(e)=>{setLocation(e.target.value);}}
-                        style={{border: isBase ? "2px solid #214225" : "1px solid #77777750 "}}
-                    />
-                    <IoIosClose
+        <div style={{position: 'relative'}}>
+        <input
+            type="text"
+            placeholder={"Podaj lokalizację bazy"}
+            value={location}
+            onKeyDownCapture={() => setIsDropdownVisible(true)}
+            onChange={(e)=>{setLocation(e.target.value);}}
+        />                    
+        {isDropdownVisible && (
+            <div className={styles.suggestions}>
+                {suggestions.map((suggestion, index) => (
+                    <div key={index} className={styles.suggestion}
                         onClick={() => {
-                                    setLocation("");
-                                    setIsDropdownVisible(false);
-                                    setSuggestions([]);
-                                    setSelectedExercises((prevExercises) =>
-                                        prevExercises.map((item) =>(
-                                            item.id === exercise.id
-                                                ? { ...item, location: ""}
-                                                : item 
-                                        ))
-                                    );
-                                }}
-                        className={styles.Xbutton} 
-                    />
-                    {isDropdownVisible && (
-                    <div className={styles.suggestions}>
-                        {suggestions.map((suggestion, index) => (
-                            <div key={index} className={styles.suggestion}
-                                onClick={() => {
-                                    setLocation(suggestion.properties.formatted);
-                                    setIsDropdownVisible(false);
-                                    setSuggestions([]);
-                                    setSelectedExercises((prevExercises) =>
-                                        prevExercises.map((item) =>(
-                                            item.id === exercise.id
-                                                ? { ...item, location: suggestion.properties.formatted, others: suggestion.properties }
-                                                : item 
-                                        ))
-                                    );
-                                }}
-                            >
-                                {suggestion?.properties?.formatted ? suggestion.properties.formatted : suggestion.properties.name} 
-                            </div>
-                        ))}
+                            setLocation(suggestion.properties.formatted);
+                            setIsDropdownVisible(false);
+                            setSuggestions([]);
+                            const newItem = {
+                                id: new Date(),
+                                location: suggestion.properties.formatted,
+                                others: {
+                                    name: suggestion.properties.name,
+                                    city: suggestion.properties.city,
+                                    state: suggestion.properties.state,
+                                    lon: suggestion.properties.lon,
+                                    lat: suggestion.properties.lat,
+                                    formatted: suggestion.properties.formatted,
+                                    address_line1: suggestion.properties.address_line1,
+                                    address_line2: suggestion.properties.address_line2
+
+                                }};
+                            setExercise(newItem);
+                        }}
+                    >
+                        {suggestion?.properties?.formatted ? suggestion.properties.formatted : suggestion.properties.name} 
                     </div>
-                    )}
+                    ))}
                 </div>
-                <FaRegTrashAlt
-                        onClick={() => {remove(exercise.id); setLocation(exercise.location);}}
-                        className={styles.trash}
-                    />
-            </div>
+            )}
         </div>
     );
 };
 
-export default AutoCompleteInput;
+export default SingleAutoCompleteInput;

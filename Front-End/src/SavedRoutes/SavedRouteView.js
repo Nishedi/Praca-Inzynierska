@@ -40,6 +40,13 @@ const SavedRouteView = () => {
             setRoutes(data);
         }
     }
+    const onYourProfileClick = () => {
+        navigate("/yourprofile");
+    };
+
+    const onOptimalizeRouteClick = () => {
+        navigate("/mainpage");
+    };
 
     useEffect(() => {
         getAllRoutes();
@@ -55,10 +62,10 @@ const SavedRouteView = () => {
                     <div className={styles.bookmark}>
                         O nas
                     </div>
-                    <div className={styles.bookmark}>
+                    <div onClick={onOptimalizeRouteClick} className={styles.bookmark}>
                         Optymalizuj trasę
                     </div>
-                    <div className={styles.bookmark}>
+                    <div onClick={onYourProfileClick} className={styles.bookmark}>
                         Twój profil
                     </div>
                     <div onClick={logOut} className={styles.login}>
