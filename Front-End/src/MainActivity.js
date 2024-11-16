@@ -579,7 +579,7 @@ function MainActivity({isLogged}) {
                         <div className='optional'>
                             <div className='optionalNOV'>
                                 <div>Sugerowana liczba pojazdów: </div>
-                                <input style={{width: listOfLocations.length <= 6 ? '50%':'auto'}} type="number" value={numberOfvehicles} onChange={(e) => {
+                                <input style={{width: listOfLocations.length <= 6 ? '100px':'auto', flex: '0'}} type="number" value={numberOfvehicles} onChange={(e) => {
                                     if(e.target.value > 0 && e.target.value<listOfLocations.length) setNumberOfVehicles(e.target.value);
                                 }} />
                             </div>
