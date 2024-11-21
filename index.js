@@ -120,20 +120,6 @@ const runScript = (message) => {
   });
 };
 
-app.post('/', (req, res) => {
-  const message = req.body.message;
-  console.log("Running")
-  // runScript(message);
-  const response = "Hello from extended Node.js!";
-  res.send({response});
-});
-
-app.get('/', (req, res) => {
-  const message = "Hello from extended Node.js!";
-  runScript(message);
-  res.send(`output: ${message}`	);
-});
-
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });

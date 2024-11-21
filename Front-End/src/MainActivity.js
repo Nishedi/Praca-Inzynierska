@@ -439,7 +439,6 @@ function MainActivity({isLogged}) {
                     address_line2: location.others.address_line2
                 }
             }));
-    
             setListOfLocations(filteredListOfLocations);
     
             const response = await fetch('http://localhost:3000/run-script', {
@@ -458,6 +457,7 @@ function MainActivity({isLogged}) {
             if (!response.ok) {
                 throw new Error(`Błąd ${response.status}: ${response.statusText}`);
             }
+            console.log(response);
             const data = await response.json();
     
             if (data?.result) {
