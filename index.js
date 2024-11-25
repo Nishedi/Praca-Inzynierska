@@ -21,7 +21,7 @@ const saveDistancesToFile = (data) => {
 
 app.post('/run-script', async (req, res) => {
   const timeOfExecution = req.body.timeOfExecution;
-  const numberOfVehicles = req.body.numberOfvehicles;
+  let numberOfVehicles = req.body.numberOfvehicles;
   const locations = req.body.message;
   let alg = req.body.alg;
   const dataForDistances= locations
@@ -70,6 +70,11 @@ app.post('/run-script', async (req, res) => {
 
 app.post('/suggest-vehicles', async (req, res) => {
   const locations = req.body.message;
+  let numberOfvehicles = 1;
+  if(!locations || locations.length < 2){
+    res.send({numberOfvehicles});
+    return;
+  }
   const dataForDistances= locations
   .map(location => `${location.others.lon},${location.others.lat}`) // Przekształcenie każdego obiektu w string
   .join(';');
@@ -78,7 +83,7 @@ app.post('/suggest-vehicles', async (req, res) => {
     const response = await fetch(url);
     const data = await response.json();
     const fileName = saveDistancesToFile(data);
-    const numberOfvehicles= await getNumberOfVechicles(data.distances[0].length+"|"+fileName);
+    numberOfvehicles= await getNumberOfVechicles(data.distances[0].length+"|"+fileName);
     while(data.distances[0].length/numberOfvehicles<3){
       numberOfvehicles--;
     }
