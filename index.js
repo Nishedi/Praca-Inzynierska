@@ -69,7 +69,8 @@ app.post('/suggest-vehicles', async (req, res) => {
   try{
     const response = await fetch(url);
     const data = await response.json();
-    const numberOfvehicles= await getNumberOfVechicles(data.distances[0].length+"|"+data.distances);
+    const fileName = saveDistancesToFile(data);
+    const numberOfvehicles= await getNumberOfVechicles(data.distances[0].length+"|"+fileName);
     while(data.distances[0].length/numberOfvehicles<3){
       numberOfvehicles--;
     }

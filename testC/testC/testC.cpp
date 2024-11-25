@@ -122,7 +122,7 @@ int main(int argc, char* argv[]) {
         }
         for (int i = 0; i < distancesInt.size(); i++) {
             for (int j = 0; j < distancesInt.size(); j++) {
-                if (distancesInt[i][j] == 0) distancesInt[i][j] = std::numeric_limits<int>::max();
+                if (distancesInt[i][j] == 0&&i==j) distancesInt[i][j] = std::numeric_limits<int>::max();
                 //std::cout << distancesInt[i][j] << " ";
             }
             //std::cout << std::endl;
@@ -145,15 +145,6 @@ int main(int argc, char* argv[]) {
             std::string y = genetic_run(numOfCities, distancesInt, numberOfVechicles, 1, timeOfExecution, numOfCities * 300);
             std::cout << "|" << numberOfVechicles << "|" << y << "G\n";
         }
-        /*for (alg = 0; alg < 2; alg++) {
-            for (int i = 0; i < 10; i++) {
-                if (test) {
-                }
-                else {
-                    
-                }
-            }
-        }*/
     }
     return 0;
 }

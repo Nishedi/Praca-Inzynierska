@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <fstream>
 
 
 using namespace std;
@@ -59,6 +60,19 @@ int greedyVehicleAllocation(const vector<vector<int>>& costMatrix) {
     return numVehicles;
 }
 
+std::string loadDataFromFile(std::string filename) {
+    std::ifstream inputFile("C:\\Users\\KONRAD PEMPERA\\Desktop\\Praca-Inzynierska\\" + filename);
+    if (!inputFile.is_open()) {
+        std::cerr << "Cannot open test file: " << filename << std::endl << std::endl;
+        return "Error"; 
+    }
+    std::stringstream buffer;
+    buffer << inputFile.rdbuf();
+    std::string input = buffer.str();
+    inputFile.close();
+    return input;
+}
+
 int main(int argc, char* argv[]) {
     if (argc > 1) {
         std::string input = argv[1];
@@ -66,7 +80,7 @@ int main(int argc, char* argv[]) {
         std::vector<std::string> parts = split(input, delimiter);
         int numOfCities = std::stoi(parts[0]);
         char separator = ',';
-        std::vector<std::string> distances = split(parts[1], separator);
+        std::vector<std::string> distances = split(loadDataFromFile(parts[1]), separator);
         std::vector<std::vector<int>> distancesInt(numOfCities, std::vector<int>(numOfCities, 0));
         for (int i = 0; i < distances.size(); i++) {
             int num = std::stoi(distances[i]);
