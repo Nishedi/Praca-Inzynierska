@@ -7,3 +7,4 @@ sugerowanie lokalizacji z pliku a nie jako arguemnt wywolania
 3) Poprawić wypełnienie macierzy kosztów ^^
 4) Poprawić błędy stylistyczne
 5) Poprawić algorytm sugerujacy liczbe pojazdow (wczytywanie z plikow)
+6) Poprawić plik mainActivity (style)
