@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './MainActivity.css';
+import styles from './MainActivity.module.css';
 import AutoCompleteInput from './AutoCompleteInput';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from 'react-leaflet';
 import { useContext } from 'react';
@@ -555,10 +555,17 @@ function MainActivity({isLogged}) {
     return (
         <>
             <button onClick={algSwitch}>Alg: {alg}</button>
-            <div className={`${listOfLocations.length <= 6 ?  'flex-container':'flex-container-column'}`}>
-                <div className='input_section'>
-                    <div className="localisation_title">Lokalizacje</div>
-                    <div className={`grid-container ${listOfLocations.length > 6 ? listOfLocations.length > 16 ? 'three-columns' :'two-columns' : 'one-column'}`}>
+            <div className={`${listOfLocations.length <= 6 ? styles['flex-container'] : styles['flex-container-column']}`}>
+
+                <div className={styles.input_section}>
+                    <div className={styles.localisation_title}>Lokalizacje</div>
+                    <div className={`${styles['grid-container']} ${
+                        listOfLocations.length > 6 
+                            ? listOfLocations.length > 16 
+                            ? styles['three-columns'] 
+                            : styles['two-columns'] 
+                            : styles['one-column']
+                        }`}>
                         {listOfLocations.map((value, index) => (
                             <div key={value.id} onChange={()=>setIsEditing(true)}>
                                 <AutoCompleteInput 
@@ -573,17 +580,17 @@ function MainActivity({isLogged}) {
                             </div>
                         ))}
                     </div> 
-                    <button className='addButton' onClick={handleAddInput}>Dodaj miasto</button> 
-                    <div className='allParameters' style={{maxWidth: listOfLocations.length <= 6 ? "282px" : "None"}}>
-                        <div className='parameters'>DODATKOWE PARAMETRY</div>
-                        <div className='optional'>
-                            <div className='optionalNOV'>
+                    <button className={styles.addButton} onClick={handleAddInput}>Dodaj miasto</button> 
+                    <div className={styles.allParameters} style={{maxWidth: listOfLocations.length <= 6 ? "282px" : "None"}}>
+                        <div className={styles.parameters}>DODATKOWE PARAMETRY</div>
+                        <div className={styles.optional}>
+                            <div className={styles.optionalNOV}>
                                 <div>Sugerowana liczba pojazdów: </div>
                                 <input style={{width: listOfLocations.length <= 6 ? '100px':'auto', flex: '0'}} type="number" value={numberOfvehicles} onChange={(e) => {
                                     if(e.target.value > 0 && e.target.value<listOfLocations.length) setNumberOfVehicles(e.target.value);
                                 }} />
                             </div>
-                            <div className='optionalNOV'>
+                            <div className={styles.optionalNOV}>
                                 <div>Czas działania: </div>
                                 <div style={{  maxWidth: '300px',  textAlign: 'center' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
@@ -596,20 +603,20 @@ function MainActivity({isLogged}) {
                                         max="15"
                                         value={timeOfExecution}
                                         onChange={(e) => {setTimeOfExecution(e.target.value)}}
-                                        className='rangeInput'
+                                        className={styles.rangeInput}
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <button
-                        className='optymaliseButton'
+                        className={styles.optymaliseButton}
                         onClick={() => makeRequest()}
                         disabled={isOptimizing}  // Przycisk będzie nieklikalny, gdy isOptimizing jest true
                         >
                         {!isOptimizing ? 'Optymalizuj' : `Trwa optymalizacja...${timeLeft > 0 ? timeLeft: ''}`}
                     </button>
-                    {isLogged && groups && groups.length>0&&<button ref={targetRef} onClick={saveRoute} className='saveRoute'>{saveRouteDrawing}</button> }
+                    {isLogged && groups && groups.length>0&&<button ref={targetRef} onClick={saveRoute} className={styles.saveRoute}>{saveRouteDrawing}</button> }
                     
                                       
                 </div>
@@ -666,10 +673,10 @@ function MainActivity({isLogged}) {
                 
             </div>
             
-            <div className='routesList'>
+            <div className={styles.routesList}>
                 {groups.length > 0  && groups.map((route, routeIndex) => (
-                        <div className='routeList'>
-                            <div className='emoticoneDiv'>
+                        <div className={styles.routeList}>
+                            <div className={styles.emoticoneDiv}>
                                 <FaTruck style={{color: colors[routeIndex]}}/>
                             </div>
                             {route.map((coords, index) => (
