@@ -187,7 +187,7 @@ function SavedRoute() {
         <>  
         {modal ? <Modal /> : 
         <>
-            <div className={`${listOfLocations.length <= 8 ?  'flex-container':'flex-container-column'}`}>
+           <div className={`${listOfLocations.length <= 6 ? styles['flex-container'] : styles['flex-container-column']}`}>
                 <div style={{ width: '100%', height: '700px', display: 'flex', flexDirection: 'column', gap: '30px', flex: '1' }}>
                     <MapContainer key={listOfLocations.length} center={mapCenter} zoom={13} scrollWheelZoom={false} style={{height: '600px', width: '100%' }}>
                         <TileLayer

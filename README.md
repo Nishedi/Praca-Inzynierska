@@ -5,6 +5,6 @@ sugerowanie lokalizacji z pliku a nie jako arguemnt wywolania
 1) Napisać intrukcje instalacji i obsługi
 2) Podpiąć odpowiednio algorytmy X
 3) Poprawić wypełnienie macierzy kosztów ^^ X
-4) Poprawić błędy stylistyczne
+4) Poprawić błędy stylistyczne X
 5) Poprawić algorytm sugerujacy liczbe pojazdow (wczytywanie z plikow) X
-6) Poprawić plik mainActivity (style)
+6) Poprawić plik mainActivity (style) X

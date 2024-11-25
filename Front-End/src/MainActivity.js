@@ -675,16 +675,29 @@ function MainActivity({isLogged}) {
             
             <div className={styles.routesList}>
                 {groups.length > 0  && groups.map((route, routeIndex) => (
-                        <div className={styles.routeList}>
+                        <div className={styles.routeList} key={routeIndex}>
+                            <div style={{
+                                        textAlign: 'center',
+                                        fontWeight: 'bold',
+                                        fontSize: '20px',
+                                        
+                                    }}>
+                                Trasa nr {routeIndex + 1} {/* Dodany napis */}
+                            </div>
                             <div className={styles.emoticoneDiv}>
                                 <FaTruck style={{color: colors[routeIndex]}}/>
                             </div>
+                            <ol>
                             {route.map((coords, index) => (
                                 <div style={index === 0 || index === route.length-1? { fontWeight: 'bold' } : {}}>
-                                    {index}. {coords.location}
+                                    
+                                        <li>{coords.location}</li>
+                                    
                                 </div>
                             ))}
-                        </div>   
+                            </ol>
+                        </div>
+                            
                         ))    
                         }
                 </div>
