@@ -46,7 +46,7 @@ app.post('/run-script', async (req, res) => {
     if(data.distances[0].length <= 20 && data.distances[0].length >= 10){
       alg = "1";
     }
-    if(numberOfVehicles == 1 && data.distances[0].length < 13){
+    if(numberOfVehicles == 1 && data.distances[0].length < 14){
       alg = "2";
     }
     console.log(alg+" algorytm\n");

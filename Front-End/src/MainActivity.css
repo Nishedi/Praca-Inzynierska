@@ -83,7 +83,7 @@
     margin-top: auto;
 }
 
-.optymaliseButton:hover, .saveRoute:hover{
+.optymaliseButton:hover, .saveRoute:hover, .addButton:hover{
     background-color: #7D9F81;
 }
 
