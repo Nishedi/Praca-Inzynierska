@@ -21,17 +21,14 @@ std::vector<std::string> split(const std::string& str, char delimiter) {
     return tokens;
 }
 
-int bnb_run(int numOfCities, std::vector<std::vector<int>> distancesInt) {
+std::string bnb_run(int numOfCities, std::vector<std::vector<int>> distancesInt) {
     BNB algorithm(numOfCities);
     std::vector<int> result = algorithm.bnb_execute(distancesInt);
-    int totalLength = 0;
-    
-    int res = 0;
-    for (int i = 0; i < result.size() - 1; i++) {
-        res += distancesInt[result[i]][result[i + 1]];
+    GeneralMethods gm;
+    for (int i = 0; i < result.size() ; i++) {
+        std::cout << result[i] << " ";
     }
-    res += distancesInt[result[result.size() - 1]][result[0]];
-    return res;
+    return gm.calculateTotalDistance2(result, result.size(), distancesInt);
 
 }
 
@@ -144,6 +141,10 @@ int main(int argc, char* argv[]) {
         if (alg == 1) {
             std::string y = genetic_run(numOfCities, distancesInt, numberOfVechicles, 1, timeOfExecution, numOfCities * 300);
             std::cout << "|" << numberOfVechicles << "|" << y << "G\n";
+        }
+        if (alg == 2) {
+            std::string z = bnb_run(numOfCities, distancesInt);
+            std::cout << "|" << numberOfVechicles << "|" << z << "BnB\n";
         }
     }
     return 0;
