@@ -21,9 +21,9 @@ const saveDistancesToFile = (data) => {
 
 app.post('/run-script', async (req, res) => {
   const timeOfExecution = req.body.timeOfExecution;
-  const numberOfVehicles = req.body.numberOfvehicles;
+  let numberOfVehicles = req.body.numberOfvehicles;
   const locations = req.body.message;
-  const alg = req.body.alg;
+  let alg = req.body.alg;
   const dataForDistances= locations
   .map(location => `${location.others.lon},${location.others.lat}`) // Przekształcenie każdego obiektu w string
   .join(';'); 
@@ -42,6 +42,14 @@ app.post('/run-script', async (req, res) => {
     // }));
     // doIt(sortedLocationsWithIndices);
     const fileName = saveDistancesToFile(data);
+    alg = "0";
+    if(data.distances[0].length <= 20 && data.distances[0].length >= 10){
+      alg = "1";
+    }
+    if(numberOfVehicles == 1 && data.distances[0].length < 14){
+      alg = "2";
+    }
+    console.log(alg+" algorytm\n");
     const algorithmResponses = await runScript(timeOfExecution+"|"+data.distances[0].length+"|"+numberOfVehicles+"|"+fileName+"|"+alg);
     const algorithResponse = algorithmResponses.split("|");
     const numberOfvehicles = algorithResponse[1];
@@ -62,6 +70,11 @@ app.post('/run-script', async (req, res) => {
 
 app.post('/suggest-vehicles', async (req, res) => {
   const locations = req.body.message;
+  let numberOfvehicles = 1;
+  if(!locations || locations.length < 2){
+    res.send({numberOfvehicles});
+    return;
+  }
   const dataForDistances= locations
   .map(location => `${location.others.lon},${location.others.lat}`) // Przekształcenie każdego obiektu w string
   .join(';');
@@ -69,7 +82,8 @@ app.post('/suggest-vehicles', async (req, res) => {
   try{
     const response = await fetch(url);
     const data = await response.json();
-    const numberOfvehicles= await getNumberOfVechicles(data.distances[0].length+"|"+data.distances);
+    const fileName = saveDistancesToFile(data);
+    numberOfvehicles= await getNumberOfVechicles(data.distances[0].length+"|"+fileName);
     while(data.distances[0].length/numberOfvehicles<3){
       numberOfvehicles--;
     }
@@ -119,20 +133,6 @@ const runScript = (message) => {
     });
   });
 };
-
-app.post('/', (req, res) => {
-  const message = req.body.message;
-  console.log("Running")
-  // runScript(message);
-  const response = "Hello from extended Node.js!";
-  res.send({response});
-});
-
-app.get('/', (req, res) => {
-  const message = "Hello from extended Node.js!";
-  runScript(message);
-  res.send(`output: ${message}`	);
-});
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

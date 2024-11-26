@@ -1,0 +1,227 @@
+.flex-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* align-items: center; */
+    width: 75%;
+    gap: 50px;
+    padding-top: 20px;
+}
+
+.flex-container-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 75%;
+    gap: 50px;
+    padding-top: 20px;
+}
+
+.item {
+    margin: 10px 0px;
+}
+
+.localisation_title{
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    font-family: 'Montserrat-Bold';
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.grid-container {
+    display: grid;
+    grid-gap: 16px;
+    font-family: 'Montserrat-Regular';
+    font-size: 16px;
+}
+
+.one-column {
+    grid-template-columns: 1fr; /* Jedna kolumna */
+}
+
+.two-columns {
+    grid-template-columns: 1fr 1fr; /* Dwie kolumny */
+    column-gap: 20px; /* Odstęp między kolumnami */
+    font-family: 'Montserrat-Regular';
+    font-size: 16px;
+}
+
+.three-columns {
+    grid-template-columns: 1fr 1fr 1fr; /* Trzy kolumny */
+    column-gap: 20px; /* Odstęp między kolumnami */
+}
+
+.optymaliseButton, .addButton{
+    background-color: #214225;
+    color: #FFF;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: 'Montserrat-SemiBold';
+    letter-spacing: 0.25em;
+    font-variant: small-caps;
+}
+
+.optymaliseButton{
+    margin-top: auto;
+}
+
+.saveRoute{
+    background-color: #214225;
+    color: #FFF;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: 'Montserrat-SemiBold';
+    letter-spacing: 0.25em;
+    font-variant: small-caps;
+    margin-top: auto;
+}
+
+.optymaliseButton:hover, .saveRoute:hover, .addButton:hover{
+    background-color: #7D9F81;
+}
+
+.input_section{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: 100%;
+    flex: 1;
+}
+
+.allParameters{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #7D9F81;
+}
+
+.parameters{
+    font-family: 'Montserrat-Bold';
+    color: #214225;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.optional {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 10px;
+    color: #214225;
+    text-transform: lowercase;
+    font-family: 'Montserrat-Regular';
+}
+
+.optional input{
+    background-color: #FFF;
+    width: fit-content;
+}
+
+.optionalNOV{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    text-align: end;
+    font-variant: small-caps;
+    
+    padding: 10px 0;
+}
+.optionalNOV div{
+    text-align:left;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Usuwa domyślny styl przeglądarki */
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #214225; /* Kolor kuleczki */
+    border-radius: 50%; /* Ustawia kuleczkę na okrągłą */
+    cursor: pointer;
+  }
+
+.rangeInput {
+    padding: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background-color: #ddd;
+    border-radius: 50px;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    width: 100%;
+}
+
+
+
+.routeList{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    border: 1.5px solid #7D9F81;
+    word-wrap: nowrap;
+    max-width: 300px;
+    padding: 30px;
+    border-radius: 20px;
+    font-family: 'Montserrat-Regular';
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.routesList{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+}
+
+.routeList ol {
+    padding-left: 10px;
+}
+
+.routeList li {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    color: #000;
+    font-family: 'Montserrat-Regular';
+    font-size: 16px;
+    margin: 5px;
+}
+
+
+
+.emoticoneDiv{
+    display: flex;
+    justify-content: center;
+    font-size: 50px;
+}
+
+.routeItem {
+    display: flex;
+    align-items: flex-start; /* Wyrównuje numer i tekst do góry */
+    gap: 8px; /* Odstęp między numerem a tekstem */
+    padding-left: 10px; /* Wcięcie dla całego elementu */
+}
+
+.routeIndex {
+    font-weight: normal;
+}
+
+.routeText {
+    flex: 1; 
+}

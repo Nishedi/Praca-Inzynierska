@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../MainActivity.css';
+import styles from '../MainActivity.module.css';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from 'react-leaflet';
 import { useContext } from 'react';
 import L from 'leaflet'; // Importujemy Leaflet do niestandardowej ikony
@@ -187,7 +187,7 @@ function SavedRoute() {
         <>  
         {modal ? <Modal /> : 
         <>
-            <div className={`${listOfLocations.length <= 8 ?  'flex-container':'flex-container-column'}`}>
+           <div className={`${listOfLocations.length <= 6 ? styles['flex-container'] : styles['flex-container-column']}`}>
                 <div style={{ width: '100%', height: '700px', display: 'flex', flexDirection: 'column', gap: '30px', flex: '1' }}>
                     <MapContainer key={listOfLocations.length} center={mapCenter} zoom={13} scrollWheelZoom={false} style={{height: '600px', width: '100%' }}>
                         <TileLayer
@@ -211,9 +211,9 @@ function SavedRoute() {
                     </MapContainer> 
                 </div>
             </div>
-            <div className='routesList'>
+            <div className={styles.routesList}>
                 {groups.length > 0  && groups.map((route, routeIndex) => (
-                        <div className='routeList'key={routeIndex}>
+                        <div className={styles.routeList} key={routeIndex}>
                             <div style={{
                                         textAlign: 'center',
                                         fontWeight: 'bold',
@@ -222,7 +222,7 @@ function SavedRoute() {
                                     }}>
                                 Trasa nr {routeIndex + 1} {/* Dodany napis */}
                             </div>
-                            <div className='emoticoneDiv'>
+                            <div className={styles.emoticoneDiv}>
                                 <FaTruck style={{color: colors[routeIndex]}}/>
                             </div>
                             <ol>
