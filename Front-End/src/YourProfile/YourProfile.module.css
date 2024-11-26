@@ -7,7 +7,7 @@
     /* max-width: 1920px;
     min-width: 1280px; */
     width: 100%;
-    background: #EEEEEE;
+    background: #eee;
   }
   
   .navbar{
@@ -16,7 +16,7 @@
       align-items: center;
       width: 75%;
       height: 10vh;
-      background: #EEE;
+      background: #eee;
       color: #282c34;
       box-sizing: border-box; 
   }
@@ -34,20 +34,74 @@
       letter-spacing: 0.12em; 
       font-variant: small-caps;
   }
+
+  .mainProfile {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    background-color: #EEE;
+    margin: 20px;
+    width: 100%;
+    align-items: center;
+    gap: 50%;  
+  }
   
   .profile{
-    background-color: #fff;
-    border-radius: 10px;
+    /* background-color: #fff; */
+    /* border-radius: 10px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 20px;
-    width: 60%;
+    width: 25%;
+    margin: 20px;
   }
 
   .profile p {
     font-size: 14px;
-    font-family: 'Montserrat-Medium';
+    font-family: 'Montserrat-Regular';
     color: #333;
-    margin: 10px 0px;
+    margin-bottom: 10px;
+    
   }
+
+  .profile input {
+    background-color: #fff;
+    margin-top: 0px;
+  }
+
+  .mainProfile button {
+    padding: 5px;
+    margin: 10px;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #4e7553;
+    font-family: 'Montserrat-Medium';
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    }
+
+    .formRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .formRow p {
+        width: 140px; /* Fixed width to align labels */
+        margin-right: 10px; /* Space between label and input */
+    }
+
+    .formRow input {
+        flex: 1; /* Allows inputs to take up remaining space */
+    }
 
   .title{
       font-size: 16px;
@@ -94,7 +148,9 @@
       text-transform: uppercase;
       border: 1px solid #7D9F81;
       transition: all 0.2s ease;
-
+      display: flex;
+      text-align: center;
+      justify-content: center;
     }
 
 
@@ -116,15 +172,15 @@
         padding: 10px;
         border: 1px solid #7D9F81;
         border-radius: 5px;
-        background-color: #f0f8ff;
+        background-color: #fff;
         color: #333;
         font-size: 14px;
-        font-family: 'Montserrat-Medium';
+        font-family: 'Montserrat-Regular';
         width: 200px;
     }
 
     input:hover {
-        background-color: #c2c9cf;
+        background-color: #f2f7f2;
     }
 
     input:focus {
@@ -158,13 +214,14 @@
         justify-content: center;
         flex-direction: column;
         align-items: center;
+        
     }
 
-    .todayStats button{
+    .todayStats button, .buttons button{
         font-size: 14px;
         font-family: 'Montserrat-Bold';
-        color: white;
-        background-color: #7D9F81;
+        color: #fff;
+        background-color: #3a5b40;
         border-radius: 10px;
         padding: 10px 30px;
         width: 40%;
@@ -173,16 +230,35 @@
         border: 1px solid #7D9F81;
         margin: 20px 0px;
     }
-    .todayStats button:hover{
+    .todayStats button:hover, .buttons button:hover{
         color: #7D9F81;
         background-color: white;
         border: 1px solid #7D9F81;
     }
+    .dzienniczek {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #eee;
+    }
+
+    .todayStatsStyle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px;
+    }
 
     .name {
-        color: #777;
+        color: #333;
         font-size: 14px;
-        font-family: 'Poppins-Regular';
+        font-family: 'Montserrat-Regular';
     }
     
     .wholeInput{
@@ -191,4 +267,28 @@
         /* align-items: center; */
         width: 60%;
         margin: 10px 0px;
+    }
+
+    .chartSection {
+        background-color: #fff;
+        margin-bottom: 10vh;
+    }
+
+    .footer {
+        /* background-image: linear-gradient(120deg, #7d9f81, #4e7553, #214225); */
+        background-color: #8a8f8d;
+        color: #676b6a;
+        font-family: 'Montserrat-Regular';
+        font-size: 16px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10vh;
+    }
+
+    .footerEnd {
+        width: 100%;
+        background-image: linear-gradient(120deg, #5f7863, #3a5b40, #18371b);
+        height: 1vh;
     }

@@ -36,8 +36,8 @@ function SavedRoute() {
     const navigate = useNavigate();
     const [listOfLocations, setListOfLocations] = useState([]);
     const [mapCenter] = useState([51.110307, 17.033225]);
-    const colors = ['#08ff00', '#ff0800', '#fff700', '#00e8ff', '#00e8ff',
-        '#ff00f7', '#000000'];
+    const colors = ['#007bff', '#dc3545', '#ffc107', '#28a745', '#6f42c1', '#343a40', '#f8f9fa'];
+
     const [groups, setGroups] = useState([]);
     const [groupsRoute, setGroupsRoute] = useState([]);
     const [modal, setModal] = useState(false);
@@ -213,17 +213,27 @@ function SavedRoute() {
             </div>
             <div className='routesList'>
                 {groups.length > 0  && groups.map((route, routeIndex) => (
-                        <div className='routeList'>
+                        <div className='routeList'key={routeIndex}>
+                            <div style={{
+                                        textAlign: 'center',
+                                        fontWeight: 'bold',
+                                        fontSize: '20px',
+                                        
+                                    }}>
+                                Trasa nr {routeIndex + 1} {/* Dodany napis */}
+                            </div>
                             <div className='emoticoneDiv'>
                                 <FaTruck style={{color: colors[routeIndex]}}/>
                             </div>
-                            
+                            <ol>
                             {route.map((coords, index) => (
                                 <div style={index === 0 || index === route.length-1? { fontWeight: 'bold' } : {}}>
                                     
-                                    {index}. {coords.location}
+                                        <li>{coords.location}</li>
+                                    
                                 </div>
                             ))}
+                            </ol>
                         </div>
                             
                         ))    

@@ -39,8 +39,8 @@
     font-size: 16px;
     font-family: 'Montserrat-SemiBold';
     text-transform: uppercase;
-    letter-spacing: 0.25em
-
+    letter-spacing: 0.25em;
+    background: #EEEEEE;
 }
 
 .bookmark{

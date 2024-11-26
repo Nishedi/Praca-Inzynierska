@@ -76,7 +76,7 @@ const SavedRoutes = () => {
             <div className={styles.mainWritting}>
                 Zapisane trasy
             </div>
-            <div className = {styles.table}>
+            <div className = {styles.table} style={{ display: 'table', width: '75%' }}>
                 <div className={styles.routeTableHeader}>
                     <div className={styles.routeNumber}>
                         Numer
@@ -90,7 +90,9 @@ const SavedRoutes = () => {
                 </div>
                 {
                     routes.map((route, index) => (
-                        <div onClick={()=>navigate(`/savedroute/${route.id}`)} className={styles.routeTableHeaderContent}>
+                        <div onClick={()=>navigate(`/savedroute/${route.id}`)}
+                            className={styles.routeTableHeaderContent}
+                        >
                             <div className={styles.routeNumberContent}>
                                 {route.id}
                             </div>
@@ -98,25 +100,25 @@ const SavedRoutes = () => {
                                 {new Date(route.created_at).toLocaleDateString()}
                             </div>
                             {
-                                JSON.parse(route.data).map((singleRoute, index) => (
-                                    <div style={{fontSize: '12px', flex: 1}}>
-                                    {
-                                        singleRoute.map((point, index) => (
-                                        <div className={styles.routePathContent}>
-                                            {index !== 0 && index !== singleRoute.length - 1 ? 
-                                            <>
-                                            {index}. 
-                                            {point.others.formatted.length > 45
-                                            ? point.others.formatted.slice(0, 45) + '...'
-                                            : point.others.formatted}
-                                            </>:null}
-                                            
-                                        </div>
-                                        ))
-                                    }
-                                    </div>
-                                ))
-                            }
+                            JSON.parse(route.data).map((singleRoute, index) => (
+                                <div style={{ fontSize: '12px', flex: 1, border: '1px solid #ddd' }}>
+                                    <ol style={{ paddingLeft: '20px' }}> {/* Add padding for indentation */}
+                                        {
+                                            singleRoute.map((point, index) => (
+                                                index !== 0 && index !== singleRoute.length - 1 ?  // Skip first and last points
+                                                    <li key={index} className={styles.routePathContent}>
+                                                        {point.others.formatted.length > 45
+                                                            ? point.others.formatted.slice(0, 45) + '...'
+                                                            : point.others.formatted}
+                                                    </li>
+                                                    : null
+                                            ))
+                                        }
+                                    </ol>
+                                </div>
+                            ))
+                        }
+
                         </div>
                     ))
                 }

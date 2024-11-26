@@ -9,6 +9,9 @@ import markerIconPng from 'leaflet/dist/images/marker-icon.png'; // Import domy�
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png'; // Import cienia markera
 import { FaTruck } from "react-icons/fa";
 import { GlobalContext } from './GlobalContext';
+import greenMarker from './assets/green_marker2.png';
+
+
 
 // Ustawienie ikony markera
 const defaultIcon = L.icon({
@@ -20,17 +23,16 @@ const defaultIcon = L.icon({
     shadowSize: [41, 41]  // Rozmiar cienia
 });
 
-const baseIcon = L.icon({
-    iconUrl: markerIconPng,
+const baseIcon= L.icon({
+    iconUrl: greenMarker,
     shadowUrl: markerShadowPng,
-    color: 'red',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
+    iconSize: [25, 41], // Rozmiar markera
+    iconAnchor: [12, 41], // Punkt zakotwiczenia, który wskazuje lokalizację
+    popupAnchor: [1, -34], // Punkt zakotwiczenia dla popupu
     shadowSize: [41, 41]
 });
 
-function MainActivity() {
+function MainActivity({isLogged}) {
     const {supabase } = useContext(GlobalContext);
     const [sugerowanaTrasa, setSugerowanaTrasa] = useState([]);
     const [listOfLocations, setListOfLocations] = useState(
@@ -263,8 +265,8 @@ function MainActivity() {
     const [mapCenter] = useState([51.110307, 17.033225]);
     const [isEditing, setIsEditing] = useState(true);
     const [isOptimizing, setIsOptimizing] = useState(false);
-    const colors = ['#08ff00', '#ff0800', '#fff700', '#00e8ff', '#00e8ff',
-        '#ff00f7', '#000000'];
+    
+    const colors = ['#007bff', '#dc3545', '#ffc107', '#28a745', '#6f42c1', '#343a40', '#f8f9fa'];
 
     const [groups, setGroups] = useState([]);
     const [groupsRoute, setGroupsRoute] = useState([]);
@@ -274,6 +276,7 @@ function MainActivity() {
     const [saveRouteDrawing, setSaveRouteDrawing] = useState("Zapisz trasę");
     const [activeRoute, setActiveRoute] = useState(null);  
     const [alg, setAlg] = useState("TS");
+    const [user, setUser] = useState(null);
     const targetRef = useRef(null);
     const scrollToSection = () => {
         targetRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -327,7 +330,14 @@ function MainActivity() {
             const data = await response.json();
     
             if (data?.numberOfvehicles) {
-                setNumberOfVehicles(data.numberOfvehicles);
+                if(user && data.numberOfvehicles <= user.number_of_trucks){
+                    setNumberOfVehicles(data.numberOfvehicles);
+                }else if(user && data.numberOfvehicles > user.number_of_trucks){
+                    setNumberOfVehicles(user.number_of_trucks);
+                }
+                if(!user){
+                    setNumberOfVehicles(data.numberOfvehicles);
+                }
             } else {
                 console.warn("Brak danych dotyczących liczby pojazdów");
             }
@@ -336,6 +346,38 @@ function MainActivity() {
             setNumberOfVehicles(1); 
         }
     };
+
+    const getUserProfile = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        const id = session?.user?.id;
+        if (id) {
+            const { data, error } = await supabase
+                .from('users_details')
+                .select('*')
+                .eq('user_id', id)
+            if (error) {
+                console.log("Error fetching profile:", error);
+            } else {
+                if(data && data.length>0){
+                    setUser(data[0]);
+                    if(data[0].base_location && data[0].base_location !== listOfLocations[0]){
+                        setListOfLocations([data[0].base_location, ...listOfLocations]);
+                    }
+                    
+                }
+            }
+        }
+    };
+
+    useEffect(() => {
+        getSuggestedNumberOfVehicles();
+    }, [user]);
+
+    useEffect(() => {
+        if (isLogged) {
+            getUserProfile();
+        }
+    }, [isLogged]);
     
     
     const saveRoute = async () => {
@@ -378,9 +420,7 @@ function MainActivity() {
         try {
             setIsOptimizing(true);
             setTimeLeft(timeOfExecution);
-    
             let algChoice = alg === "TS" ? "0" : "1";
-    
             const message = listOfLocations.filter(location => 
                 location.location && location.location.trim() !== ""
             );
@@ -484,7 +524,6 @@ function MainActivity() {
         return allRoutes;
     };
 
-
     useEffect(() => {
         const fetchRoutes = async () => {
             const groupRoutes2 = [];
@@ -512,13 +551,14 @@ function MainActivity() {
         }
     };
 
+
     return (
         <>
-            <div className={`${listOfLocations.length <= 8 ?  'flex-container':'flex-container-column'}`}>
+            <button onClick={algSwitch}>Alg: {alg}</button>
+            <div className={`${listOfLocations.length <= 6 ?  'flex-container':'flex-container-column'}`}>
                 <div className='input_section'>
-                    
                     <div className="localisation_title">Lokalizacje</div>
-                    <div className={`grid-container ${listOfLocations.length > 8 ? listOfLocations.length > 16 ? 'three-columns' :'two-columns' : 'one-column'}`}>
+                    <div className={`grid-container ${listOfLocations.length > 6 ? listOfLocations.length > 16 ? 'three-columns' :'two-columns' : 'one-column'}`}>
                         {listOfLocations.map((value, index) => (
                             <div key={value.id} onChange={()=>setIsEditing(true)}>
                                 <AutoCompleteInput 
@@ -528,40 +568,68 @@ function MainActivity() {
                                     initialValue={value} 
                                     onChange={()=>setIsEditing(true)}
                                     remove={() => remove(value.id)} 
+                                    isBase = {index === 0}
                                 />
                             </div>
                         ))}
-                       
                     </div> 
-                    <button className='addButton' onClick={handleAddInput}>Add input</button> 
-                    
+                    <button className='addButton' onClick={handleAddInput}>Dodaj miasto</button> 
+                    <div className='allParameters' style={{maxWidth: listOfLocations.length <= 6 ? "282px" : "None"}}>
+                        <div className='parameters'>DODATKOWE PARAMETRY</div>
+                        <div className='optional'>
+                            <div className='optionalNOV'>
+                                <div>Sugerowana liczba pojazdów: </div>
+                                <input style={{width: listOfLocations.length <= 6 ? '100px':'auto', flex: '0'}} type="number" value={numberOfvehicles} onChange={(e) => {
+                                    if(e.target.value > 0 && e.target.value<listOfLocations.length) setNumberOfVehicles(e.target.value);
+                                }} />
+                            </div>
+                            <div className='optionalNOV'>
+                                <div>Czas działania: </div>
+                                <div style={{  maxWidth: '300px',  textAlign: 'center' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                                        <span >Szybko</span>
+                                        <span >Dokładnie</span>
+                                    </div>
+                                    <input
+                                        type="range"
+                                        min="5"
+                                        max="15"
+                                        value={timeOfExecution}
+                                        onChange={(e) => {setTimeOfExecution(e.target.value)}}
+                                        className='rangeInput'
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <button
                         className='optymaliseButton'
                         onClick={() => makeRequest()}
                         disabled={isOptimizing}  // Przycisk będzie nieklikalny, gdy isOptimizing jest true
                         >
                         {!isOptimizing ? 'Optymalizuj' : `Trwa optymalizacja...${timeLeft > 0 ? timeLeft: ''}`}
-                        </button>
-                    <div className='allParameters'>
-                    <div className='parameters'>DODATKOWE PARAMETRY</div>
-                    <div className='optional'>
-                        <div className='optionalText'>
-                            <div>Sugerowana liczba pojazdów: </div>
-                            <div>Czas działania: </div>
-                        </div>
-                        <div className='optionalInput' >
-                            <input type="number" value={numberOfvehicles} onChange={(e) => setNumberOfVehicles(e.target.value)} />
-                            <div className="sliderContainer">
-                                <input type="range" min="0" max="100" value={timeOfExecution} onChange={(e) => setTimeOfExecution(e.target.value)} />
-                                <span className="sliderValue">{timeOfExecution}</span>
-                            </div>
-                        </div>
-                        <button onClick={algSwitch}>Alg: {alg}</button>
-                    </div>
-                    </div>
+                    </button>
+                    {isLogged && groups && groups.length>0&&<button ref={targetRef} onClick={saveRoute} className='saveRoute'>{saveRouteDrawing}</button> }
+                    
+                                      
                 </div>
-                <div ref={targetRef} style={{ width: '100%', height: '700px', display: 'flex', flexDirection: 'column', gap: '30px', flex: '1' }}>
-                    <MapContainer key={listOfLocations.length} center={mapCenter} zoom={13} scrollWheelZoom={false} style={{height: '600px', width: '100%' }}>
+                <div 
+                    ref={targetRef} 
+                    style={{ 
+                        width: '100%', 
+                        height: '100%',
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        justifyContent: 'space-between', 
+                        gap: '20px'
+                    }}
+                >
+                    <MapContainer key={listOfLocations.length} 
+                                center={mapCenter} 
+                                zoom={13} 
+                                scrollWheelZoom={false} 
+                                style={{height: listOfLocations.length <= 6 ? '850px':'600px', width: '100%' 
+                                }}>
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -580,7 +648,7 @@ function MainActivity() {
                             <>
                             {listOfLocations.map((location, index) => (
                                 location?.others?.lat && location?.others?.lon ?
-                                <Marker key={index} position={[location?.others?.lat, location?.others?.lon]} icon={index === 0 ? baseIcon: defaultIcon}>
+                                <Marker key={index} position={[location?.others?.lat, location?.others?.lon]} icon={index === 0 ? baseIcon : defaultIcon}>
                                     <Popup>{location.location}</Popup>
                                 </Marker> : null  ))  }
                                 <FitMapToBounds locations={listOfLocations} /> 
@@ -593,26 +661,23 @@ function MainActivity() {
                         ))    
                         }
                     </MapContainer>
-                    {groups && groups.length>0&&<button onClick={saveRoute} className='saveRoute'>{saveRouteDrawing}</button> }
-                    
+                   
                 </div>
                 
             </div>
+            
             <div className='routesList'>
                 {groups.length > 0  && groups.map((route, routeIndex) => (
                         <div className='routeList'>
                             <div className='emoticoneDiv'>
                                 <FaTruck style={{color: colors[routeIndex]}}/>
                             </div>
-                            
                             {route.map((coords, index) => (
                                 <div style={index === 0 || index === route.length-1? { fontWeight: 'bold' } : {}}>
-                                    
                                     {index}. {coords.location}
                                 </div>
                             ))}
-                        </div>
-                            
+                        </div>   
                         ))    
                         }
                 </div>

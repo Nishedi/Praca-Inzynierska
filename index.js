@@ -2,6 +2,7 @@ const { exec } = require('child_process');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 const app = express();
 const port = 3000;
@@ -11,11 +12,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
 
+const saveDistancesToFile = (data) => {
+  // Zamiana tablicy dwuwymiarowej na wiersze CSV
+  const distancesCsv = data.distances.map(row => row.join(',')).join(',');
+  fs.writeFileSync('distances/distances'+data.distances[0].length+'.csv', distancesCsv, 'utf8');
+  return 'distances/distances'+data.distances[0].length+'.csv';
+};
+
 app.post('/run-script', async (req, res) => {
-  console.log("req.body", req.body);
   const timeOfExecution = req.body.timeOfExecution;
   const numberOfVehicles = req.body.numberOfvehicles;
-  console.log("numberOfVehicles", numberOfVehicles);
   const locations = req.body.message;
   const alg = req.body.alg;
   const dataForDistances= locations
@@ -35,8 +41,8 @@ app.post('/run-script', async (req, res) => {
     //   id: indices[i] // Dodajemy odpowiadający 'indices' jako 'id'
     // }));
     // doIt(sortedLocationsWithIndices);
-    console.log(alg);
-    const algorithmResponses = await runScript(timeOfExecution+"|"+data.distances[0].length+"|"+numberOfVehicles+"|"+data.distances+"|"+alg);
+    const fileName = saveDistancesToFile(data);
+    const algorithmResponses = await runScript(timeOfExecution+"|"+data.distances[0].length+"|"+numberOfVehicles+"|"+fileName+"|"+alg);
     const algorithResponse = algorithmResponses.split("|");
     const numberOfvehicles = algorithResponse[1];
     const path = algorithResponse[0];
@@ -64,6 +70,9 @@ app.post('/suggest-vehicles', async (req, res) => {
     const response = await fetch(url);
     const data = await response.json();
     const numberOfvehicles= await getNumberOfVechicles(data.distances[0].length+"|"+data.distances);
+    while(data.distances[0].length/numberOfvehicles<3){
+      numberOfvehicles--;
+    }
     res.send({numberOfvehicles});
     
     }

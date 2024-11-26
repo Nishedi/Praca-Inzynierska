@@ -21,8 +21,8 @@
 }  
   /* Style for individual suggestion items */
   .suggestion {
-    background-color: #EEE;
-    border: 0px solid #ccc;
+    background-color: #dddada;
+    border: 1px solid #dddada;
     border-top: none; /* To avoid double border between suggestions */
     padding: 10px;
     font-size: 14px;
@@ -47,16 +47,20 @@
     top: 100%;
     /* max-height: 200px;  */
     background-color: #EEE;
+    
+    border: 1px solid #dddada;
     overflow-y: auto;
     border-radius: 6px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    width: 100%;
 
   } 
 
 .wholeInput{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     font-family: 'Montserrat-Medium';
     color: #000000;
     font-size: 16px;

@@ -66,7 +66,7 @@ const MainPage = () => {
             <div className={styles.mainWritting}>
                 Wprowadź lokalizacje
             </div>
-            <MainActivity/>
+            <MainActivity isLogged = {isLogged}/>
         </div>
     );
 }
