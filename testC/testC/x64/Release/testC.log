@@ -60,8 +60,8 @@ C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(31,74): 
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(58,88): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\testC\testC.cpp(85,88): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   Generating code
-  2 of 798 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  1 of 798 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   testC.vcxproj -> C:\Users\KONRAD PEMPERA\Desktop\Praca-Inzynierska\testC\x64\Release\testC.exe

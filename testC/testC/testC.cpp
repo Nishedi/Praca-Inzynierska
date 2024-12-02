@@ -130,7 +130,7 @@ int main(int argc, char* argv[]) {
             numOfVechicles = numOfCities;
         }
         numberOfVechicles = numOfVechicles;
-        for (int x = 0; x < 10; x++)
+        for (int x = 0; x < 1; x++)
         {
             if (alg == 0) {
                 std::string x = ts_run(numOfCities, distancesInt, 1, 100 * numOfCities, numberOfVechicles, timeOfExecution);
