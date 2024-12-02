@@ -78,8 +78,7 @@ public:
 				vector<int> first = selectParent(population);
 				vector<int> second = selectParent(population);
 				vector<int> child = cs.orderCrossover(first, second, distancesSize, crossoverRate, numberOfVechicles);
-				/*if (mutationType == 0)mt.insertionMutate(child, distancesSize, mutationRate);
-				if (mutationType == 1)mt.swapMutate(child, distancesSize, mutationRate);*/
+				mt.swapMutate(child, distancesSize, 0.05);
 				if (child[child.size() - 1] == 0) {
 					child[child.size() - 1] = child[child.size() - 2];
 					child[child.size() - 2] = 0;

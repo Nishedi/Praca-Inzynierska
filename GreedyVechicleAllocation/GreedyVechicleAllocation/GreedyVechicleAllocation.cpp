@@ -61,7 +61,7 @@ int greedyVehicleAllocation(const vector<vector<int>>& costMatrix) {
 }
 
 std::string loadDataFromFile(std::string filename) {
-    std::ifstream inputFile("C:\\Users\\minec\\Desktop\\Praca-Inzynierska\\" + filename);
+    std::ifstream inputFile( filename);
     if (!inputFile.is_open()) {
         std::cerr << "Cannot open test file: " << filename << std::endl << std::endl;
         return "Error"; 

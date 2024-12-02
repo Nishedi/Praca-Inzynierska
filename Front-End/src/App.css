@@ -26,7 +26,11 @@
 @font-face {
   font-family: 'Montserrat-Regular';
   src: url('../fonts/Montserrat/static/Montserrat-Regular.ttf') format('truetype');
-  src: url();
+}
+
+@font-face {
+  font-family: 'Montserrat-Light';
+  src: url('../fonts/Montserrat/static/Montserrat-Light.ttf') format('truetype');
 }
 
 @font-face {

@@ -87,7 +87,8 @@ std::string genetic_run(int numOfCities, std::vector<std::vector<int>> distances
 }
 
 std::string loadDataFromFile(std::string filename) {
-    std::ifstream inputFile("C:\\Users\\minec\\Desktop\\Praca-Inzynierska\\"+filename);
+    std::ifstream inputFile("C:\\Users\\KONRAD PEMPERA\\Desktop\\Praca-Inzynierska\\"+filename);
+    //std::ifstream inputFile(filename);
     if (!inputFile.is_open()) {
         std::cerr << "Cannot open test file: " << filename << std::endl << std::endl;
         return "Error"; 
@@ -108,7 +109,7 @@ int main(int argc, char* argv[]) {
         int numOfCities = std::stoi(parts[1]);
         int numOfVechicles = std::stoi(parts[2]);
         std::vector<std::string> distances = split(loadDataFromFile(parts[3]), ',');
-       
+
         std::vector<std::vector<int>> distancesInt(numOfCities, std::vector<int>(numOfCities, 0));
         int alg = std::stoi(parts[4]);
 
@@ -118,8 +119,8 @@ int main(int argc, char* argv[]) {
         }
         for (int i = 0; i < distancesInt.size(); i++) {
             for (int j = 0; j < distancesInt.size(); j++) {
-                if (distancesInt[i][j] == 0&&i==j) distancesInt[i][j] = std::numeric_limits<int>::max();
-               
+                if (distancesInt[i][j] == 0 && i == j) distancesInt[i][j] = std::numeric_limits<int>::max();
+
             }
         }
 
@@ -129,19 +130,22 @@ int main(int argc, char* argv[]) {
             numOfVechicles = numOfCities;
         }
         numberOfVechicles = numOfVechicles;
-
-        if (alg == 0) {
-            std::string x = ts_run(numOfCities, distancesInt, 1, 100 * numOfCities, numberOfVechicles, timeOfExecution);
-            std::cout << "|" << numberOfVechicles << "|" << x << "TS\n";
+        for (int x = 0; x < 10; x++)
+        {
+            if (alg == 0) {
+                std::string x = ts_run(numOfCities, distancesInt, 1, 100 * numOfCities, numberOfVechicles, timeOfExecution);
+                std::cout << "|" << numberOfVechicles << "|" << x << "TS\n";
+            }
+            if (alg == 1) {
+                std::string y = genetic_run(numOfCities, distancesInt, numberOfVechicles, timeOfExecution, numOfCities * 300);
+                std::cout << "|" << numberOfVechicles << "|" << y << "G\n";
+            }
+            if (alg == 2) {
+                std::string z = bnb_run(numOfCities, distancesInt);
+                std::cout << "|" << numberOfVechicles << "|" << z << "BnB\n";
+            }
         }
-        if (alg == 1) {
-            std::string y = genetic_run(numOfCities, distancesInt, numberOfVechicles, timeOfExecution, numOfCities * 300);
-            std::cout << "|" << numberOfVechicles << "|" << y << "G\n";
-        }
-        if (alg == 2) {
-            std::string z = bnb_run(numOfCities, distancesInt);
-            std::cout << "|" << numberOfVechicles << "|" << z << "BnB\n";
-        }
+        
     }
     return 0;
 }

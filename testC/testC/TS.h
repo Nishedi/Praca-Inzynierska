@@ -21,19 +21,24 @@ public:
         std::vector<Neigbor> neighborhood;
         for (int iter = 0; iter < numberOfMaxMoves && iter < 1000000; iter++) {
             int i = (rand() % (pathSize - 1)) + 1;
-            while(path[i]==0)i = (rand() % (pathSize - 1)) + 1;
+            while (path[i] == 0)i = (rand() % (pathSize - 1)) + 1;
             int j = (rand() % (pathSize - 1)) + 1;
-            while (i == j ) {
+            while (i == j) {
                 j = (rand() % (pathSize - 1)) + 1;
             }
             int valueToMove = path[i];
             std::vector<int> neighbor(path);
             neighbor.erase(neighbor.begin() + i);
             neighbor.insert(neighbor.begin() + j, valueToMove);
-            neighborhood.emplace_back(neighbor, pathSize, i, j, 0, 0);
+            Neigbor newNeighbor(neighbor, pathSize, i, j, 0, 0);
+            if (std::find(neighborhood.begin(), neighborhood.end(), newNeighbor) == neighborhood.end()) {
+                neighborhood.push_back(newNeighbor);
+            }
+            //neighborhood.emplace_back(neighbor, pathSize, i, j, 0, 0);
         }
         return neighborhood;
     }
+
 
     std::vector<int> tabuSearch(std::vector<std::vector<int>> distances, int distancesSize, int tabuSize, int maxTime, int numOfStartSolution, int neighborType, int numOfVechicles) {
         distancesSize = distancesSize + numOfVechicles - 1;
@@ -49,9 +54,15 @@ public:
         std::vector<Neigbor> tabuList;
         long startTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
         long currentTime;
+        int cnt = 0;
         currentSolution = bestSolution;
         for (int i = 0; (currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count()) - startTime <= maxTime; i++) {
             std::vector<Neigbor> neighborhood;
+            cnt++;
+            if (cnt > numOfVechicles*5) {
+                cnt = 0;
+                currentSolution = gm.generateInitialSolution(distancesSize - numOfVechicles + 1, distances, numOfVechicles);
+            }
             neighborhood = generateNeighbor(distancesSize, currentSolution, (distancesSize * distancesSize) / 2, currentTime);
             std::sort(neighborhood.begin(), neighborhood.end(), [&distancesSize, &distances](const Neigbor& a, const Neigbor& b) {
                 TS ts(distancesSize);
@@ -70,6 +81,7 @@ public:
             }
             currentSolutionLength = gm.calculateTotalDistance(currentSolution, distancesSize, distances);
             if (currentSolutionLength < bestSolutionLength) {
+                cnt = 0;
                 std::vector<int> occures;
                 for (int i = 0; i < currentSolution.size(); i++) {
                     if (currentSolution[i] == 0) {

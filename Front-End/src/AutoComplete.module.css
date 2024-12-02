@@ -70,6 +70,10 @@
     position: relative;
 }
 
+.wholeInput input{
+  font-family: 'Montserrat-Light';
+}
+
 .add_button{
     font-size: 40px;
     color: #FFF;
