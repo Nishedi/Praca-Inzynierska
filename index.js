@@ -49,7 +49,6 @@ app.post('/run-script', async (req, res) => {
     if(numberOfVehicles == 1 && data.distances[0].length < 14){
       alg = "2";
     }
-    console.log(alg+" algorytm\n");
     const algorithmResponses = await runScript(timeOfExecution+"|"+data.distances[0].length+"|"+numberOfVehicles+"|"+fileName+"|"+alg);
     const algorithResponse = algorithmResponses.split("|");
     const numberOfvehicles = algorithResponse[1];
