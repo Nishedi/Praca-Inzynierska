@@ -87,8 +87,8 @@ std::string genetic_run(int numOfCities, std::vector<std::vector<int>> distances
 }
 
 std::string loadDataFromFile(std::string filename) {
-    std::ifstream inputFile("C:\\Users\\KONRAD PEMPERA\\Desktop\\Praca-Inzynierska\\"+filename);
-    //std::ifstream inputFile(filename);
+    //std::ifstream inputFile("C:\\Users\\KONRAD PEMPERA\\Desktop\\Praca-Inzynierska\\"+filename);
+    std::ifstream inputFile(filename);
     if (!inputFile.is_open()) {
         std::cerr << "Cannot open test file: " << filename << std::endl << std::endl;
         return "Error"; 
