@@ -40,9 +40,7 @@ const MainPage = () => {
                     Mniej kilometrów,<br/> więcej zadowolenia
                 </div>
                 <div className={styles.bookmarks}>
-                    <div className={styles.bookmark}>
-                        O nas
-                    </div>
+                    
                     {isLogged && 
                     <>
                         <div onClick={()=>navigate("/savedroutes")} className={styles.bookmark}>

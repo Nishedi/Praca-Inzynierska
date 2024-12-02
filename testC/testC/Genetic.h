@@ -1,6 +1,4 @@
 #pragma once
-
-#pragma once
 #include "GeneralMethods.h"
 #include "Mutations.h"
 #include "CrossOvers.h"
@@ -59,7 +57,7 @@ private:
 	}
 
 public:
-	std::vector<int>  geneticSolve(std::vector<std::vector<int>> distances, int distancesSize, int maxTime, int mutationType, int crossoverType, double crossoverRate, double mutationRate, int numberOfVechicles) {
+	std::vector<int>  geneticSolve(std::vector<std::vector<int>> distances, int distancesSize, int maxTime,  double crossoverRate, double mutationRate, int numberOfVechicles) {
 		maxTime = maxTime * 1000;
 		int bestDistance = 9999999;
 		distancesSize = distancesSize + numberOfVechicles - 1;
@@ -76,18 +74,10 @@ public:
 			(currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count()) - startTime <= maxTime;
 			generation++) {
 			vector<vector<int>> newPopulation(populationSize);
-
 			for (int i = 0; i < populationSize; i++) {
 				vector<int> first = selectParent(population);
 				vector<int> second = selectParent(population);
-				vector<int> child;
-				if (std::equal(first.begin(), first.end(), second.begin())) {
-					child = cs.PMXCrossOver(first, second, distancesSize, 0);
-				}
-				else {
-					if (crossoverType == 0) child = cs.PMXCrossOver(first, second, distancesSize, crossoverRate);
-					if (crossoverType == 1) child = cs.orderCrossover(first, second, distancesSize, crossoverRate, numberOfVechicles);
-				}
+				vector<int> child = cs.orderCrossover(first, second, distancesSize, crossoverRate, numberOfVechicles);
 				/*if (mutationType == 0)mt.insertionMutate(child, distancesSize, mutationRate);
 				if (mutationType == 1)mt.swapMutate(child, distancesSize, mutationRate);*/
 				if (child[child.size() - 1] == 0) {
@@ -112,7 +102,7 @@ public:
 				}		
 			}
 		}
-		gm.calculateTotalDistance(bestTour, bestTour.size(), distances);
+		//gm.calculateTotalDistance(bestTour, bestTour.size(), distances);
 		return bestTour;
 	}
 

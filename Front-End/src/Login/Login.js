@@ -7,6 +7,7 @@ const Login = () => {
     const {supabase } = useContext(GlobalContext);
     const [login, setLogin] = useState("minecraftkonrad872@gmail.com");
     const [password, setPassword] = useState("TestCzemu!123");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     const tryLogin = async () => {
         // email: 'konrad.pempera@gmail.com',
@@ -17,9 +18,12 @@ const Login = () => {
         email: login,
         password: password
         })
-        if(data){
+        if(data.user){
             console.log(data);
             navigate('/mainpage');
+        }else{
+            setError(error.code);
+            console.log(error.code);
         }
     }
 
@@ -39,17 +43,24 @@ const Login = () => {
                     Zaloguj się
                 </div>
                 <div className={styles.wholeInput}>
-                    <div className={styles.inputName}>
+                {/* {passwordError === 'tooShort' && <div className={styles.inputName} style={errorStyle} > Hasło jest za krótkie </div>} */}
+                    <div className={styles.inputName} style={{ color: error !== ''? 'red' : '#777'}} >
                         E-mail
                     </div>
-                    <input value={login} type="text" placeholder="E-mail" className={styles.input} onChange={(e)=>setLogin(e.target.value)}/>
+                    <input
+                        style={{ borderColor: error !== ''? 'red' : '#777'}} 
+                        value={login} type="text" placeholder="E-mail" className={styles.input} onChange={(e)=>setLogin(e.target.value)}/>
                 </div>
                 <div className={styles.wholeInput}>
-                    <div className={styles.inputName}>
+                    <div className={styles.inputName} style={{ color: error !== ''? 'red' : '#777'}} >
                         Hasło
                     </div>
-                    <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" placeholder="Hasło" className={styles.input}/>
+                    <input 
+                        style={{ borderColor: error !== ''? 'red' : '#777'}} 
+                        value={password} onChange={(e)=>setPassword(e.target.value)} 
+                        type="password" placeholder="Hasło" className={styles.input}/>
                 </div>
+                {error === 'invalid_credentials' && <div className={styles.inputName} style={{color: 'red', fontSize: '12px'}} > Niepoprawny e-mail lub hasło </div>}
                 <button className={styles.login} onClick={tryLogin}> Zaloguj </button>
                 <div className={styles.dontHaveAccountContainer}>
                     <div className={styles.spacer}></div>

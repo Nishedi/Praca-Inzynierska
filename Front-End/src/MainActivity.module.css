@@ -18,6 +18,19 @@
     padding-top: 20px;
 }
 
+@media screen and (max-width: 768px){
+    .flex-container-column{
+        width: 100%;
+    }
+    
+}
+@media screen and (min-width: 1930px){
+    .flex-container-column{
+        width: 50%;
+    }
+    
+}
+
 .item {
     margin: 10px 0px;
 }

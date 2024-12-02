@@ -40,6 +40,11 @@ const SingleAutoCompleteInput = ({ exercise, setExercise, isBase}) => {
     }
 
     useEffect(() => {
+        setLocation(exercise?.location|| "");
+    }
+    ,[exercise]);
+
+    useEffect(() => {
         if(location.length >= 5)
             getSuggestions(location);
     },[location]);

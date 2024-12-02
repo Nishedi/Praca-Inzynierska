@@ -59,10 +59,9 @@ std::string ts_run(int numOfCities, std::vector<std::vector<int>> distances, int
     return resultstr;
 }
 
-std::string genetic_run(int numOfCities, std::vector<std::vector<int>> distances, int numOfVechicles, int crossOverType, int timeOfExecton, int genSize) {
+std::string genetic_run(int numOfCities, std::vector<std::vector<int>> distances, int numOfVechicles, int timeOfExecton, int genSize) {
     Genetic* genetic = new Genetic(distances, numOfCities, genSize);
-    std::vector<int> result = genetic->geneticSolve(distances, numOfCities, timeOfExecton, 0,crossOverType,0.8,0.1, numOfVechicles);
-
+    std::vector<int> result = genetic->geneticSolve(distances, numOfCities, timeOfExecton, 0.8,0.1, numOfVechicles);
     int res = 0;
     for (int i = 0; i < result.size() - 1; i++) {
         if (result[i] == 0 && result[i + 1] == 0) {
@@ -88,10 +87,10 @@ std::string genetic_run(int numOfCities, std::vector<std::vector<int>> distances
 }
 
 std::string loadDataFromFile(std::string filename) {
-    std::ifstream inputFile("C:\\Users\\KONRAD PEMPERA\\Desktop\\Praca-Inzynierska\\"+filename);
+    std::ifstream inputFile("C:\\Users\\minec\\Desktop\\Praca-Inzynierska\\"+filename);
     if (!inputFile.is_open()) {
         std::cerr << "Cannot open test file: " << filename << std::endl << std::endl;
-        return "Error"; // Zakończ program z błędem
+        return "Error"; 
     }
     std::stringstream buffer;
     buffer << inputFile.rdbuf();
@@ -120,26 +119,23 @@ int main(int argc, char* argv[]) {
         for (int i = 0; i < distancesInt.size(); i++) {
             for (int j = 0; j < distancesInt.size(); j++) {
                 if (distancesInt[i][j] == 0&&i==j) distancesInt[i][j] = std::numeric_limits<int>::max();
-                //std::cout << distancesInt[i][j] << " ";
+               
             }
-            //std::cout << std::endl;
         }
 
         GreedyVechicleAllocation gva;
-
         int numberOfVechicles = gva.greedyVehicleAllocation(distancesInt);
         if (numOfVechicles > numOfCities) {
             numOfVechicles = numOfCities;
         }
         numberOfVechicles = numOfVechicles;
 
-        bool test = false;
         if (alg == 0) {
             std::string x = ts_run(numOfCities, distancesInt, 1, 100 * numOfCities, numberOfVechicles, timeOfExecution);
             std::cout << "|" << numberOfVechicles << "|" << x << "TS\n";
         }
         if (alg == 1) {
-            std::string y = genetic_run(numOfCities, distancesInt, numberOfVechicles, 1, timeOfExecution, numOfCities * 300);
+            std::string y = genetic_run(numOfCities, distancesInt, numberOfVechicles, timeOfExecution, numOfCities * 300);
             std::cout << "|" << numberOfVechicles << "|" << y << "G\n";
         }
         if (alg == 2) {

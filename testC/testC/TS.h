@@ -16,7 +16,7 @@ public:
         this->cityNumber = cityNumber;
     }
 
-    std::vector<Neigbor> generateNeighbor1(int pathSize, std::vector<int>& path, int numberOfMaxMoves, int seed) {
+    std::vector<Neigbor> generateNeighbor(int pathSize, std::vector<int>& path, int numberOfMaxMoves, int seed) {
         srand(time(NULL) * seed + seed);
         std::vector<Neigbor> neighborhood;
         for (int iter = 0; iter < numberOfMaxMoves && iter < 1000000; iter++) {
@@ -45,7 +45,6 @@ public:
         bestSolution = currentSolution;
         currentSolutionLength = gm.calculateTotalDistance(currentSolution, distancesSize, distances);
         bestSolutionLength = currentSolutionLength;
-        /*currentSolutionLength = gm.calculateTotalDistance(currentSolution, distancesSize, distances);   */
         maxTime = maxTime * 1000;
         std::vector<Neigbor> tabuList;
         long startTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
@@ -53,7 +52,7 @@ public:
         currentSolution = bestSolution;
         for (int i = 0; (currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count()) - startTime <= maxTime; i++) {
             std::vector<Neigbor> neighborhood;
-            neighborhood = generateNeighbor1(distancesSize, currentSolution, (distancesSize * distancesSize) / 2, currentTime);
+            neighborhood = generateNeighbor(distancesSize, currentSolution, (distancesSize * distancesSize) / 2, currentTime);
             std::sort(neighborhood.begin(), neighborhood.end(), [&distancesSize, &distances](const Neigbor& a, const Neigbor& b) {
                 TS ts(distancesSize);
             return ts.gm.calculateTotalDistance(a.path_vec, distancesSize, distances) < ts.gm.calculateTotalDistance(b.path_vec, distancesSize, distances);

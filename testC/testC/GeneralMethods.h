@@ -2,24 +2,10 @@
 #include <vector>
 #include <chrono>
 #include <algorithm>
-#include <cmath> // dla funkcji abs()
+#include <cmath> 
 class GeneralMethods {
     int iter = 0;
 public:
-   /* int calculateTotalDistance(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {
-
-        int totalDistance = 0;
-        for (int i = 0; i < path.size() - 1; i++) {
-            int x = path[i];
-            int y = path[i + 1];
-            totalDistance += distances[x][y];
-
-        }
-        return totalDistance += distances[path[path.size() - 1]][path[0]];
-    }*/
-
-
-
    int calculateTotalDistance(std::vector<int> path, int pathSize, std::vector<std::vector<int>> distances) {
         int totalDistance = 0;
         std::vector<int> truckDistances;

@@ -10,6 +10,7 @@ const YourProfile = () => {
     const [userSurname, setUserSurname] = useState('');
     const [numberOfVehicle, setNumberOfVehicle] = useState('');
     const [baseLocation, setBaseLocation] = useState('');
+    const [saveComplete, setSaveComplete] = useState(false);
 
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 2); 
@@ -36,9 +37,11 @@ const YourProfile = () => {
             if (error) {
                 console.log("Error fetching profile:", error);
             } else {
+                console.log(data[0]?.base_location);
                 setUserName(data[0]?.name || "");
                 setUserSurname(data[0]?.surname || "");
                 setNumberOfVehicle(data[0]?.number_of_trucks || 0);
+                setBaseLocation(data[0]?.base_location || "");
             }
         }
     };
@@ -57,7 +60,12 @@ const YourProfile = () => {
             if (error) {
                 alert("Wystąpił problem podczas zapisywania danych!");
                 console.log("Error fetching profile:", error);
-            } 
+            } else{
+                setSaveComplete(true);
+                const interval = setInterval(() => {
+                    setSaveComplete(false);
+                }, 5000);
+            }
     };
     useEffect(() => {
         getUserProfile();
@@ -206,9 +214,6 @@ const YourProfile = () => {
                     Mniej kilometrów,<br/> więcej zadowolenia
                 </div>
                 <div className={styles.bookmarks}>
-                    <div className={styles.bookmark}>
-                        O nas
-                    </div>
                     <div onClick={onOptimalizeRouteClick} className={styles.bookmark}>
                         Optymalizuj trasę
                     </div>
@@ -251,7 +256,7 @@ const YourProfile = () => {
                  </div>
 
                 <div className={styles.buttons}>
-                    <button onClick={updateProfile}>Zapisz</button>
+                    <button onClick={updateProfile}>{!saveComplete? "Zapisz": "Zapisano!"}</button>
                 </div>
             </div>
 

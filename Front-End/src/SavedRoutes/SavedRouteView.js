@@ -59,9 +59,6 @@ const SavedRouteView = () => {
                     Mniej kilometrów,<br/> więcej zadowolenia
                 </div>
                 <div className={styles.bookmarks}>
-                    <div className={styles.bookmark}>
-                        O nas
-                    </div>
                     <div onClick={onOptimalizeRouteClick} className={styles.bookmark}>
                         Optymalizuj trasę
                     </div>
