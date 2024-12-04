@@ -41,6 +41,7 @@ function SavedRoute() {
     const [groups, setGroups] = useState([]);
     const [groupsRoute, setGroupsRoute] = useState([]);
     const [modal, setModal] = useState(false);
+    const [modalRole, setModalRole] = useState('');
     const FitMapToBounds = ({ locations }) => {
         const map = useMap();
     
@@ -127,11 +128,25 @@ function SavedRoute() {
                 }
                 if(data.length === 0){
                     setModal(true);
+                    setModalRole('auth');
                 }
             }
         }
         fetchRoute();
     }, []);
+
+    const deleteRoute = async () => {
+        const { data, error } = await supabase
+            .from('saved_routes')
+            .delete()
+            .eq('id', routeID);
+        if (error) {
+            console.log(error);
+        }
+        else {
+            navigate('/mainpage');
+        }
+    }
 
     const Modal = () => {
         return (
@@ -158,8 +173,8 @@ function SavedRoute() {
                     height: '50%',
                     overflow: 'auto',
                     fontFamily: 'Montserrat-Bold',
-                }}>
-                    <p>Nieautoryzowany dostęp</p>
+                }}> 
+                    <p>{modalRole === 'delete' ? 'Czy na pewno chcesz usunąć trasę?' : 'Nieautoryzowany dostęp'}</p>
                     
                     <button style={
                         {
@@ -177,7 +192,35 @@ function SavedRoute() {
                             border: '1px solid #7D9F81'
                         }
 
-                    } onClick={() => navigate("/mainpage")}>Zamknij</button>
+                    } onClick={() => {
+                        if(modalRole === 'delete'){
+                            deleteRoute();
+                        }
+                        if(modalRole === 'auth'){
+                            navigate('/mainpage');
+                        }
+
+                    }}>{modalRole === 'delete' ? 'Tak' : 'Zamknij'}</button>
+                    {
+                        modalRole === 'delete' ?
+                        <button style={
+                            {
+                                fontSize: '14px',
+                                fontFamily: 'Montserrat-Bold',
+                                color: 'white',
+                                backgroundColor: '#7D9F81',
+                                border: '0px',
+                                width: '30%',
+                                borderRadius: '10px',
+                                padding: '10px 20px',
+                                letterSpacing: '0.25em',
+                                textTransform: 'uppercase',
+                                margin: '20px 0px',
+                                border: '1px solid #7D9F81'
+                            }
+
+                        } onClick={() => setModal(false)}>Nie</button> : null
+                    }
                 </div>
             </div>
         );
@@ -239,6 +282,8 @@ function SavedRoute() {
                         ))    
                         }
                 </div>
+                
+            <button className={styles.button} onClick={()=>{setModalRole('delete'); setModal(true)}}>Usuń trasę</button>
             </>
             }
         </>

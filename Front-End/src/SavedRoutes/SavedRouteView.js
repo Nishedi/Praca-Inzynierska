@@ -1,11 +1,12 @@
 import styles from './SavedRoutes.module.css';
 import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../GlobalContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SavedRoute from './SavedRoute';
 const SavedRouteView = () => {
     const {supabase} = useContext(GlobalContext);
     const navigate = useNavigate();
+    const routeID = useParams().id;
     useEffect(() => {
         const checkUser = async () => {
             const { data: { session } } = await supabase.auth.getSession();
@@ -71,7 +72,7 @@ const SavedRouteView = () => {
                 </div>
             </div>
             <div className={styles.mainWritting}>
-                Wprowadź lokalizacje
+                Trasa nr {routeID}
             </div>
             <SavedRoute/>
         </div>
